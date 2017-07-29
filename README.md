@@ -1,9 +1,9 @@
 # Fastcampus FDS 4th - Project 'Bond'  
 
-### 팀 구성원: 고세민, 김태훈, 한성욱  
-### 프로젝트 주제: 관심사를 기반으로 그룹 생성이 가능한 SNS 서비스 
-### 벤치마킹 서비스: 밴드
-### 서비스 이름: 'a close connection joining two or more people'라는 의미의 영단어 'bond' => '본드'
+- 팀 구성원: 고세민, 김태훈, 한성욱  
+- 프로젝트 주제: 관심사를 기반으로 그룹 생성이 가능한 SNS 서비스 
+- 벤치마킹 서비스: 밴드
+- 서비스 이름: 'a close connection joining two or more people'라는 의미의 영단어 'bond' => '본드'
 
 ```
 기능 MVP
