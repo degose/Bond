@@ -1,0 +1,30 @@
+body {
+    padding: 50px;
+}
+.box{
+    min-height: 50px;
+    background: yellow;
+    width: 100px;
+    float: left;
+}
+.box-float{
+    margin-right: 10px;
+}
+.box-isolate{
+    margin-right: -100%;
+}
+.col-2{
+    width: 210px;
+}
+.isolate-order-1{
+    margin-left: 110px;
+}
+.isolate-order-2{
+    margin-left: 220px;
+}
+.isolate-order-3{
+    margin-left: 330px;
+}
+.isolate-order-4{
+    margin-left: 440px;
+}
