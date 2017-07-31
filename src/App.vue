@@ -1,6 +1,8 @@
 <template lang="pug">
   #app
-    img.box(:src="vue.path", :alt="vue.label")
+    //- header-main 
+    header-user
+    //- router-view(name="home")   
 
     //- 직접 에셋 속성을 설정하는 경우, assets/ 디렉토리에서 찾아야 이미지 출력
     //- file-loader를 통해 아래와 같이 처리되기 때문
@@ -9,8 +11,16 @@
 </template>
 
 <script>
+import Vue from 'Vue';
+// import HeaderMain from './components/Home/HeaderMain';
+import HeaderUser from './components/HeaderUser';
+
 export default {
   name: 'app',
+  components: {
+    // HeaderMain,
+    HeaderUser
+  },
   data () {
     return {
       vue: {
@@ -25,9 +35,6 @@ export default {
 </script>
 
 <style lang="sass">
-  html
-    font-size: 100%
-    background: #fff
-  body
-    margin: 0
+  @import "~sass"
+
 </style>

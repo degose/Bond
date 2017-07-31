@@ -16,6 +16,9 @@
     background-repeat: no-repeat;
     background-size: 100% 100%
 }
+.readable-hidden{
+  @extend %readable-hidden;
+}
 // 반응형 콘텐츠
 .responsive-object{
     max-width: 100%;
@@ -40,4 +43,15 @@ body{
     font-family: "Noto Sans Regular";
     line-height: 1.5;
     background: #fff;
+}
+
+/****************************
+Modal
+*****************************/
+
+.modal {
+    .button-icon {
+        margin-top: 0px !important;
+        margin-left: 16px;
+    }
 }
