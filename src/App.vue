@@ -1,7 +1,7 @@
 <template lang="pug">
   #app
-    //- header-main 
-    header-user
+    
+    feed
     //- router-view(name="home")   
 
     //- 직접 에셋 속성을 설정하는 경우, assets/ 디렉토리에서 찾아야 이미지 출력
@@ -12,14 +12,16 @@
 
 <script>
 import Vue from 'Vue';
-// import HeaderMain from './components/Home/HeaderMain';
-import HeaderUser from './components/HeaderUser';
+import Home from './components/Home/Home';
+// import HeaderUser from './components/HeaderUser';
+import Feed from './components/Feed/Feed';
 
 export default {
   name: 'app',
   components: {
     // HeaderMain,
-    HeaderUser
+    Home,
+    Feed
   },
   data () {
     return {
@@ -35,6 +37,8 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "~sass"
+  // @import "~sass"
+  body
+    padding 20px
 
 </style>

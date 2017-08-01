@@ -2,6 +2,8 @@
 // 컨테이너 및 그리드 최대 너비
 $container-width: 100%;
 $grid-max-width: 1200px;
+$leading-scale: 1.5;
+$col-height: 50px;
 // 전체 영역을 포함하는 컨테이너
 .container{
   width: $container-width;
@@ -19,7 +21,8 @@ $grid-max-width: 1200px;
   float: left;
   position: relative;
   width: 100%;
-  min-height: 50px;
+  min-height: $col-height;
+  line-height: $col-height;
   // margin-right: -100%;
   background: rgba(255,0,0,0.3);
 }
