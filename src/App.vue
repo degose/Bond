@@ -39,6 +39,6 @@ export default {
 <style lang="sass">
   // @import "~sass"
   body
-    padding 20px
+    padding 20px 
 
 </style>
