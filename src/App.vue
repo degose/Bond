@@ -37,8 +37,9 @@ export default {
 </script>
 
 <style lang="sass">
-  // @import "~sass"
-  body
-    padding 20px 
+@import "~bulma"
+
+body
+  // background: #ffc107
 
 </style>
