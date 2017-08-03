@@ -13,6 +13,7 @@
             .media
               .media-content
                 p.title.is-4 그룹 이름
+              icon
                 span 멤버 5
             .content
               | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -42,11 +43,8 @@
               .content
                 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 | Phasellus nec iaculis mauris. 
-                a @bulmaio
-                | .
-                a #css
-                a #responsive
 
+                br
 
                 //- 좋아요, 댓글 count
                 .level.is-mobile
@@ -93,10 +91,6 @@
               .content
                 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 | Phasellus nec iaculis mauris. 
-                a @bulmaio
-                | .
-                a #css
-                a #responsive
 
 
                 //- 좋아요, 댓글 count
@@ -132,13 +126,6 @@
                         | 3 hrs
 
 
-          //- .card
-          //-   .card-content
-          //-     .block
-          //-       b-checkbox Basic
-          //-       //- b-checkbox(v-model='checkbox') {{ checkbox }}
-          //-       b-checkbox(disabled='') Disabled
-          //-       b-checkbox(disabled='', checked='') Disabled Checked
                 
 </template>
 
@@ -157,8 +144,8 @@ export default {
 
 <style lang="sass">
 
-.btn-join-group
-  // padding: 40px
 .feed-box
   margin-bottom: 30px
+
+
 </style>
