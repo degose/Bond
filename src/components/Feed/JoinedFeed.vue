@@ -39,16 +39,19 @@
 
                 .dropdown.is-right.is-active
                   .dropdown-trigger
-                    button.button.is-info(aria-haspopup='true', aria-controls='dropdown-menu6')
+                    button.button.is-info(aria-haspopup='true', aria-controls='dropdown-menu6s')
                       span.icon
                         i.fa.fa-ellipsis-v(aria-hidden='true')
                   #dropdown-menu6.dropdown-menu(role='menu')
                     .dropdown-content
                       .dropdown-item
-                        a 
-                          | 글 수정
-                        a 
-                          | 글 삭제
+                        ul
+                          li
+                            a 
+                              | 글 수정
+                          li
+                            a 
+                              | 글 삭제
 
 
               .content
@@ -102,6 +105,7 @@
                       br
                       small
                         | 3 hrs
+
 </template>
 
 <style lang="sass">
@@ -109,5 +113,5 @@
   min-height: 50px
 .btn-comment
   height: 50px
-
+  
 </style>

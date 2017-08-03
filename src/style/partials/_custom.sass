@@ -1,10 +1,12 @@
 // bulma element custom
 
+$bond-hover: #f9b408
+
 .btn-default
   width: 100%
   background: #fff
   border: 1px solid #b5b5b5
-  border-radius: 3px
+  border-radius: $radius
   font-size: 16px
   color: #363636
   &:hover
@@ -12,15 +14,18 @@
 
 .btn-fill
   width: 100%
-  background: #fff
-  border: 1px solid #b5b5b5
-  border-radius: 3px
+  background: $bond
+  border: 1px solid $bond
+  border-radius: $radius
   font-size: 16px
   color: #363636
-  &:hover
-    // border: 1px solid $bond
-    background: $bond
-    color: #fff
+  &:hover,
+  &:active,
+  &:focus,
+    background: $bond-hover
+    border: 1px solid $bond-hover
+    // background: $bond
+    // color: #fff
 
 
 .user-img 
