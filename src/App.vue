@@ -1,7 +1,10 @@
 <template lang="pug">
   #app
-    group-list
-    MakingGroupModal
+    // component insert : CamelCase
+    .wrapper
+      GroupList
+      MysettingModal
+      MakingGroupModal
 </template>
 
 <script>
@@ -11,6 +14,7 @@ import Vue from 'Vue';
 // import Feed from './components/Feed/Feed';
 import GroupList from './components/Grouplist/GroupList';
 import MakingGroupModal from './components/Grouplist/MakingGroupModal';
+import MysettingModal from './components/Home/MysettingModal';
 
 export default {
   name: 'app',
@@ -19,6 +23,7 @@ export default {
     // Home,
     // Feed,
     GroupList,
+    MysettingModal,
     MakingGroupModal
   },
   data () {

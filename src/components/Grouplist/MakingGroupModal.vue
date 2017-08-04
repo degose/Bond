@@ -6,11 +6,21 @@
         figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
          a
           img(src='http://bulma.io/images/placeholders/640x320.png', alt='그룹 대표 사진')
+          //- .file.has-name.is-fullwidth
+          //-   label.file-label
+          //-     input.file-input(type='file', name='resume')
+          //-     span.file-cta
+          //-       span.file-icon
+          //-         i.fa.fa-upload
+          //-       span.file-label
+          //-         | Choose a file…
+          //-     span.file-name
+          //-       | Screen Shot 2017-07-29 at 15.54.25.png
           hr
           .field
             .control
               input.input.is-primary(type='text', placeholder='그룹 이름을 설정해주세요')
-          textarea.input(type="text" rows="50" placeholder="그룹에 소개글을 적어주세요")
+          textarea.input(type="text" placeholder="그룹에 소개글을 적어주세요" rows="10")
             //- columns 
             //- columns 
             //- textarea.is-12
@@ -30,7 +40,7 @@ export default {
     },
     is_visible: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {

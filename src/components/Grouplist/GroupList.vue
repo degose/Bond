@@ -7,14 +7,14 @@
             picture
               //- source.responsive-object(srcset='../../assets/logo-011.svg', media='max-width: 767px')
               img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
-              img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드', width=40, height=30)
+              img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
           .navbar-burger.burger(data-target="navMenuExample")
             figure
               img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
         .search.column
           .field
             .control.has-icons-left.has-icons-right
-              input.input.is-dark(type='text', placeholder='그룹이나 게시글을 검색해보세요')
+              input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요')
               a.span.icon.is-small.is-right(aria-label="search")
                 i.fa.fa-search
         .navbar-menu    
@@ -130,11 +130,12 @@
                 .media-content
                   p.title.is-4 그룹 이름
                   // 도움 요청..
+            
         .column.is-3.is-hidden-mobile
           .card
             .card-image.makegroup
-              figure.image
-                a(:click="makingGroup")
+              a.figure.image
+                a(@click="openModal")
                   div.plusgroup
                     i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
                 //- img.plusgroup
@@ -155,6 +156,11 @@
             a.pagination-link.is-dark 2
           li
             a.pagination-link.is-dark 3
+    
+    MakingGroupModal(
+      ref="my_modal"
+      close_message="close lightbox"
+    )
 
 </template>
 
@@ -184,9 +190,9 @@ export default {
     };
   },
   methods: {
-    makingGroup(){
-
-    }
+    openModal(){
+      this.$refs.my_modal.visible = true;
+    },
   }
 }
 </script>
