@@ -38,12 +38,14 @@ export default {
     openMessage(){
       this.$refs.slide_anim.is_visible = true;
     }
-  }
+ }
 }
 </script>
 
 <style lang="sass">
 @import "~bulma"
+body
+  background-color: #eee
 .open-modal
   margin-bottom: 20px
 

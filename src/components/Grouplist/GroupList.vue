@@ -5,8 +5,9 @@
         .navbar-brand
           a.navbar-item(href="#")
             picture
-              source.responsive-object(srcset='../../assets/logo-011.svg', media='max-width: 767px')
-              img(src='../../assets/logo-07.svg', alt='본드', width=112, height=28)
+              //- source.responsive-object(srcset='../../assets/logo-011.svg', media='max-width: 767px')
+              img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
+              img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드', width=40, height=30)
           .navbar-burger.burger(data-target="navMenuExample")
             figure
               img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
@@ -54,7 +55,7 @@
             .card-content
               .media
                 .media-content
-                  p.title.is-4.is-2-mobile 그룹 이름
+                  p.title.is-4 그룹 이름
 
         .column.is-3
           .card
@@ -128,7 +129,8 @@
               .media
                 .media-content
                   p.title.is-4 그룹 이름
-        .column.is-3
+                  // 도움 요청..
+        .column.is-3.is-hidden-mobile
           .card
             .card-image.makegroup
               figure.image
@@ -179,7 +181,7 @@ export default {
         path: './src/assets/logo.png',
         label: 'Vue.js'
       }
-    }
+    };
   },
   methods: {
     makingGroup(){
@@ -193,7 +195,7 @@ export default {
 @import "~bulma"
 
 body
-  // background: #ffc107
+  background-color: #eee
 .user-img
   border-radius: 50%
 .navbar-burger.burger
@@ -206,16 +208,18 @@ body
 .feed-box
   margin-bottom: 30px
 .header-bg
-  background-color: #673AB7
+  background-color: #fff
   height: 60.341px
 .navbar
-  background-color: #673AB7
-.makegroup
-  width: 222.017px
-  height: 111.009px
+  background-color: #fff
+  // 도움 요청
+.column.is-3.is-hidden-mobile
+  width: 238px
+  height: 194px
 .fa.fa-plus-circle.fa-5x
-  width: 135px
-  height: 135px
+  font-size: 119px
+  margin: 0 63px 0 63px
+  color: #E91E63
 
 
 </style>
