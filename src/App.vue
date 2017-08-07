@@ -1,8 +1,7 @@
 <template lang="pug">
   #app
     .container
-      router-view
-      app-nav
+    Navbar
     footer.footer.is-hidden-mobile
       .content.has-text-centered
         p
@@ -13,11 +12,13 @@
 </template>
 
 <script>
-import Navigation from './components/Navigation';
+// import Navigation from './components/Navigation';
+import Navbar from './components/Main/NavBar'
 export default {
   name: 'app',
   components: {
-    appNav: Navigation
+    // appNav: Navigation,
+    Navbar
   },
   data () {
     return {
