@@ -1,22 +1,31 @@
 <template lang="pug">
-
-  
-  //- none-joint-feed
-  joined-feed
+  .wrapper
+    header-main
+    my-group-feed
+    joined-group-feed
+    none-joint-feed
+    
 
 
 </template>
 
 <script>
-// import NoneJointFeed from './NoneJointFeed';
-import JoinedFeed from './JoinedFeed';
+import NoneJointFeed from './NoneJointFeed';
+import JoinedGroupFeed from './JoinedGroupFeed';
+import MyGroupFeed from './/MyGroupFeed.vue';
+import HeaderMain from './Header';
+import WriteModal from './WriteModal';
 
 export default {
   name: 'app',
   components: {
-    // NoneJointFeed,
-    JoinedFeed
-  }, 
+    NoneJointFeed,
+    JoinedGroupFeed,
+    MyGroupFeed,
+    HeaderMain,
+    WriteModal
+  },
+
 }
 </script>
 
