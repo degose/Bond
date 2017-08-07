@@ -12,7 +12,7 @@
 <style lang="sass" scoped>
 .footer
   position: absolute
-  bottom: 0
+  // bottom: 0
   width: 100%
   background-color: hsla(0, 0%, 100%, .3)
 </style>

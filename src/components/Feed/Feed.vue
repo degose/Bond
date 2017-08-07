@@ -1,13 +1,9 @@
 <template lang="pug">
   .wrapper
     //- my-group-feed
-    //- feed-menu
-    //- .container
-    //-   .columns
-        //- .column.is-3
-          joined-group-info
-        //- .column.is-9
-          joined-group-feed
+    feed-menu
+    joined-group-feed
+    //- member-list
     //- none-joint-feed
     
     
@@ -22,6 +18,7 @@ import JoinedGroupInfo from './JoinedGroupInfo';
 import JoinedGroupFeed from './JoinedGroupFeed';
 import MyGroupFeed from './/MyGroupFeed.vue';
 import WriteModal from './WriteModal';
+import MemberList from './MemberList';
 
 export default {
   name: 'app',
@@ -31,7 +28,8 @@ export default {
     JoinedGroupInfo,
     MyGroupFeed,
     WriteModal,
-    FeedMenu
+    FeedMenu,
+    MemberList
   },
 
 }

@@ -1,10 +1,9 @@
 <template lang="pug">
-      div
-        nav.navbar
+      div.nav-bg
+        nav.navbar.container
           .navbar-brand
             a.navbar-item(href="#")
               picture
-                //- source.responsive-object(srcset='../../assets/logo-011.svg', media='max-width: 767px')
                 img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                 img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
             .navbar-burger.burger(data-target="navMenuburger")
@@ -60,6 +59,9 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 
+.nav-bg
+  background: #fff
+
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px
@@ -68,12 +70,11 @@ export default {
   // margin: 0
 .dropdownhr
   margin: 5px
-.header-bg
-  background-color: #fff
-  // height: 60.341px
+// .header-bg
+//   background-color: #fff
+//   // height: 60.341px
 .navbar
   // background-color: #fff
-.vav-bg
-  // height: 100%
-  // background: #eee
+.nav-fixed
+  position: fixed
 </style>

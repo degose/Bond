@@ -337,23 +337,10 @@ export default {
   &:active
     color: $bond
 
-ul li
-  list-style: none
-  margin: 0
-  padding: 0
 
 
-
-.navbar-burger.burger
-  padding-top: 8px
-  padding-left: 10px
-.navhr
-  margin: 0 5px 30px 5px
 .dropdownhr
   margin: 5px
-.header-bg
-  background-color: #fff
-  height: 60.341px
 
 .group-img-small
   border-radius: 10%

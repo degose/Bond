@@ -168,24 +168,22 @@ export default {
 .grouplist
   // margin-top: 30px
 
-body
-  background-color: #eee
-.user-img
-  border-radius: 50%
-.navbar-burger.burger
-  padding-top: 8px
-  padding-left: 10px
-.navhr
-  margin: 0 5px 30px 5px
+
+// .navbar-burger.burger
+//   padding-top: 8px
+//   padding-left: 10px
+// .navhr
+//   margin: 0 5px 30px 5px
 .dropdownhr
   margin: 5px
-.feed-box
-  margin-bottom: 30px
-.header-bg
-  background-color: #fff
-  height: 60.341px
-.navbar
-  background-color: #fff
+// .feed-box
+//   margin-bottom: 30px
+// .header-bg
+//   background-color: #fff
+//   height: 60.341px
+// .navbar
+//   background-color: #fff
+
   // 도움 요청
 .column.is-3.is-hidden-mobile
   width: 238px
