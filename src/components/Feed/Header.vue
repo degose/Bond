@@ -1,0 +1,40 @@
+<template lang="pug">
+    .header-bg
+      .container
+        nav.navbar
+          .navbar-brand
+            a.navbar-item(href="#")
+              picture
+                //- source.responsive-object(srcset='../../assets/logo-02.svg', media='max-width: 767px')
+                img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='본드', width=112, height=28)
+                img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='본드')
+            .navbar-burger.burger(data-target="navMenuExample")
+              figure
+                img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
+          .search.column
+            .field
+              .control.has-icons-left.has-icons-right
+                input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요')
+                a.span.icon.is-small.is-right(aria-label="search")
+                  i.fa.fa-search
+          .navbar-menu    
+            .navbar-end
+              .navbar-item.has-dropdown.is-hoverable.is-right
+                a.navbar-link
+                  figure
+                    img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
+                .navbar-dropdown
+                  a.navbar-item
+                    | 내 정보
+                  a.navbar-item
+                    | 내 글 보기
+                  a.navbar-item
+                    | 새 글 보기
+                  hr.dropdownhr
+                  a.navbar-item
+                    | 로그 아웃
+      
+      hr.navhr.is-hidden-mobile
+
+
+</template>
