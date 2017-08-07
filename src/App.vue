@@ -2,9 +2,10 @@
   #app
     // component insert : CamelCase
     .wrapper
-      GroupList
-      MysettingModal
-      MakingGroupModal
+      MemberList
+      //- GroupList
+      //- MysettingModal
+      //- MakingGroupModal
 </template>
 
 <script>
@@ -15,6 +16,7 @@ import Vue from 'Vue';
 import GroupList from './components/Grouplist/GroupList';
 import MakingGroupModal from './components/Grouplist/MakingGroupModal';
 import MysettingModal from './components/Home/MysettingModal';
+import MemberList from './components/Feed/MemberList';
 
 export default {
   name: 'app',
@@ -24,7 +26,8 @@ export default {
     // Feed,
     GroupList,
     MysettingModal,
-    MakingGroupModal
+    MakingGroupModal,
+    MemberList
   },
   data () {
     return {
