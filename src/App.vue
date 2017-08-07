@@ -1,7 +1,11 @@
 <template lang="pug">
   #app
-    group-list
-    MakingGroupModal
+    // component insert : CamelCase
+    .wrapper
+      MemberList
+      //- GroupList
+      //- MysettingModal
+      //- MakingGroupModal
 </template>
 
 <script>
@@ -11,6 +15,8 @@ import Vue from 'Vue';
 // import Feed from './components/Feed/Feed';
 import GroupList from './components/Grouplist/GroupList';
 import MakingGroupModal from './components/Grouplist/MakingGroupModal';
+import MysettingModal from './components/Home/MysettingModal';
+import MemberList from './components/Feed/MemberList';
 
 export default {
   name: 'app',
@@ -19,7 +25,9 @@ export default {
     // Home,
     // Feed,
     GroupList,
-    MakingGroupModal
+    MysettingModal,
+    MakingGroupModal,
+    MemberList
   },
   data () {
     return {
@@ -38,12 +46,14 @@ export default {
     openMessage(){
       this.$refs.slide_anim.is_visible = true;
     }
-  }
+ }
 }
 </script>
 
 <style lang="sass">
 @import "~bulma"
+body
+  background-color: #eee
 .open-modal
   margin-bottom: 20px
 

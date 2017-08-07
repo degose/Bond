@@ -3,15 +3,32 @@
     .modal-background(@click="closeModal")
     .modal-card
       header.modal-card-head
-        p 그룹 만들기
-      input.groupname(type="text" placeholder="그룹 이름?")
-      
-      section.input.modal-card-body
-        input.groupsummary(type="text" placeholder="그룹 간략 설명")
-        // Content ...
+        figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
+         a
+          img(src='http://bulma.io/images/placeholders/640x320.png', alt='그룹 대표 사진')
+      section.modal-card-body 
+        .file.has-name.is-fullwidth.is-primary
+          label.file-label
+            input.file-input(type='file', name='resume')
+            span.file-cta
+              span.file-icon
+                i.fa.fa-upload
+              span.file-label
+                | 사진을 선택해주세요
+            span.file-name
+              | Screen Shot 2017-07-29 at 15.54.25.png
+        hr
+        .field
+          .control
+            input.input.is-primary(type='text', placeholder='그룹 이름을 설정해주세요')
+            textarea.input(type="text" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
+            //- columns 
+            //- columns 
+            //- textarea.is-12
+          // Content ...
       footer.modal-card-foot
-        a.button.is-primary Save changes
-        a.button(@click="closeModal") Cancel
+        button.button.is-primary 그룹 만들기
+        button.button(@click="closeModal") 취소
 
 </template>
 
@@ -24,7 +41,7 @@ export default {
     },
     is_visible: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {
@@ -40,7 +57,5 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.groupname
-  // width: 200px
 
 </style>
