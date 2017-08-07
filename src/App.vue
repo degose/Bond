@@ -1,7 +1,8 @@
 <template lang="pug">
   #app
     .container
-    Navbar
+    MainHeader
+      GroupList
     footer.footer.is-hidden-mobile
       .content.has-text-centered
         p
@@ -13,12 +14,14 @@
 
 <script>
 // import Navigation from './components/Navigation';
-import Navbar from './components/Main/NavBar'
+import MainHeader from './components/Main/MainHeader'
+import Grouplist from './components/Main/GroupList'
 export default {
   name: 'app',
   components: {
     // appNav: Navigation,
-    Navbar
+    MainHeader,
+    Grouplist
   },
   data () {
     return {
@@ -35,14 +38,14 @@ html,body
     margin: 0
     padding: 0
     height: 100%
-#app 
-    position: relative
-    min-height: 100%
-.title
-    margin-top: 20px
-.footer
-    position: absolute
-    bottom: 0
-    width: 100%
-    background-color: hsla(0, 0%, 100%, .3)
+// #app 
+//     position: relative
+//     min-height: 100%
+// .title
+//     margin-top: 20px
+// .footer
+//     position: absolute
+//     bottom: 0
+//     width: 100%
+//     background-color: hsla(0, 0%, 100%, .3)
 </style>

@@ -1,166 +1,130 @@
 <template lang="pug">
-  .header-bg
-    .container
-      nav.navbar
-        .navbar-brand
-          a.navbar-item(href="#")
-            picture
-              //- source.responsive-object(srcset='../../assets/logo-011.svg', media='max-width: 767px')
-              img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
-              img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
-          .navbar-burger.burger(data-target="navMenuburger")
-            figure
-              img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
-        .search.column
-          .field
-            .control.has-icons-left.has-icons-right
-              input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요')
-              a.span.icon.is-small.is-right(aria-label="search")
-                i.fa.fa-search
-        #navMenuburger.navbar-menu    
-          .navbar-end
-            .navbar-item.has-dropdown.is-hoverable.is-right
-              a.navbar-link
-                figure
-                  img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-              .navbar-dropdown
-                a.navbar-item
-                  | 내 정보
-                a.navbar-item
-                  | 내 글 보기
-                a.navbar-item
-                  | 새 글 보기
-                hr.dropdownhr
-                a.navbar-item
-                  | 로그 아웃
-    hr.navhr.is-hidden-mobile
-    //- 네비바 끝
-    .container
-      .columns
-        //- 그룹 정보 영역
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+.container
+  .columns
+    //- 그룹 정보 영역
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-      .columns
-        //- 그룹 정보 영역
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+  .columns
+    //- 그룹 정보 영역
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-2by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
 
-      .columns
-        .column.is-3
-          .card
-            .card-image
-              figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 이름
-                  // 도움 요청..
-            
-        .column.is-3.is-hidden-mobile
-          .card
-            .card-image.makegroup
-              a.figure.image
-                a(@click="openModal")
-                  div.plusgroup
-                    i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
-                //- img.plusgroup
-                //- img.plusgroup(src='./assets/plusmark.svg' width=30 height=30 alt='makegroup')
-            //- svg.icon.icon--plus(viewbox='0 0 5 5', xmlns='http://www.w3.org/2000/svg')
-            //-   path(d='M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z')
-            .card-content
-              .media
-                .media-content
-                  p.title.is-4 그룹 만들기
-      nav.pagination.is-hidden-mobile.is-centered
-        a.pagination-previous(title='This is the first page', disabled='') Previous
-        a.pagination-next Next page
-        ul.pagination-list
-          li
-            a.pagination-link.is-current.is-dark 1
-          li
-            a.pagination-link.is-dark 2
-          li
-            a.pagination-link.is-dark 3
-    
-    MakingGroupModal(
-      ref="my_modal"
-      close_message="close lightbox"
-    )
+  .columns
+    .column.is-3
+      .card
+        .card-image
+          figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
+            img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 이름
+              // 도움 요청..
+        
+    .column.is-3.is-hidden-mobile
+      .card
+        .card-image.makegroup
+          a.figure.image
+            a(@click="openModal")
+              div.plusgroup
+                i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
+            //- img.plusgroup
+            //- img.plusgroup(src='./assets/plusmark.svg' width=30 height=30 alt='makegroup')
+        //- svg.icon.icon--plus(viewbox='0 0 5 5', xmlns='http://www.w3.org/2000/svg')
+        //-   path(d='M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z')
+        .card-content
+          .media
+            .media-content
+              p.title.is-4 그룹 만들기
+  nav.pagination.is-hidden-mobile.is-centered
+    a.pagination-previous(title='This is the first page', disabled='') Previous
+    a.pagination-next Next page
+    ul.pagination-list
+      li
+        a.pagination-link.is-current.is-dark 1
+      li
+        a.pagination-link.is-dark 2
+      li
+        a.pagination-link.is-dark 3
+
+  MakingGroupModal(
+    ref="my_modal"
+    close_message="close lightbox"
+  )
 
 </template>
 
@@ -202,22 +166,8 @@ export default {
 
 body
   background-color: #eee
-.user-img
-  border-radius: 50%
-.navbar-burger.burger
-  padding-top: 8px
-  padding-left: 10px
-.navhr
-  margin: 0 5px 30px 5px
-.dropdownhr
-  margin: 5px
 .feed-box
   margin-bottom: 30px
-.header-bg
-  background-color: #fff
-  height: 60.341px
-.navbar
-  background-color: #fff
   // 도움 요청
 .column.is-3.is-hidden-mobile
   width: 238px

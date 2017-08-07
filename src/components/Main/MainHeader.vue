@@ -34,10 +34,17 @@
                 a.navbar-item
                   | 로그 아웃
     hr.navhr.is-hidden-mobile
+    
+    GroupList
 </template>
 
 <script>
+import GroupList from './GroupList'
+
 export default {
+  components:{
+    GroupList
+  },
   data(){
     return{
         vue: {
@@ -52,7 +59,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import "~bulma"
 .user-img
   border-radius: 50%
