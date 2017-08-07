@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 // ESLint 규칙:
@@ -14,6 +15,14 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "rules": {
+=======
+module.exports = {
+  extends: ["vue", /* your other extends */],
+  plugins: ["vue"],
+  rules: {
+    /* your overrides -- vue/jsx-uses-vars is included in eslint-config-vue */
+    
+>>>>>>> 112664a99b9aa7453d9adf5ef0557a9adb3902d9
         "no-console": 0,
         "no-unused-vars": 0,
         "indent": [
@@ -33,4 +42,8 @@ module.exports = {
             "always"
         ]
     }
+<<<<<<< HEAD
 };
+=======
+  }
+>>>>>>> 112664a99b9aa7453d9adf5ef0557a9adb3902d9
