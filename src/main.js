@@ -1,16 +1,16 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+// import VueRouter from 'vue-router';
 import App from './App';
-import {routes} from './routes';
+// import {routes} from './routes';
 
-Vue.use(VueRouter);
+// Vue.use(VueRouter);
 
-const router = new VueRouter({
-  routes
-});
+// const router = new VueRouter({
+//   routes
+// });
 
 new Vue({
   el: '#app',
-  router,
+  // router,
   render: h => h(App)
 });

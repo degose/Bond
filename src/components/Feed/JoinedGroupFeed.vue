@@ -1,17 +1,6 @@
 <template lang="pug">
       //- 가입한 그룹의 feed
-      .container
-  
-        .columns
-          .column
-            .tabs.is-centered
-              ul
-                li.is-active
-                  a 전체글
-                li
-                  a 멤버
-
-
+      div.container
         .columns
           //- 그룹 정보 영역
           .column.is-3
@@ -339,6 +328,12 @@ export default {
 <style lang="sass">
 @import "~bulma"
 @import "~style"
+
+.tab-wrapper
+  margin: -30px
+
+.navhr
+  display: none
 
 .icon-more
   font-size: 1.5rem

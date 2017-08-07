@@ -1,9 +1,15 @@
 <template lang="pug">
   .wrapper
-    header-main
-    my-group-feed
-    joined-group-feed
-    none-joint-feed
+    //- my-group-feed
+    //- feed-menu
+    //- .container
+    //-   .columns
+        //- .column.is-3
+          joined-group-info
+        //- .column.is-9
+          joined-group-feed
+    //- none-joint-feed
+    
     
 
 
@@ -11,9 +17,10 @@
 
 <script>
 import NoneJointFeed from './NoneJointFeed';
+import FeedMenu from './FeedMenu';
+import JoinedGroupInfo from './JoinedGroupInfo';
 import JoinedGroupFeed from './JoinedGroupFeed';
 import MyGroupFeed from './/MyGroupFeed.vue';
-import HeaderMain from './Header';
 import WriteModal from './WriteModal';
 
 export default {
@@ -21,9 +28,10 @@ export default {
   components: {
     NoneJointFeed,
     JoinedGroupFeed,
+    JoinedGroupInfo,
     MyGroupFeed,
-    HeaderMain,
-    WriteModal
+    WriteModal,
+    FeedMenu
   },
 
 }
