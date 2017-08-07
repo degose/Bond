@@ -1,6 +1,6 @@
 <template lang="pug">
-  #app
-    .container
+  .container
+    header.header
       .title.has-text-centered
           img(src="../assets/logo-01.svg")
       .box.column.is-half.is-offset-one-quarter
@@ -30,12 +30,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "~bulma"
+@import "~style"
 .title
-  margin: 20px 0
-.email-login
-  margin-top: 20px
-.field
-  margin-bottom: 0
-.box
-   background-color: hsla(0, 0%, 100%, .9)
+  // margin: 20px 0
+// .email-login
+//   margin-top: 20px
+// .field
+//   margin-bottom: 0
+// .box
+//    background-color: hsla(0, 0%, 100%, .9)
 </style>

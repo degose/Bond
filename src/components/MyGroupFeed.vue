@@ -1,79 +1,58 @@
 <template lang="pug">
       //- 가입한 그룹의 feed
       .container
-  
-        .columns
-          .column
-            .tabs.is-centered
-              ul
-                li.is-active
-                  a 전체글
-                li
-                  a 멤버
-
 
         .columns
           //- 그룹 정보 영역
           .column.is-3
-            .card
-              .card-image
-                figure.image.is-16by9
-                  img(src='http://bulma.io/images/placeholders/1280x960.png', alt='Image')
-              .card-content
-                article.media
-                  .media-content
-                    p.title.is-4 그룹 이름
-                    div
-                      span 멤버 5
-                      |  · 
-                      a 
-                        span.icon.is-small
-                          i.fa.fa-cog(aria-hidden='true')
-                        | 그룹 설정
-                .content
-                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  | Phasellus nec iaculis mauris. 
+            .card-content
+              //- 가입하기 버튼
+              .columns.is-mobile
+                button.column.btn-default.btn-fill 그룹 만들기
+            hr
+            .card-content
+              .columns.is-mobile
+                h3.title.is-5 내 그룹
+                  |  · 
+                  | 5
+            .card-content
+              a.columns.is-mobile.group-small-list-group
+                article.media.group-small-list
+                  figure.media-left
+                    p.image.is-32x32
+                      img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
+                p 안녕
+              a.columns.is-mobile
+                article.media.group-small-list
+                  figure.media-left
+                    p.image.is-32x32
+                      img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
+                p 안녕
 
 
           
           
           //- feed 영역
           .column.is-9
-            //- 글쓰기 영역
-            div.feed-box
-              .card
-                a(aria-label="open write modal" @click="openWriteModal")
-                  .card-content
-                    p 소식을 남겨주세요.
-                    | &nbsp; 
-                  footer.card-footer
-                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
-                      span.icon
-                        i.fa.fa-picture-o
-                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
-                      span.icon
-                        i.fa.fa-play-circle-o
-                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
-                      span.icon
-                        i.fa.fa-folder-open-o
-                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
-                      span.icon
-                        i.fa.fa-pencil
-                      p.is-hidden-mobile 
-                        | &nbsp; 
-                        |글쓰기
-                
 
-
-            div.feed-box
+            .feed-box
               .card
+                header.card-header
+                  a.card-header-title
+                    | &nbsp;  
+                    | &nbsp;  
+                    span.icon
+                      img(src="../assets/bond-img.svg")
+                    | &nbsp;  
+                    | 해당 그룹 이름
+
                 .card-content
                   article.media
                     .media-left
                       figure.image.is-64x64.img-user
                         img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
                     .media-content
-                      p.title.is-4.user-name John Smith
+                      p.title.is-4.user-name 만순이
                       p.subtitle.is-6 11:09 PM - 1 Jan 2016
 
 
@@ -167,6 +146,14 @@
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card
+                header.card-header
+                  a.card-header-title
+                    | &nbsp;  
+                    | &nbsp;  
+                    span.icon
+                      img(src="../assets/bond-img.svg")
+                    | &nbsp;  
+                    | 해당 그룹 이름
                 .card-content
                   article.media
                     .media-left
@@ -225,7 +212,7 @@
                   .content
                     figure
                       video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
-                        source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
+                        source(src='', type='video/webm; codecs="vp8, vorbis"')
                         track(src='', kind='captions', srclang='en', label='English captions', default='')
                   //- .content
                   //-   figure
@@ -336,7 +323,7 @@ export default {
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
 
@@ -350,23 +337,18 @@ export default {
   &:active
     color: $bond
 
-ul li
-  list-style: none
-  margin: 0
-  padding: 0
 
 
-
-.navbar-burger.burger
-  padding-top: 8px
-  padding-left: 10px
-.navhr
-  margin: 0 5px 30px 5px
 .dropdownhr
   margin: 5px
-.header-bg
-  background-color: #fff
-  height: 60.341px
+
+.group-img-small
+  border-radius: 10%
+
+.group-small-list-group
+  line-height: 38px
+.group-small-list
+  margin-bottom: 8px
 
 
 

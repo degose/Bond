@@ -1,23 +1,30 @@
 <template lang="pug">
   #app
-    .container
+    div
       router-view
       app-nav
-    footer.footer.is-hidden-mobile
-      .content.has-text-centered
-        p
-          strong 본드
-          |  by 
-          a(href='http://school.fastcampus.co.kr/') 패스트 캠퍼스.
-          |  웹 프론트엔드 스쿨 
+      //- main-header
+      //- feed
+      //- group-list
+
+      main-footer
 </template>
 
 <script>
 import Navigation from './components/Navigation';
+import MainHeader from './components/MainHeader';
+import Feed from './components/Feed';
+import GroupList from './components/GroupList';
+import MainFooter from './components/MainFooter';
+
 export default {
   name: 'app',
   components: {
-    appNav: Navigation
+    appNav: Navigation,
+    MainHeader,
+    Feed,
+    GroupList,
+    MainFooter,
   },
   data () {
     return {
@@ -29,19 +36,18 @@ export default {
 <style lang="sass">
 @import "~bulma"
 @import "~style"
+
 html,body
-    font-size: 100%
-    margin: 0
-    padding: 0
-    height: 100%
+  // font-size: 100%
+  // margin: 0
+  // padding: 0
+  min-height: 100vh
 #app 
-    position: relative
-    min-height: 100%
+    // position: relative
+    // min-height: 100%
 .title
-    margin-top: 20px
-.footer
-    position: absolute
-    bottom: 0
-    width: 100%
-    background-color: hsla(0, 0%, 100%, .3)
+    // margin-top: 20px
+
+
+
 </style>
