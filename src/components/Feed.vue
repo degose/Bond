@@ -1,10 +1,11 @@
 <template lang="pug">
   .wrapper
-    //- my-group-feed
     feed-menu
+    //- my-group-feed
     joined-group-feed
-    //- member-list
     //- none-joint-feed
+    //- member-list
+    
     
     
 
@@ -12,24 +13,22 @@
 </template>
 
 <script>
-import NoneJointFeed from './NoneJointFeed';
 import FeedMenu from './FeedMenu';
-import JoinedGroupInfo from './JoinedGroupInfo';
 import JoinedGroupFeed from './JoinedGroupFeed';
-import MyGroupFeed from './/MyGroupFeed.vue';
-import WriteModal from './WriteModal';
+import MyGroupFeed from './MyGroupFeed.vue';
+import NoneJointFeed from './NoneJointFeed';
 import MemberList from './MemberList';
+
 
 export default {
   name: 'app',
   components: {
-    NoneJointFeed,
-    JoinedGroupFeed,
-    JoinedGroupInfo,
-    MyGroupFeed,
-    WriteModal,
     FeedMenu,
-    MemberList
+    JoinedGroupFeed,
+    MyGroupFeed,
+    NoneJointFeed,
+    MemberList,
+    
   },
 
 }
@@ -37,8 +36,8 @@ export default {
 
 
 <style lang="sass">
-
-
+@import "~bulma"
+@import "~style"
 
 
 </style>

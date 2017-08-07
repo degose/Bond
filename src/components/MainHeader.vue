@@ -4,8 +4,8 @@
           .navbar-brand
             a.navbar-item(href="#")
               picture
-                img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
-                img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
+                img.is-hidden-mobile(src='../assets/logo-01.svg', alt='큰본드', width=112, height=28)
+                img.is-hidden-desktop.is-hidden-tablet(src='../assets/logo-02.svg', alt='작은본드')
             .navbar-burger.burger(data-target="navMenuburger")
               figure
                 img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
@@ -47,8 +47,8 @@ export default {
         vue: {
         // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
         // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        path: './src/assets/logo.png',
-        label: 'Vue.js'
+        // path: './src/assets/logo.png',
+        // label: 'Vue.js'
       },
 
     }
@@ -58,9 +58,7 @@ export default {
 
 <style lang="sass" scoped>
 @import "~bulma"
-
-.nav-bg
-  background: #fff
+@import "~style"
 
 .navbar-burger.burger
   padding-top: 8px
@@ -70,11 +68,9 @@ export default {
   // margin: 0
 .dropdownhr
   margin: 5px
-// .header-bg
-//   background-color: #fff
-//   // height: 60.341px
-.navbar
-  // background-color: #fff
+
 .nav-fixed
   position: fixed
+.nav-bg
+  background: #fff
 </style>

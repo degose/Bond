@@ -73,11 +73,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  html
-    font-size: 100%
-    background: #fff
-  body
-    margin: 0
-  .leader
-    margin-left: 8px
+@import "~bulma"
+@import "~style"
+// html
+//   font-size: 100%
+//   background: #fff
+// body
+//   margin: 0
+.leader
+  margin-left: 8px
 </style>

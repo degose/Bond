@@ -99,7 +99,9 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+@import "~bulma"
+@import "~style"
 
 .group-info
   // position: fixed

@@ -42,7 +42,7 @@
                     | &nbsp;  
                     | &nbsp;  
                     span.icon
-                      img(src="../../assets/bond-img.svg")
+                      img(src="../assets/bond-img.svg")
                     | &nbsp;  
                     | 해당 그룹 이름
 
@@ -151,7 +151,7 @@
                     | &nbsp;  
                     | &nbsp;  
                     span.icon
-                      img(src="../../assets/bond-img.svg")
+                      img(src="../assets/bond-img.svg")
                     | &nbsp;  
                     | 해당 그룹 이름
                 .card-content
@@ -212,7 +212,7 @@
                   .content
                     figure
                       video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
-                        source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
+                        source(src='', type='video/webm; codecs="vp8, vorbis"')
                         track(src='', kind='captions', srclang='en', label='English captions', default='')
                   //- .content
                   //-   figure
@@ -323,7 +323,7 @@ export default {
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
 

@@ -325,7 +325,7 @@ export default {
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
 
@@ -359,9 +359,7 @@ export default {
 //   margin: 0 5px 30px 5px
 .dropdownhr
   margin: 5px
-// .header-bg
-//   background-color: #fff
-//   height: 60.341px
+
 
 
 

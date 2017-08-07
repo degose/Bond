@@ -164,6 +164,7 @@ export default {
 
 <style lang="sass" scoped>
 @import "~bulma"
+@import "~style"
 
 .grouplist
   // margin-top: 30px

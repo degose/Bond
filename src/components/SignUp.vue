@@ -42,28 +42,28 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .title
-    margin: 20px 0
-  .field
-    margin-top: 0
-    margin-bottom: 0
-    padding-bottom: 0
-  .nickname
-    margin-top: 20px
-  .is-grouped
-    margin-top: 20px
-  .label
-    overflow: hidden
-    position: absolute
-    clip: rect(0 0 0 0)
-    clip: rect(0, 0, 0, 0)
-    width: 1px
-    height: 1px
-    margin: -1px
-    border: 0
-    padding: 0
-  .button
-    margin-top: 20px
-  .box
-    background-color: hsla(0, 0%, 100%, .9)
+  // .title
+  //   margin: 20px 0
+  // .field
+  //   margin-top: 0
+  //   margin-bottom: 0
+  //   padding-bottom: 0
+  // .nickname
+  //   margin-top: 20px
+  // .is-grouped
+  //   margin-top: 20px
+  // .label
+  //   overflow: hidden
+  //   position: absolute
+  //   clip: rect(0 0 0 0)
+  //   clip: rect(0, 0, 0, 0)
+  //   width: 1px
+  //   height: 1px
+  //   margin: -1px
+  //   border: 0
+  //   padding: 0
+  // .button
+  //   margin-top: 20px
+  // .box
+  //   background-color: hsla(0, 0%, 100%, .9)
 </style>
