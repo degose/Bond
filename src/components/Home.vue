@@ -25,11 +25,16 @@
           .control.column.is-half.is-offset-one-quarter.has-text-centered
             a(href='#/SignUp')
               |       처음이신가요? 회원가입
+      //- main-footer
 </template>
 
 <script>
+import MainFooter from './MainFooter';
 export default {
   name: 'app',
+  components: {
+    MainFooter
+  },
 }
 </script>
 

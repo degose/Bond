@@ -1,13 +1,16 @@
 <template lang="pug">
   #app
-    div
-      router-view
-      app-nav
-      //- main-header
-      //- feed
-      //- group-list
+    div.wrapper
+      header
+      main
+        //- main-header
+        router-view
+        app-nav
+        //- feed
+        //- group-list
 
       main-footer
+
 </template>
 
 <script>
@@ -24,7 +27,7 @@ export default {
     MainHeader,
     Feed,
     GroupList,
-    MainFooter,
+    MainFooter
   },
   data () {
     return {
@@ -42,11 +45,26 @@ html,body
   // margin: 0
   // padding: 0
   min-height: 100vh
-#app 
-    // position: relative
-    // min-height: 100%
-.title
-    // margin-top: 20px
+.wrapper
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+  // height: 100vh
+  // justify-content: flex-start
+  // align-items: flex-start
+  // align-content: stretch
+  background: #eee
+header
+  flex: 0 1 auto
+  align-self: auto
+main
+  flex: 1 1 auto
+  // background: yellow
+  align-self: auto
+footer
+  flex: 0 1 auto
+  align-self: auto
+
 
 </style>
 

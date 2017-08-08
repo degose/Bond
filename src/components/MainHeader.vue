@@ -22,14 +22,14 @@
                   figure
                     img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
                 .navbar-dropdown
-                  a.navbar-item
+                  a.navbar-item(@click="console")
                     | 내 정보
-                  a.navbar-item
+                  a.navbar-item(@click="console")
                     | 내 글 보기
-                  a.navbar-item
+                  a.navbar-item(@click="console")
                     | 새 글 보기
                   hr.dropdownhr
-                  a.navbar-item
+                  a.navbar-item(@click="console")
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
     
@@ -51,6 +51,11 @@ export default {
         // label: 'Vue.js'
       },
 
+    }
+  },
+  methods: {
+    console() {
+      conlsole.log('눌렀다!');
     }
   }
 }
