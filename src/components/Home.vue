@@ -1,24 +1,30 @@
 <template lang="pug">
-    .container
-      .title.has-text-centered
+  .container
+    header.header
+      .columns.is-centered.is-mobile
+        .column.is-half.is-narrow.has-text-centered.logo
+          a(href="#")
+            picture
+              img(src='../assets/logo-01.svg', alt='큰본드', width=170, height=28)
+      //- .title.has-text-centered.is-mobile
           img(src="../assets/logo-01.svg")
-      .box.column.is-half.is-offset-one-quarter
-        h1.is-size-4.has-text-centered.title 로그인
-          .field
-            p.control.column.is-half.is-offset-one-quarter.email-login
-                button.column.btn-default.btn-login 이메일로 로그인
-          .field
-            p.control.column.is-half.is-offset-one-quarter.facebook-login
-                button.column.btn-default.btn-login 페이스북으로 로그인
-          .field
-            .control.column.is-half.is-offset-one-quarter
-              label.checkbox
-                input(type='checkbox')
-                |       로그인 상태유지
-            .control.column.is-half.is-offset-one-quarter
-              a(href='#/SignUp')
-                |       처음이신가요? 회원가입
-      
+    main
+      .columns.is-mobile.home-box-wrapper
+        .box.column.is-half.is-offset-one-quarter.home-box
+          h1.is-size-4.has-text-centered.title.home-heading 로그인
+          .control.column.is-half.is-offset-one-quarter.email-login
+            router-link(to='/Login', active-class='current-page')
+              button.column.btn-default.btn-login 이메일로 로그인
+          .control.column.is-half.is-offset-one-quarter.facebook-login
+            router-link(to='/#', active-class='current-page')
+              button.column.btn-default.btn-login 페이스북으로 로그인
+          //- .control.column.is-half.is-offset-one-quarter
+          //-   label.checkbox
+          //-     input(type='checkbox')
+          //-     |       로그인 상태유지
+          .control.column.is-half.is-offset-one-quarter.has-text-centered
+            a(href='#/SignUp')
+              |       처음이신가요? 회원가입
 </template>
 
 <script>
@@ -28,12 +34,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.title
-  margin: 20px 0
-.email-login
-  margin-top: 20px
-.field
-  margin-bottom: 0
-.box
-   background-color: hsla(0, 0%, 100%, .9)
+@import "~bulma"
+@import "~style"
+
+.logo
+  padding: 60px 0 90px 0
+
+.home-box
+  background-color: hsla(0, 0%, 100%, .9)
+  padding: 40px 0
+
 </style>
