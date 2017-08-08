@@ -34,6 +34,7 @@ import Password from './components/Password';
 // Main
 import GroupList from './components/GroupList';
 import SearchPage from './components/SearchPage';
+import InviteGroupModal from './components/InviteGroupModal';
 
 // Set
 
@@ -55,6 +56,7 @@ export const routes = [
     //Main
     {path: '/GroupList', component: GroupList},
     {path: '/SearchPage', component: SearchPage},
+    {path: '/InviteGroupModal', component: InviteGroupModal},
     
     //Set
 ]

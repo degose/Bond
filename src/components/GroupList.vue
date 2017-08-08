@@ -135,7 +135,6 @@
 // // import HeaderUser from './components/HeaderUser';
 // import Feed from './components/Feed/Feed';
 import MakingGroupModal from './MakingGroupModal';
-
 export default {
   name: 'app',
   components: {
@@ -165,11 +164,8 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .grouplist
   // margin-top: 30px
-
-
 // .navbar-burger.burger
 //   padding-top: 8px
 //   padding-left: 10px
@@ -184,7 +180,6 @@ export default {
 //   height: 60.341px
 // .navbar
 //   background-color: #fff
-
   // 도움 요청
 .column.is-3.is-hidden-mobile
   width: 238px
@@ -195,6 +190,4 @@ export default {
   color: #E91E63
 .grouplist-nav
   // margin-bottom: 200px
-
-
 </style>
