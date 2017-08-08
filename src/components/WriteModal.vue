@@ -58,7 +58,7 @@ export default {
   }
 }
 </script>
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
 
@@ -72,8 +72,8 @@ export default {
   width: 100%
   font-size: 1rem
 
-// .file-cta
-//   background: #fff
+.file-cta
+  // background: #fff
 
   
 </style>
