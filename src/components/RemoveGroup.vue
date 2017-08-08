@@ -1,6 +1,5 @@
 <template lang="pug">
-      //- 가입한 그룹의 feed
-      #app.container
+      .container
         .columns
           .column
             .tabs.is-centered
