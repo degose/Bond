@@ -10,7 +10,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
         .column.is-3
           .card
@@ -19,7 +19,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
         .column.is-3
@@ -29,7 +29,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
         .column.is-3
@@ -39,7 +39,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
       .columns
@@ -51,7 +51,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
         .column.is-3
@@ -61,7 +61,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
         .column.is-3
@@ -71,7 +71,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
         .column.is-3
@@ -81,7 +81,7 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
 
       .columns
@@ -92,24 +92,19 @@
                 img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 이름
                   // 도움 요청..
             
-        .column.is-3.is-hidden-mobile
+        .column.is-3
           .card
             .card-image.makegroup
-              a.figure.image
+              figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
                 a(@click="openModal")
-                  div.plusgroup
-                    i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
-                //- img.plusgroup
-                //- img.plusgroup(src='./assets/plusmark.svg' width=30 height=30 alt='makegroup')
-            //- svg.icon.icon--plus(viewbox='0 0 5 5', xmlns='http://www.w3.org/2000/svg')
-            //-   path(d='M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z')
+                  img(src='../assets/group-add-hoverx2.png', alt='Image')
             .card-content
               .media
-                .media-content
+                .media-content.has-text-centered
                   p.title.is-4 그룹 만들기
       nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
         a.pagination-previous(title='This is the first page', disabled='') Previous
@@ -165,22 +160,10 @@ export default {
 @import "~bulma"
 @import "~style"
 .grouplist
-  // margin-top: 30px
-// .navbar-burger.burger
-//   padding-top: 8px
-//   padding-left: 10px
-// .navhr
-//   margin: 0 5px 30px 5px
+
 .dropdownhr
   margin: 5px
-// .feed-box
-//   margin-bottom: 30px
-// .header-bg
-//   background-color: #fff
-//   height: 60.341px
-// .navbar
-//   background-color: #fff
-  // 도움 요청
+
 .column.is-3.is-hidden-mobile
   width: 238px
   height: 194px
@@ -189,5 +172,8 @@ export default {
   margin: 0 63px 0 63px
   color: #E91E63
 .grouplist-nav
+  margin-top: 100px
   // margin-bottom: 200px
+.plusgroup
+  background: yellow
 </style>
