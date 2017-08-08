@@ -1,4 +1,5 @@
 <template lang="pug">
+div
   .header-bg
     .container
       nav.navbar
@@ -6,7 +7,7 @@
           a.navbar-item(href="#")
             picture
               //- source.responsive-object(srcset='../../assets/logo-011.svg', media='max-width: 767px')
-              img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
+              img.is-hidden-mobile(src='../assets/logo-01.svg', alt='큰본드', width=112, height=28)
               img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
           .navbar-burger.burger(data-target="navMenuburger")
             figure

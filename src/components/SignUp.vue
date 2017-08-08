@@ -1,5 +1,4 @@
 <template lang="pug">
-  #app
     .container
       .title.has-text-centered
           img(src="../assets/logo-01.svg")
@@ -28,10 +27,8 @@
                 i.fa.fa-warning
           .field.is-grouped.is-grouped-centered
             .control
-              router-link(to='/#/Login', active-class='current-page')
                 button.button.is-primary 가입하기
             .control
-              router-link(to='/#', active-class='current-page')
                 button.button.is-link.is-right Cancel
 </template>
 

@@ -1,5 +1,4 @@
 <template lang="pug">
-  #app
     .container
       .title.has-text-centered
           img(src="../assets/logo-01.svg")
@@ -13,7 +12,6 @@
               input.input(type='password', placeholder='비밀번호를 입력해주세요.')
           .field
             p.control.column.is-half.is-offset-one-quarter
-              router-link(to='/#', active-class='current-page')
                 button.column.btn-fill.btn-login 로그인
           .field
             p.control.column.is-half.is-offset-one-quarter

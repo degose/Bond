@@ -82,9 +82,6 @@
               td
                 span.tag.is-rounded.is-primary 리더
 
-                  
-
-
 </template>
 
 <script>

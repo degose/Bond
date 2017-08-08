@@ -1,5 +1,4 @@
 <template lang="pug">
-  #app
     .container
       .title.has-text-centered
           img(src="../assets/logo-01.svg")
@@ -10,7 +9,6 @@
               input.input(type='email', placeholder='이메일을 입력해주세요.')
           .field
             p.control.column.is-half.is-offset-one-quarter
-              router-link(to='/#', active-class='current-page')
                 button.column.btn-fill.btn-login 보내기
           .field
             p.control.column.is-half.is-offset-one-quarter

@@ -1,7 +1,6 @@
 <template lang="pug">
-      //- 가입한 그룹의 feed
-      .container
-
+      div
+        //- 가입한 그룹의 feed
         .columns
           //- 그룹 정보 영역
           .column.is-3
