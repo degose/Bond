@@ -1,17 +1,6 @@
 <template lang="pug">
       //- 가입한 그룹의 feed
-      .container
-  
-        .columns
-          .column
-            .tabs.is-centered
-              ul
-                li.is-active
-                  a 전체글
-                li
-                  a 멤버
-
-
+      div.container
         .columns
           //- 그룹 정보 영역
           .column.is-3
@@ -336,9 +325,15 @@ export default {
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
+// .tab-wrapper
+//   margin: -30px
+
+// .navhr
+//   display: none
 
 .icon-more
   font-size: 1.5rem
@@ -350,23 +345,21 @@ export default {
   &:active
     color: $bond
 
-ul li
-  list-style: none
-  margin: 0
-  padding: 0
+// ul li
+//   list-style: none
+//   margin: 0
+//   padding: 0
 
 
 
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px
-.navhr
-  margin: 0 5px 30px 5px
+// .navhr
+//   margin: 0 5px 30px 5px
 .dropdownhr
   margin: 5px
-.header-bg
-  background-color: #fff
-  height: 60.341px
+
 
 
 
