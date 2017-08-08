@@ -12,6 +12,7 @@ nav.gnb
     router-link(to='/SignUp', tag='li', active-class='current-page') SignUp
     router-link(to='/GroupList', tag='li', active-class='current-page') GroupList
     router-link(to='/SearchPage', tag='li', active-class='current-page') SearchPage
+    router-link(to='/InviteGroupModal', tag='li', active-class='current-page') InviteGroupModal
 
 </template>
 
