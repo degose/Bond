@@ -1,8 +1,10 @@
 <template lang="pug">
   .wrapper
-    feed-menu
+    main-header
+    group-list
+    //- feed-menu
     //- my-group-feed
-    joined-group-feed
+    //- joined-group-feed
     //- none-joint-feed
     //- member-list
     
@@ -13,6 +15,8 @@
 </template>
 
 <script>
+import MainHeader from './MainHeader';
+import GroupList from './GroupList';
 import FeedMenu from './FeedMenu';
 import JoinedGroupFeed from './JoinedGroupFeed';
 import MyGroupFeed from './MyGroupFeed.vue';
@@ -23,6 +27,8 @@ import MemberList from './MemberList';
 export default {
   name: 'app',
   components: {
+    MainHeader,
+    GroupList,
     FeedMenu,
     JoinedGroupFeed,
     MyGroupFeed,

@@ -39,6 +39,8 @@
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
+
 .footer
   // position: absolute
   // bottom: 0
