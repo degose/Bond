@@ -307,7 +307,7 @@
 </template>
 
 <script>
-import WriteModal from './WriteModal';
+import WriteModal from '../Feed/WriteModal';
 export default {
   a: function name(params) {
     console.log('ㅇㅋ')

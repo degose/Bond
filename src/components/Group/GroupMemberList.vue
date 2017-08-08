@@ -106,18 +106,18 @@
                     
                     td
                       span.tag.is-rounded.is-primary 리더
-          InviteGroupModal(
+          invitation-modal(
             ref="my_modal"
             close_message="close lightbox"
           )
 </template>
 
 <script>
-import InviteGroupModal from './InviteGroupModal'
+import InvitationModal from '../Group/InvitationModal'
 
 export default {
   components:{
-    InviteGroupModal
+    InvitationModal
   },
   data() {
     return{

@@ -4,8 +4,8 @@
           .navbar-brand
             a.navbar-item(href="#")
               picture
-                img.is-hidden-mobile(src='../assets/logo-01.svg', alt='큰본드', width=112, height=28)
-                img.is-hidden-desktop.is-hidden-tablet(src='../assets/logo-02.svg', alt='작은본드')
+                img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
+                img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
             .navbar-burger.burger(data-target="navMenuburger")
               figure
                 img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
@@ -36,11 +36,9 @@
 </template>
 
 <script>
-import GroupList from './GroupList'
 
 export default {
   components:{
-    GroupList
   },
   data(){
     return{
