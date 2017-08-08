@@ -1,6 +1,5 @@
 <template lang="pug">
   //- 가입하지 않은 그룹의 feed
-  
   div.container
     .columns
     

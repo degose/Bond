@@ -48,7 +48,5 @@ html,body
 .title
     // margin-top: 20px
 
-
-
 </style>
 

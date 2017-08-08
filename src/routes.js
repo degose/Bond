@@ -23,7 +23,6 @@ import JoinedGroupFeed from './components/JoinedGroupFeed';
 import MemberList from './components/MemberList';
 import MyGroupFeed from './components/MyGroupFeed';
 import NoneJointFeed from './components/NoneJointFeed';
-import RemoveGroup from './components/RemoveGroup';
 
 // Home
 import Home from './components/Home';
@@ -45,7 +44,6 @@ export const routes = [
     {path: '/MemberList', component: MemberList},
     {path: '/MyGroupFeed', component: MyGroupFeed},
     {path: '/NoneJointFeed', component: NoneJointFeed},
-    {path: '/RemoveGroup', component: RemoveGroup},
 
     //Home
     {path: '/Home', component: Home},
