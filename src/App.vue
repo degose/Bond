@@ -1,11 +1,11 @@
 <template lang="pug">
   #app
-    div.wrapper
-      header
-      main
+    div
+      //- header
+      //- main
         //- main-header
-        router-view
-        app-nav
+      router-view
+      app-nav
         //- feed
         //- group-list
 
@@ -44,7 +44,7 @@ html,body
   // font-size: 100%
   // margin: 0
   // padding: 0
-  min-height: 100vh
+  // min-height: 100vh
 .wrapper
   display: flex
   flex-direction: column
@@ -59,11 +59,10 @@ header
   align-self: auto
 main
   flex: 1 1 auto
-  // background: yellow
   align-self: auto
 footer
-  flex: 0 1 auto
-  align-self: auto
+  // flex: 0 1 auto
+  // align-self: auto
 
 
 </style>
