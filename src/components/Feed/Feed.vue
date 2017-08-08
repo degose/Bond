@@ -4,9 +4,9 @@
     group-list
     //- feed-menu
     //- my-group-feed
-    //- joined-group-feed
+    //- joint-group-feed
     //- none-joint-feed
-    //- member-list
+    //- group-member-list
     
     
     
@@ -15,25 +15,25 @@
 </template>
 
 <script>
-import MainHeader from './MainHeader';
-import GroupList from './GroupList';
-import FeedMenu from './FeedMenu';
-import JoinedGroupFeed from './JoinedGroupFeed';
-import MyGroupFeed from './MyGroupFeed.vue';
-import NoneJointFeed from './NoneJointFeed';
-import MemberList from './MemberList';
+import MainHeader from '../Header-Footer/MainHeader';
+import MyGroup from '../Main//MyGroup';
+import FeedMenu from '../Feed/FeedMenu';
+import JointGroupFeed from '../Feed/JointGroupFeed';
+import MyGroupFeed from '../Feed/MyGroupFeed';
+import NoneJointFeed from '../Feed/NoneJointGroupFeed';
+import GroupMemberList from '../Group/GroupMemberList';
 
 
 export default {
   name: 'app',
   components: {
     MainHeader,
-    GroupList,
+    MyGroup,
     FeedMenu,
-    JoinedGroupFeed,
+    JointGroupFeed,
     MyGroupFeed,
     NoneJointFeed,
-    MemberList,
+    GroupMemberList,
     
   },
 

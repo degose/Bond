@@ -5,7 +5,7 @@
         .column.is-half.is-narrow.has-text-centered.logo
           a(href="#")
             picture
-              img(src='../assets/logo-01.svg', alt='큰본드', width=170, height=28)
+              img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
       //- .title.has-text-centered.is-mobile
           img(src="../assets/logo-01.svg")
     main
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import MainFooter from './MainFooter';
+import MainFooter from '../Header-Footer/MainFooter';
 export default {
   name: 'app',
   components: {

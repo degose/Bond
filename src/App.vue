@@ -7,7 +7,7 @@
       router-view
       app-nav
         //- feed
-        //- group-list
+        //- my-group
 
       main-footer
 
@@ -15,10 +15,10 @@
 
 <script>
 import Navigation from './components/Navigation';
-import MainHeader from './components/MainHeader';
-import Feed from './components/Feed';
-import GroupList from './components/GroupList';
-import MainFooter from './components/MainFooter';
+import MainHeader from './components/Header-Footer/MainHeader';
+import Feed from './components/Feed/Feed';
+import MyGroup from './components/Main/MyGroup';
+import MainFooter from './components/Header-Footer/MainFooter';
 
 export default {
   name: 'app',
@@ -26,7 +26,7 @@ export default {
     appNav: Navigation,
     MainHeader,
     Feed,
-    GroupList,
+    MyGroup,
     MainFooter
   },
   data () {
@@ -40,7 +40,7 @@ export default {
 @import "~bulma"
 @import "~style"
 
-html,body
+body
   // font-size: 100%
   // margin: 0
   // padding: 0
@@ -54,13 +54,13 @@ html,body
   // align-items: flex-start
   // align-content: stretch
   background: #eee
-header
-  flex: 0 1 auto
-  align-self: auto
-main
-  flex: 1 1 auto
-  align-self: auto
-footer
+// header
+//   flex: 0 1 auto
+//   align-self: auto
+// main
+//   flex: 1 1 auto
+//   align-self: auto
+// footer
   // flex: 0 1 auto
   // align-self: auto
 

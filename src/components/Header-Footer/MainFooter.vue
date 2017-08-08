@@ -5,7 +5,7 @@
         .content.has-text-centered
           a(href="#")
             picture
-              img(src='../assets/logo-01.svg', alt='큰본드', width=70, height=28)
+              img(src='../../assets/logo-01.svg', alt='큰본드', width=70, height=28)
                 //- p
                 //-   strong Bond
           | &nbsp;
@@ -40,8 +40,8 @@
 
 
 .footer
-  position: absolute
-  bottom: 0
+  // position: absolute
+  // bottom: 0
   // width: 100%
   background-color: hsla(0, 0%, 100%, .3)
   width: 100%

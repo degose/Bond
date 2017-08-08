@@ -101,7 +101,7 @@
             .card-image.makegroup
               figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
                 a(@click="openModal")
-                  img(src='../assets/group-add-hoverx2.png', alt='Image')
+                  img(src='../../assets/group-add-hoverx2.png', alt='Image')
             .card-content
               .media
                 .media-content.has-text-centered
@@ -125,17 +125,10 @@
 </template>
 
 <script>
-// import Vue from 'Vue';
-// import Home from './components/Home/Home';
-// // import HeaderUser from './components/HeaderUser';
-// import Feed from './components/Feed/Feed';
-import MakingGroupModal from './MakingGroupModal';
+import MakingGroupModal from '../Group/MakingGroupModal';
 export default {
   name: 'app',
   components: {
-    // HeaderMain,
-    // Home,
-    // Feed,
     MakingGroupModal
   },
   data () {
@@ -143,8 +136,8 @@ export default {
       vue: {
         // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
         // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        path: './src/assets/logo.png',
-        label: 'Vue.js'
+        // path: './src/assets/logo.png',
+        // label: 'Vue.js'
       }
     };
   },

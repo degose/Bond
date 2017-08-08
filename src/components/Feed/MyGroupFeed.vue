@@ -41,7 +41,7 @@
                     | &nbsp;  
                     | &nbsp;  
                     span.icon
-                      img(src="../assets/bond-img.svg")
+                      img(src="../../assets/bond-img.svg")
                     | &nbsp;  
                     | 해당 그룹 이름
 
@@ -150,7 +150,7 @@
                     | &nbsp;  
                     | &nbsp;  
                     span.icon
-                      img(src="../assets/bond-img.svg")
+                      img(src="../../assets/bond-img.svg")
                     | &nbsp;  
                     | 해당 그룹 이름
                 .card-content
@@ -304,7 +304,7 @@
 </template>
 
 <script>
-import WriteModal from './WriteModal';
+import WriteModal from '../Feed/WriteModal';
 export default {
   a: function name(params) {
     console.log('ㅇㅋ')
