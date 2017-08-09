@@ -31,7 +31,7 @@
                       i.fa.fa-check
                 .control.column.is-half.is-offset-one-quarter
                   router-link(to='/MainPage', active-class='current-page')
-                    button.column.btn-fill.btn-login 로그인
+                    button.column.btn-fill.btn-login(type="submit") 로그인
             .field
               .control.column.is-half.is-offset-one-quarter.has-text-centered
                 a(href='#/FindPassword').is-link.home-link.column 비밀번호를 잊으셨나요?
