@@ -15,26 +15,42 @@
               fieldset.field
             .column.is-half.is-offset-one-quarter.nickname
               .control
-                input.input(type='text', placeholder='닉네임을 설정해주세요.')
+                input.input(type='text', v-model="signup.nickname" placeholder='닉네임을 설정해주세요.')
               p.help.is-dark 해당 닉네임은 사용가능합니다.
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
-                input.input.is-primary(type='text', placeholder='이름을 입력해주세요.')
+                input.input(type='text', v-model="signup.name" placeholder='이름을 입력해주세요.')
                 span.icon.is-small.is-left
                   i.fa.fa-user
                 span.icon.is-small.is-right
                   i.fa.fa-check
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
-                input.input.is-primary(type='text', placeholder='이메일을 입력해주세요.')
+                input.input(type='text', v-model="signup.email" placeholder='이메일을 입력해주세요.')
                 span.icon.is-small.is-left
                   i.fa.fa-envelope
                 span.icon.is-small.is-right
                   i.fa.fa-warning
+            .column.is-half.is-offset-one-quarter
+              .control.has-icons-left.has-icons-right
+                input.input(type='text', v-model="signup.password1" placeholder='비밀번호')
+                span.icon.is-small.is-left
+                  i.fa.fa-envelope
+                span.icon.is-small.is-right
+                  i.fa.fa-warning
+            .column.is-half.is-offset-one-quarter
+              .control.has-icons-left.has-icons-right
+                input.input(type='text', v-model="signup.password2" placeholder='비밀번호 확인')
+                span.icon.is-small.is-left
+                  i.fa.fa-envelope
+                span.icon.is-small.is-right
+                  i.fa.fa-warning
+
+
             .field.column.is-grouped.is-grouped-centered
               .control
-                router-link(to='/#/Login', active-class='current-page')
-                  button.button.is-primary 가입하기
+                //- router-link(to='/#/Login', active-class='current-page')
+                button.button.is-primary(type="button" @click="signupSubmit") 가입하기
               .control
                 router-link(to='/#', active-class='current-page')
                   button.button.is-link.is-right Cancel
@@ -43,6 +59,24 @@
 <script>
 export default {
   name: 'app',
+  data(){
+    return {
+      signup: {
+        nickname: '',
+        name: '',
+        email: '',
+        password1: '',
+        password2: ''
+      }
+    }
+  },
+  methods: {
+    signupSubmit(){
+      this.$http.post('https://bond-43bc3.firebaseio.com/signup.json', this.signup)
+                .then(response => console.log(response))
+                .catch(error => console.log(error.message));
+    }
+  }
 }
 </script>
 
@@ -66,7 +100,8 @@ export default {
 fieldset
   border: 0 none
   margin: 0
-
+.container
+  min-height: 87vh
 
 
 </style>

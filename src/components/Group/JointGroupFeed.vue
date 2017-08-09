@@ -1,59 +1,68 @@
 <template lang="pug">
-    div
-      main-header
-      .container
-        //- 가입한 그룹의 feed
+      //- 가입한 그룹의 feed
+      div.container.page-wrapper
         .columns
           //- 그룹 정보 영역
           .column.is-3
-            .card-content
-              //- 가입하기 버튼
-              .columns.is-mobile
-                button.column.btn-default.btn-fill 그룹 만들기
-            hr
-            .card-content
-              .columns.is-mobile
-                h3.title.is-5 내 그룹
-                  |  · 
-                  | 5
-            .card-content
-              a.columns.is-mobile.group-small-list-group
-                article.media.group-small-list
-                  figure.media-left
-                    p.image.is-32x32
-                      img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
-                p 안녕
-              a.columns.is-mobile
-                article.media.group-small-list
-                  figure.media-left
-                    p.image.is-32x32
-                      img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
-                p 안녕
+            .card
+              .card-image
+                figure.image.is-16by9
+                  img(src='http://bulma.io/images/placeholders/1280x960.png', alt='Image')
+              .card-content
+                article.media
+                  .media-content
+                    p.title.is-4 그룹 이름
+                    div
+                      span 멤버 5
+                      |  · 
+                      a(aria-label="open leave group modal" @click="openLeaveGroupModal") 
+                        span.icon.is-small
+                          i.fa.fa-cog(aria-hidden='true')
+                        | 그룹 설정
+                .content
+                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  | Phasellus nec iaculis mauris. 
 
 
           
           
           //- feed 영역
           .column.is-9
-
-            .feed-box
+            //- 글쓰기 영역
+            div.feed-box
               .card
-                header.card-header
-                  a.card-header-title
-                    | &nbsp;  
-                    | &nbsp;  
-                    span.icon
-                      img(src="../../assets/bond-img.svg")
-                    | &nbsp;  
-                    | 해당 그룹 이름
+                a(aria-label="open write modal" @click="openWriteModal")
+                  .card-content
+                    p 소식을 남겨주세요.
+                    | &nbsp; 
+                  footer.card-footer
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-picture-o
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-play-circle-o
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-folder-open-o
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-pencil
+                      p.is-hidden-mobile 
+                        | &nbsp; 
+                        |글쓰기
+                
 
+
+            div.feed-box
+              .card
                 .card-content
                   article.media
                     .media-left
                       figure.image.is-64x64.img-user
                         img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
                     .media-content
-                      p.title.is-4.user-name 만순이
+                      p.title.is-4.user-name John Smith
                       p.subtitle.is-6 11:09 PM - 1 Jan 2016
 
 
@@ -147,14 +156,6 @@
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card
-                header.card-header
-                  a.card-header-title
-                    | &nbsp;  
-                    | &nbsp;  
-                    span.icon
-                      img(src="../../assets/bond-img.svg")
-                    | &nbsp;  
-                    | 해당 그룹 이름
                 .card-content
                   article.media
                     .media-left
@@ -197,14 +198,12 @@
                       img(src='http://bulma.io/images/placeholders/480x320.png')
 
 
-
                   //- 동영상
                   .content
                     figure
                       video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
-                        source(src='', type='video/webm; codecs="vp8, vorbis"')
+                        source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
                         track(src='', kind='captions', srclang='en', label='English captions', default='')
-
 
 
 
@@ -245,12 +244,12 @@
                   article.media
                     .media-content.columns.is-mobile
                       .field.column.is-10.is-3-mobile
-                        p.control
-                          textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.')
+                        .control
+                          textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment")
                       .field.column.is-2.is-1-mobile
-                        p.control
-                          button.btn-comment.btn-default.is-hidden-mobile 댓글 달기
-                          button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet
+                        .control
+                          button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit") 댓글 달기
+                          button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit")
                             span.icon
                               i.fa.fa-pencil
                   
@@ -285,22 +284,43 @@
                               a.dropdown-item(href='#')
                                 | 댓글 삭제
                             
+        write-modal(close_message="close lightbox" ref='write_modal')
+        leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
 
         
 </template>
 
 <script>
-import MainHeader from '../Header-Footer/MainHeader';
+import WriteModal from './WriteModal';
+import LeaveGroupModal from './LeaveGroupModal';
 export default {
-  a: function name(params) {
-    console.log('ㅇㅋ')
-    
+  name: 'app',
+  data() {
+    return {
+      write_comment: ''
+    }
   },
   components: {
-    MainHeader
+    WriteModal,
+    LeaveGroupModal
   },
   methods: {
-  } 
+    openWriteModal(){
+      this.$refs.write_modal.visible = true;
+    },
+    openLeaveGroupModal(){
+      this.$refs.leave_group_modal.visible = true;
+    },
+    writeCommentSubmit(){
+      // console.log(this.$http);
+      // console.log(this.write_comment);
+      this.$http.post('', this.write_comment).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.error(error.message);
+      });
+    } 
+  }
 }
 </script>
 
@@ -308,6 +328,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
+.page-wrapper
+  min-height: 87vh
+
 
 .icon-more
   font-size: 1.5rem
@@ -321,16 +345,14 @@ export default {
 
 
 
+
+.navbar-burger.burger
+  padding-top: 8px
+  padding-left: 10px
+
 .dropdownhr
   margin: 5px
 
-.group-img-small
-  border-radius: 10%
-
-.group-small-list-group
-  line-height: 38px
-.group-small-list
-  margin-bottom: 8px
 
 
 

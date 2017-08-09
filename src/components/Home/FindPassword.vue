@@ -51,4 +51,6 @@ fieldset
 
 .home-link
   padding: 5px 0 0 0
+.container
+  min-height: 87vh
 </style>

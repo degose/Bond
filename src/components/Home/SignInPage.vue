@@ -28,17 +28,19 @@
                     span.icon.is-small.is-right
                       i.fa.fa-check
                 .control.column.is-half.is-offset-one-quarter
-                  router-link(to='/#', active-class='current-page')
+                  router-link(to='/MainPage', active-class='current-page')
                     button.column.btn-fill.btn-login 로그인
             .field
               .control.column.is-half.is-offset-one-quarter.has-text-centered
-                a(href='#/Password').is-link.home-link.column 비밀번호를 잊으셨나요?
+                a(href='#/FindPassword').is-link.home-link.column 비밀번호를 잊으셨나요?
                 a(href='#/SignUp').is-link.home-link.column 처음이신가요? 회원가입
 </template>
 
 <script>
 export default {
   name: 'app',
+  components: {
+  },
 }
 </script>
 
@@ -65,6 +67,8 @@ fieldset
 
 .home-link
   padding: 5px 0 0 0
+.container
+  min-height: 87vh
   
 
 </style>

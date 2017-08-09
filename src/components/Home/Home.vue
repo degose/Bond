@@ -6,14 +6,12 @@
           a(href="#")
             picture
               img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
-      //- .title.has-text-centered.is-mobile
-          img(src="../assets/logo-01.svg")
     main
       .columns.is-mobile.home-box-wrapper
         .box.column.is-half.is-offset-one-quarter.home-box
           h1.is-size-4.has-text-centered.title.home-heading 로그인
           .control.column.is-half.is-offset-one-quarter.email-login
-            router-link(to='/Login', active-class='current-page')
+            router-link(to='/SignInPage', active-class='current-page')
               button.column.btn-default.btn-login 이메일로 로그인
           .control.column.is-half.is-offset-one-quarter.facebook-login
             router-link(to='/#', active-class='current-page')
@@ -23,7 +21,8 @@
           //-     input(type='checkbox')
           //-     |       로그인 상태유지
           .control.column.is-half.is-offset-one-quarter.has-text-centered
-            a(href='#/SignUp')
+            //- a(href='/SignUpPage')
+            router-link(to="/SignUpPage")
               |       처음이신가요? 회원가입
       //- main-footer
 </template>
@@ -48,5 +47,7 @@ export default {
 .home-box
   background-color: hsla(0, 0%, 100%, .9)
   padding: 40px 0
+.container
+  min-height: 87vh
 
 </style>

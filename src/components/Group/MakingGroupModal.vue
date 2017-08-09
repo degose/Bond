@@ -20,14 +20,14 @@
         hr
         .field
           .control
-            input.input.is-primary(type='text', placeholder='그룹 이름을 설정해주세요')
-            textarea.input(type="text" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
+            input.input.is-primary(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요')
+            textarea.input(type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
             //- columns 
             //- columns 
             //- textarea.is-12
           // Content ...
       footer.modal-card-foot
-        button.button.is-primary 그룹 만들기
+        button.button.is-primary(type="button" @click="createGroup") 그룹 만들기
         button.button(@click="closeModal") 취소
 
 </template>
@@ -46,12 +46,24 @@ export default {
   },
   data() {
     return {
-      visible: this.is_visible
+      visible: this.is_visible,
+      group: {
+        name: '',
+        description: ''
+      }
     }
   },
   methods: {
     closeModal(){
       this.visible = false;
+    },
+    createGroup(){
+      // this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group.json', this.group)
+      //           .then(response => console.log(response))
+      //           .catch(error => console.log(error.message));
+      this.$http.post('https://bond-43bc3.firebaseio.com/group.json', this.group)
+                .then(response => console.log(response))
+                .catch(error => console.log(error.message));
     }
   }
 }
