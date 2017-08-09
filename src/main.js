@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import App from './App';
 import {routes} from './routes';
+import {store} from './store';
+
 // import axios from 'axios';
 
 Vue.use(VueRouter);
@@ -54,5 +56,7 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
+
   render: h => h(App)
 });
