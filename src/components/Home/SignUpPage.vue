@@ -1,4 +1,6 @@
 <template lang="pug">
+  div
+    background
     .container
       header.header
         .columns.is-centered.is-mobile
@@ -57,6 +59,7 @@
 </template>
 
 <script>
+import Background from '../Background';
 export default {
   name: 'app',
   data(){
@@ -69,6 +72,9 @@ export default {
         password2: ''
       }
     }
+  },
+  components:{
+    Background
   },
   methods: {
     signupSubmit(){
@@ -97,7 +103,7 @@ export default {
   margin-bottom: 0
 
 .home-box
-  background-color: hsla(0, 0%, 100%, .9)
+  background-color: hsla(0, 0%, 100%, .7)
   padding: 40px 0
 
 fieldset
