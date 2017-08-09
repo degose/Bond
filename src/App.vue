@@ -8,7 +8,7 @@
       //- joint-group
       //- feed
 
-    main-footer
+    //- main-footer
 
 </template>
 
@@ -32,7 +32,7 @@ export default {
     JointGroup,
     Feed,
     MyGroup,
-    MainFooter
+    MainFooter,
   },
   data () {
     return {

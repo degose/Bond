@@ -1,4 +1,6 @@
 <template lang="pug">
+div
+  background
   .container
     header.header
       .columns.is-centered.is-mobile
@@ -28,11 +30,11 @@
 </template>
 
 <script>
-import MainFooter from '../Header-Footer/MainFooter';
+import Background from '../Background';
 export default {
   name: 'app',
   components: {
-    MainFooter
+    Background
   },
 }
 </script>
@@ -45,7 +47,7 @@ export default {
   padding: 60px 0 90px 0
 
 .home-box
-  background-color: hsla(0, 0%, 100%, .9)
+  background-color: hsla(0, 0%, 100%, .7)
   padding: 40px 0
 .container
   min-height: 87vh
