@@ -72,9 +72,12 @@ export default {
   },
   methods: {
     signupSubmit(){
-      this.$http.post('https://bond-43bc3.firebaseio.com/signup.json', this.signup)
+      this.$http.post('https://bond.ap-northeast-2.elasticbeanstalk.com/api/signup', this.signup)
                 .then(response => console.log(response))
                 .catch(error => console.log(error.message));
+      // this.$http.post('https://bond-43bc3.firebaseio.com/signup.json', this.signup)
+      //           .then(response => console.log(response))
+      //           .catch(error => console.log(error.message));
     }
   }
 }
