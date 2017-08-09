@@ -1,12 +1,9 @@
 <template lang="pug">
   .wrapper
     main-header
-    group-list
-    //- feed-menu
+    //- router-view
     //- my-group-feed
-    //- joint-group-feed
-    //- none-joint-feed
-    //- group-member-list
+    none-joint-feed
     
     
     
@@ -17,11 +14,9 @@
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
 import MyGroup from '../Main//MyGroup';
-import FeedMenu from '../Feed/FeedMenu';
-import JointGroupFeed from '../Feed/JointGroupFeed';
 import MyGroupFeed from '../Feed/MyGroupFeed';
+import MyWriteFeed from '../Feed/MyWriteFeed';
 import NoneJointFeed from '../Feed/NoneJointGroupFeed';
-import GroupMemberList from '../Group/GroupMemberList';
 
 
 export default {
@@ -29,11 +24,9 @@ export default {
   components: {
     MainHeader,
     MyGroup,
-    FeedMenu,
-    JointGroupFeed,
     MyGroupFeed,
+    MyWriteFeed,
     NoneJointFeed,
-    GroupMemberList,
     
   },
 

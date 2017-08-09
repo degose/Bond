@@ -1,6 +1,6 @@
 <template lang="pug">
   //- 가입한 그룹의 feed
-  .container
+  .container.page-wrapper
     .columns
       //- 그룹 정보 영역
       .column.is-3
@@ -133,6 +133,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "~bulma"
+@import "~style"
+
+.page-wrapper
+  min-height: 87vh
+
 .user-img
   border-radius: 50%
 .namelist,

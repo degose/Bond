@@ -8,7 +8,7 @@
 
       section.modal-card-body
         .card-content
-          textarea.write-text-modal(placeholder='소식을 남겨주세요.', rows='10')
+          textarea.write-text-modal(placeholder='소식을 남겨주세요.', rows='10' v-model="write.task")
         //- footer.card-footer
       footer.card-footer
         .file.card-footer-item
@@ -27,7 +27,7 @@
             span
               i.fa.fa-folder-open-o
       footer.modal-card-foot
-        button.button.is-primary.is-3 글쓰기
+        button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-3(:aria-label="close_message" @click="closeModal") 취소
 
     button.modal-close(:aria-label="close_message" @click="closeModal")
@@ -36,6 +36,7 @@
 <script>
 
 export default {
+  name: 'app',
   props: {
     close_message: {
       type: String,
@@ -48,12 +49,28 @@ export default {
   },
   data() {
     return {
-      visible: this.is_visible
+      visible: this.is_visible,
+      write: {
+        done: false,
+        task: ''
+      }
     }
   },
   methods: {
     closeModal(){
       this.visible = false;
+    },
+    writeTextSubmit(){
+      // console.log(this.write_text);
+      // this.$http.post('https://bond-43bc3.firebaseio.com/write_text.json', this.write_text.task).then(response => {
+      //   console.log(response);
+      // }).catch((error) => {
+      //   console.error(error.message);
+      //   console.log('실패');
+      // })
+      this.$http.post('https://bond-43bc3.firebaseio.com/write.json', this.write)
+                .then(response => console.log(response))
+                .catch(error => console.log(error.message));
     }
   }
 }
