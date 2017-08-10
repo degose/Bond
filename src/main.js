@@ -1,14 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import VueResource from 'vue-resource';
+// import VueResource from 'vue-resource';
 import App from './App';
 import {routes} from './routes';
 import {store} from './store';
+import axios from 'axios';
 
-// import axios from 'axios';
 
 Vue.use(VueRouter);
-Vue.use(VueResource);
+// Vue.use(VueResource);
+Vue.prototype.$http = axios
 
 // Global Settings
 // firebase 주소값(App.vue 에서 get,post 주소값은 생략 가능)
