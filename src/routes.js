@@ -41,9 +41,23 @@ export const routes = [
     // {path: '/GroupMemberList', component: GroupMemberList},
 
     //Home
-    {path: '/', component: Home},
-    {path: '/SignInPage', component: SignInPage},
+    {
+      path: '/', 
+      component: Home,
+      // beforeEnter(to, from, next){
+      //   let tk = window.localStorage.getItem('token');
+      //   if (tk) {
+      //     next('/MainPage');
+      //   } else {
+      //     next();
+      //   }
+      // },
+    },
     {path: '/FindPassword', component: FindPassword},
+    {
+      path: '/SignInPage', 
+      component: SignInPage,
+    },
     {path: '/SignUpPage', component: SignUpPage},
 
     //Main
