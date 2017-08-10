@@ -68,7 +68,7 @@ export default {
       //   console.error(error.message);
       //   console.log('실패');
       // })
-      this.$http.post('https://bond-43bc3.firebaseio.com/write.json', this.write)
+      this.$http.post(this.$store.state.api_write, this.write)
                 .then(response => console.log(response))
                 .catch(error => console.log(error.message));
     }
