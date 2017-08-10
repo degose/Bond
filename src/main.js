@@ -5,7 +5,6 @@ import axios from 'axios';
 import App from './App';
 import {routes} from './routes';
 import {store} from './store';
-import axios from 'axios';
 
 
 Vue.use(VueRouter);
