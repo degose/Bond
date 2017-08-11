@@ -22,3 +22,13 @@ export default {
   
 }
 </script>
+
+<style lang="sass" scoped>
+@import "~bulma"
+@import "~style"
+
+
+body
+  background: #eee
+
+</style>

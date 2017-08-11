@@ -142,6 +142,9 @@ export default {
 @import "~bulma"
 @import "~style"
 
+body
+  background: #eee
+
 .page-wrapper
   min-height: 87vh
 
