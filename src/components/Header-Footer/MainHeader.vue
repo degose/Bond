@@ -70,9 +70,12 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import "~bulma"
 @import "~style"
+
+body
+  background: #eee
 
 .navbar-burger.burger
   padding-top: 8px
