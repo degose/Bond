@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    background
+    //- background
     .container
       header.header
         .columns.is-centered.is-mobile
@@ -49,7 +49,6 @@ export default {
   },
   data(){
     return {
-      // is_confirm: false
       signin: {
         email: '',
         password: ''

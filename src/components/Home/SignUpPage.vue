@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    background
+    //- background
     .container
       header.header
         .columns.is-centered.is-mobile
@@ -28,21 +28,21 @@
                   i.fa.fa-check
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
-                input.input(type='text', v-model="signup.email" placeholder='이메일을 입력해주세요.')
+                input.input(type='email', v-model="signup.email" placeholder='이메일을 입력해주세요.')
                 span.icon.is-small.is-left
                   i.fa.fa-envelope
                 span.icon.is-small.is-right
                   i.fa.fa-warning
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
-                input.input(type='text', v-model="signup.password1" placeholder='비밀번호')
+                input.input(type='password', v-model="signup.password1" placeholder='비밀번호')
                 span.icon.is-small.is-left
                   i.fa.fa-envelope
                 span.icon.is-small.is-right
                   i.fa.fa-warning
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
-                input.input(type='text', v-model="signup.password2" placeholder='비밀번호 확인')
+                input.input(type='password', v-model="signup.password2" placeholder='비밀번호 확인')
                 span.icon.is-small.is-left
                   i.fa.fa-envelope
                 span.icon.is-small.is-right
