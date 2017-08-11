@@ -297,10 +297,6 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 export default {
-  a: function name(params) {
-    console.log('ㅇㅋ')
-    
-  },
   components: {
     MainHeader,
     MainFooter,
