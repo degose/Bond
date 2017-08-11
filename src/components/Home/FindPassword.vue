@@ -5,7 +5,7 @@
       header.header
         .columns.is-centered.is-mobile
           .column.is-half.is-narrow.has-text-centered.logo
-            a(href="#")
+            router-link(to="/")
               picture
                 img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
 
@@ -27,8 +27,8 @@
                     button.column.btn-fill.btn-login 보내기
             .field
               .control.column.is-half.is-offset-one-quarter.has-text-centered
-                a(href='#').is-link.home-link.column 비밀번호가 생각나셨나요? 로그인
-                a(href='#/SignUp').is-link.home-link.column 처음이신가요? 회원가입
+                router-link(to='/SignIn').is-link.home-link.column 비밀번호가 생각나셨나요? 로그인
+                router-link(to='/SignUpPage').is-link.home-link.column 처음이신가요? 회원가입
 </template>
 
 <script>

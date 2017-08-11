@@ -102,6 +102,9 @@ export default {
 @import "~bulma"
 @import "~style"
 
+body
+  background: #eee
+
 .group-info
   // position: fixed
 
