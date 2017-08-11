@@ -309,6 +309,9 @@ export default {
 @import "~bulma"
 @import "~style"
 
+body
+  background: #eee
+
 .icon-more
   font-size: 1.5rem
   color: $grey

@@ -62,7 +62,11 @@ export default {
       //           .then(response => console.log(response))
       //           .catch(error => console.log(error.message));
       this.$http.post('https://bond-43bc3.firebaseio.com/group.json', this.group)
-                .then(response => console.log(response))
+                .then(
+                  response => {
+                    console.log(response);
+                    this.$router.push('/MainPage');
+                  })
                 .catch(error => console.log(error.message));
     }
   }

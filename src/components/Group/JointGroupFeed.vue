@@ -293,6 +293,7 @@
 <script>
 import WriteModal from './WriteModal';
 import LeaveGroupModal from './LeaveGroupModal';
+
 export default {
   name: 'app',
   data() {
@@ -328,6 +329,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
+
+body
+  background: #eee
 
 .page-wrapper
   min-height: 87vh

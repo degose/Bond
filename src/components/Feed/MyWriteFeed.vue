@@ -286,19 +286,24 @@
                                 | 댓글 삭제
                             
         //- write-modal(close_message="close lightbox" ref='write_modal')
+      
+      main-footer
 
         
+
 </template>
 
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
+import MainFooter from '../Header-Footer/MainFooter';
 export default {
   a: function name(params) {
     console.log('ㅇㅋ')
     
   },
   components: {
-    MainHeader
+    MainHeader,
+    MainFooter,
   },
   methods: {
   } 
@@ -306,9 +311,12 @@ export default {
 </script>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import "~bulma"
 @import "~style"
+
+body
+  background: #eee
 
 .icon-more
   font-size: 1.5rem
