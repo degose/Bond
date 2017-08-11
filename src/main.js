@@ -3,9 +3,8 @@ import VueRouter from 'vue-router';
 // import VueResource from 'vue-resource';
 import axios from 'axios';
 import App from './App';
-import {routes} from './routes';
-import {store} from './store';
-
+import { routes } from './routes';
+import { store } from './store';
 
 Vue.use(VueRouter);
 // Vue.use(VueResource);
@@ -37,8 +36,6 @@ Vue.prototype.$http = axios;
 //   });
 // });
 
-
-
 // methods: {
 //   temp: () => {
 //     this.$http.get('api').then(res=>{
@@ -52,7 +49,6 @@ Vue.prototype.$http = axios;
 //     });
 //   }
 // }
-
 
 const router = new VueRouter({
   mode: 'history',
