@@ -36,114 +36,6 @@
           //- feed 영역
           .column.is-9
 
-            .feed-box
-              .card
-                header.card-header
-                  a.card-header-title
-                    | &nbsp;  
-                    | &nbsp;  
-                    span.icon
-                      img(src="../../assets/bond-img.svg")
-                    | &nbsp;  
-                    | 해당 그룹 이름
-
-                .card-content
-                  article.media
-                    .media-left
-                      figure.image.is-64x64.img-user
-                        img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-                    .media-content
-                      p.title.is-4.user-name 만순이
-                      p.subtitle.is-6 11:09 PM - 1 Jan 2016
-
-
-                    //- 드롭다운 버튼
-                    .dropdown.is-right
-                      .dropdown-trigger
-                        button(aria-haspopup='true', aria-controls='dropdown-menu3')
-                          span.icon
-                            i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu')
-                        .dropdown-content
-                          ul
-                            li
-                              a.dropdown-item(href='#')
-                                | 글 수정
-                            li
-                              a.dropdown-item(href='#')
-                                | 글 삭제
-                          
-                  .content
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-
-                
-                //- 좋아요, 댓글 개수
-                footer.card-footer
-                  a(href='#').card-footer-item
-                    span
-                      i.fa.fa-heart
-                        | &nbsp;  
-                        | 5
-                  a(href='#').card-footer-item
-                    | 댓글
-                    | 5
-                    | &nbsp; 
-                    span.icon.is-small
-                      i.fa.fa-angle-down(aria-hidden='true')
-                      
-
-              //- 댓글 작성 영역
-              .card
-                .card-content
-                  article.media
-                    .media-content.columns.is-mobile
-                      .field.column.is-10.is-3-mobile
-                        p.control
-                          textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.')
-                      .field.column.is-2.is-1-mobile
-                        p.control
-                          button.btn-comment.btn-default.is-hidden-mobile 댓글 달기
-                          button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet
-                            span.icon
-                              //- i.ion-chatbox-working
-                              i.fa.fa-pencil
-                  
-                  //- 댓글 리스트 영역
-                  article.media
-                    figure.media-left
-                      p.image.is-48x48
-                        img.user-img(src='http://bulma.io/images/placeholders/128x128.png')
-                    .media-content
-                      .content
-                        p
-                          strong Barbara Middleton
-                          br
-                          |         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-                          br
-                          small
-                            | 3 hrs
-                    
-                    //- 드롭다운 버튼
-                    .dropdown.is-right.is-active
-                      .dropdown-trigger
-                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3')
-                          span.icon.is-small
-                            i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu')
-                        .dropdown-content
-                          ul
-                            li
-                              a.dropdown-item(href='#')
-                                | 댓글 수정
-                            li
-                              a.dropdown-item(href='#')
-                                | 댓글 삭제
-
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card
@@ -168,10 +60,10 @@
                     //- 드롭다운 버튼
                     .dropdown.is-right.is-active
                       .dropdown-trigger
-                        button(aria-haspopup='true', aria-controls='dropdown-menu3')
+                        button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdown")
                           span.icon
                             i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu')
+                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownvisible")
                         .dropdown-content
                           ul
                             li
@@ -272,10 +164,10 @@
                     //- 드롭다운 버튼
                     .dropdown.is-right.is-active
                       .dropdown-trigger
-                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3')
+                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdown")
                           span.icon.is-small
                             i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu')
+                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownvisible")
                         .dropdown-content
                           ul
                             li
@@ -285,7 +177,6 @@
                               a.dropdown-item(href='#')
                                 | 댓글 삭제
                             
-        //- write-modal(close_message="close lightbox" ref='write_modal')
       
       main-footer
 
@@ -297,11 +188,20 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 export default {
+  name: 'MyWriteFeed',
   components: {
     MainHeader,
     MainFooter,
   },
+  data(){
+    return {
+      dropdownvisible: false
+    }
+  },
   methods: {
+    openDropdown() {
+      this.dropdownvisible = !this.dropdownvisible;
+    }
   } 
 }
 </script>
