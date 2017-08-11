@@ -5,7 +5,7 @@ div
     header.header
       .columns.is-centered.is-mobile
         .column.is-half.is-narrow.has-text-centered.logo
-          a(href="#")
+          router-link(to='/')
             picture
               img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
     main

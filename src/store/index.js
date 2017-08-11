@@ -14,13 +14,10 @@ export const store = new Vuex.Store({
   // api
   // Domain: bond.ap-northeast-2.elasticbeanstalk.com
   api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
-  // api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
   api_login: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login',
-  // api_login: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login',
-  api_signup: '',
-  api_write: 'https://bond-43bc3.firebaseio.com/write.json'
-
-
+  api_write: 'https://bond-43bc3.firebaseio.com/write.json',
+  api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
+  
 },
   getters: {
 

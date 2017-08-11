@@ -2,8 +2,7 @@
   div
     main-header
     feed-menu
-      //- router-view
-    //- joint-group-feed
+    main-footer
   
 </template>
 
@@ -11,13 +10,14 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import FeedMenu from './FeedMenu';
 import JointGroupFeed from './JointGroupFeed';
+import MainFooter from '../Header-Footer/MainFooter';
 export default {
   name: 'app',
   components: {
     MainHeader,
     FeedMenu,
     JointGroupFeed,
-    
+    MainFooter
   },
   
 }

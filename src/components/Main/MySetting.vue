@@ -52,7 +52,7 @@ export default {
     },
     is_visible: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {

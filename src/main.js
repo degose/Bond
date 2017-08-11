@@ -11,6 +11,10 @@ Vue.use(VueRouter);
 
 Vue.prototype.$http = axios;
 // Vue.http = axios;
+// Vue.prototype.$http.headers.common
+
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+// Vue.http.headers.common['Access-Control-Request-Method'] = '*'
 
 // Global Settings
 // firebase 주소값(App.vue 에서 get,post 주소값은 생략 가능)

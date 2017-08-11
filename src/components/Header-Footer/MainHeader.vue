@@ -10,11 +10,17 @@
               figure
                 img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
           .search.column
-            .field
-              .control.has-icons-left.has-icons-right
+            .field.has-addons
+              .control.has-icons-left.is-expanded
                 input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요')
-                a.span.icon.is-small.is-right(aria-label="search")
+                span.span.icon.is-small.is-left
                   i.fa.fa-search
+              .control
+                router-link(to="/SearchResult")
+                  button.button.btn-search(type="button") Search
+
+
+
           #navMenuburger.navbar-menu    
             .navbar-end
               .navbar-item.has-dropdown.is-hoverable.is-right
@@ -22,7 +28,7 @@
                   figure
                     img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
                 .navbar-dropdown
-                  a.navbar-item(@click="console")
+                  a.navbar-item(@click="openMySetting")
                     | 내 정보
                   router-link.navbar-item(to="/MyWriteFeed")
                     | 내 글 보기
@@ -32,13 +38,15 @@
                   a.navbar-item(@click="console")
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
+        my-setting(close_message="close lightbox" ref='my_setting')
     
 </template>
 
 <script>
-
+import MySetting from '../Main/MySetting';
 export default {
   components:{
+    MySetting
   },
   data(){
     return{
@@ -54,6 +62,9 @@ export default {
   methods: {
     console() {
       conlsole.log('눌렀다!');
+    },
+    openMySetting() {
+      this.$refs.my_setting.visible = true;
     }
   }
 }
@@ -76,4 +87,6 @@ export default {
   position: fixed
 .nav-bg
   background: #fff
+.btn-search
+  color: $primary
 </style>

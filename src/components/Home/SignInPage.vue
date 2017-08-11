@@ -5,7 +5,7 @@
       header.header
         .columns.is-centered.is-mobile
           .column.is-half.is-narrow.has-text-centered.logo
-            a(href="#")
+            router-link(to='/')
               picture
                 img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
 
@@ -36,8 +36,8 @@
                   //-   button.column.btn-fill.btn-login(type="submit") 로그인
             .field
               .control.column.is-half.is-offset-one-quarter.has-text-centered
-                a(href='#/FindPassword').is-link.home-link.column 비밀번호를 잊으셨나요?
-                a(href='#/SignUp').is-link.home-link.column 처음이신가요? 회원가입
+                router-link(to='/FindPassword').is-link.home-link.column 비밀번호를 잊으셨나요?
+                router-link(to='/SignUpPage').is-link.home-link.column 처음이신가요? 회원가입
 </template>
 
 <script>
@@ -58,8 +58,7 @@ export default {
   },
   methods: {
     signinSubmit(){
-      // this.is_confirm = true;
-      this.$http.post('https://bond-43bc3.firebaseio.com/login.json',this.signin)
+      this.$http.post(this.$store.state.api_signin, this.signin)
       .then(response => {
         let token = response.data.key;
         if ( !window.localStorage.getItem('token') ) {
