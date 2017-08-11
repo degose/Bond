@@ -9,7 +9,7 @@
             .card-content
               //- 가입하기 버튼
               .columns.is-mobile
-                button.column.btn-default.btn-fill 그룹 만들기
+                button.column.btn-default.btn-fill(@click="openModal") 그룹 만들기
             hr
             .card-content
               .columns.is-mobile
@@ -22,29 +22,22 @@
                   figure.media-left
                     p.image.is-32x32
                       img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
-                p 안녕
-              a.columns.is-mobile
-                article.media.group-small-list
-                  figure.media-left
-                    p.image.is-32x32
-                      img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
-                p 안녕
+                p.group-small-name 안녕
 
 
           
           
           //- feed 영역
           .column.is-9
-
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card
                 header.card-header
-                  a.card-header-title
+                  a.card-header-title.group-name
                     | &nbsp;  
                     | &nbsp;  
-                    span.icon
-                      img(src="../../assets/bond-img.svg")
+                    span.icon.icon-bond
+                      img(src="../../assets/btn-bond-normal.svg")
                     | &nbsp;  
                     | 해당 그룹 이름
                 .card-content
@@ -60,10 +53,11 @@
                     //- 드롭다운 버튼
                     .dropdown.is-right.is-active
                       .dropdown-trigger
-                        button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdown")
+                        button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownPost")
                           span.icon
                             i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownvisible")
+
+                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownpost")
                         .dropdown-content
                           ul
                             li
@@ -118,17 +112,20 @@
                 
                 //- 좋아요, 댓글 개수
                 footer.card-footer
-                  a(href='#').card-footer-item
-                    span
-                      i.fa.fa-heart-o
-                        | &nbsp;  
-                        | 5
-                  a(href='#').card-footer-item
+                  button(type="submit" @click="addLike").card-footer-item.btn-show-like
+                    span.icon-like
+                      i.fa.fa-heart-o(v-show="!like")
+                      i.fa.fa-heart(v-show="like")
+                    | &nbsp;  
+                    | 5
+                  button(@click="showComment").card-footer-item.btn-show-comment
                     | 댓글
                     | 5
                     | &nbsp; 
-                    span.icon.is-small
+                    span.icon.is-small(v-show="!showcomment")
                       i.fa.fa-angle-down(aria-hidden='true')
+                    span.icon.is-small(v-show="showcomment")
+                      i.fa.fa-angle-up(aria-hidden='true')
                       
 
               //- 댓글 작성 영역
@@ -147,7 +144,7 @@
                               i.fa.fa-pencil
                   
                   //- 댓글 리스트 영역
-                  article.media
+                  article.media(v-show="showcomment")
                     figure.media-left
                       p.image.is-48x48
                         img.user-img(src='http://bulma.io/images/placeholders/128x128.png')
@@ -164,10 +161,10 @@
                     //- 드롭다운 버튼
                     .dropdown.is-right.is-active
                       .dropdown-trigger
-                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdown")
+                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownComment")
                           span.icon.is-small
                             i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownvisible")
+                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdowncomment")
                         .dropdown-content
                           ul
                             li
@@ -176,38 +173,56 @@
                             li
                               a.dropdown-item(href='#')
                                 | 댓글 삭제
-                            
-      
       main-footer
+      MakingGroupModal(ref="my_modal" close_message="close lightbox")
+                            
 
         
-
 </template>
 
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
+import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
+
 export default {
   name: 'MyWriteFeed',
   components: {
     MainHeader,
-    MainFooter,
+    MakingGroupModal,
+    MainFooter
   },
-  data(){
+  data() {
     return {
-      dropdownvisible: false
+      dropdownpost: false,
+      dropdowncomment: false,
+      showcomment: false,
+      like: false
     }
   },
   methods: {
-    openDropdown() {
-      this.dropdownvisible = !this.dropdownvisible;
+    openModal(){
+      this.$refs.my_modal.visible = true;
+    },
+    openDropdownPost() {
+      this.dropdownpost = !this.dropdownpost;
+    },
+    openDropdownComment() {
+      this.dropdowncomment = !this.dropdowncomment;
+    },
+    showComment() {
+      this.showcomment = !this.showcomment;
+    },
+    addLike() {
+      
+      this.like = !this.like;
     }
   } 
 }
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
 
@@ -236,7 +251,20 @@ body
   line-height: 38px
 .group-small-list
   margin-bottom: 8px
+.group-small-name
+  margin-top: -4px
 
+.group-name
+  color: $primary
 
+.btn-show-comment,
+.btn-show-like
+  font-size: 1rem
+  color: $primary
+
+.fa-heart,
+.fa-heart-o
+  font-size: 1rem
+  margin-top: 1px
 
 </style>

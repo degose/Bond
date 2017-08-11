@@ -103,16 +103,19 @@ div
               span.pagination-ellipsis …
             li
               a.pagination-link 86
+  main-footer
 
 
 </template>
 
 <script>
-import MainHeader from '../Header-Footer/MainHeader'
+import MainHeader from '../Header-Footer/MainHeader';
+import MainFooter from '../Header-Footer/MainFooter';
 export default {
   name: 'app',
   components: {
-    MainHeader
+    MainHeader,
+    MainFooter
   }
 
 }

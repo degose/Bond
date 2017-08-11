@@ -127,7 +127,7 @@
                 
                 //- 좋아요, 댓글 개수
                 footer.card-footer
-                  button(type="submit").card-footer-item.btn-show-like(@click="addLike")
+                  button(type="submit" @click="addLike").card-footer-item.btn-show-like
                     span.icon-like
                       i.fa.fa-heart-o(v-show="!like")
                       i.fa.fa-heart(v-show="like")
