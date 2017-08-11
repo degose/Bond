@@ -1,44 +1,75 @@
 <template lang="pug">
   #app
-    
-    feed
-    //- router-view(name="home")   
+    div
+      //- Home
+      //- main-page
+      router-view
+      //- app-nav
+      //- joint-group
+      //- feed
 
-    //- 직접 에셋 속성을 설정하는 경우, assets/ 디렉토리에서 찾아야 이미지 출력
-    //- file-loader를 통해 아래와 같이 처리되기 때문
-    //- /dist/logo.png?82b9c7a5a3f405032b1db71a25f67021
-    //- img(src="./assets/logo.png", :alt="vue.label")
+    //- main-footer
+
 </template>
 
 <script>
-import Vue from 'Vue';
 import Home from './components/Home/Home';
-// import HeaderUser from './components/HeaderUser';
+import Navigation from './components/Navigation';
+import MainHeader from './components/Header-Footer/MainHeader';
+import MainPage from './components/Main/MainPage';
+import JointGroup from './components/Group/JointGroup';
 import Feed from './components/Feed/Feed';
+import MyGroup from './components/Main/MyGroup';
+import MainFooter from './components/Header-Footer/MainFooter';
 
 export default {
   name: 'app',
   components: {
-    // HeaderMain,
     Home,
-    Feed
+    appNav: Navigation,
+    MainHeader,
+    MainPage,
+    JointGroup,
+    Feed,
+    MyGroup,
+    MainFooter,
   },
   data () {
     return {
-      vue: {
-        // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
-        // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        path: './src/assets/logo.png',
-        label: 'Vue.js'
       }
     }
   }
-}
 </script>
 
 <style lang="sass">
-  // @import "~sass"
-  body
-    padding 20px 
+@import "~bulma"
+@import "~style"
+
+body
+  
+  // font-size: 100%
+  // margin: 0
+  // padding: 0
+  // min-height: 100vh
+.wrapper
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+  // height: 100vh
+  // justify-content: flex-start
+  // align-items: flex-start
+  // align-content: stretch
+  background: #eee
+// header
+//   flex: 0 1 auto
+//   align-self: auto
+// main
+//   flex: 1 1 auto
+//   align-self: auto
+footer
+  // flex: 0 1 auto
+  // align-self: auto
+
 
 </style>
+

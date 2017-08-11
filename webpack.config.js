@@ -44,8 +44,9 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       // 외부 Sass 파일을 로드하고자 할 경우, 아래와 같이 경로를 입력한 후,
       // .vue 파일 <style lang="sass"> 내에 @import "~yamoo9" 를 호출하면 사용 가능합니다.
-      // 'yamoo9': path.resolve(__dirname, './src/lib/yamoo9/_index.sass'),
-      'sass': path.resolve(__dirname, './src/sass/stylesheets.scss')
+      // 'bulma': path.resolve(__dirname, './src/bulma/bulma.sass')
+      'bulma': path.resolve(__dirname, './src/bulma/config.sass'),
+      'style': path.resolve(__dirname, './src/style/style.sass')
     }
   },
   devServer: {

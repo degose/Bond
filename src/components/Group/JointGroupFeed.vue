@@ -1,0 +1,275 @@
+<template lang="pug">
+      //- 가입한 그룹의 feed
+      div.container.page-wrapper
+        .columns
+          //- 그룹 정보 영역
+          .column.is-3
+            .card
+              .card-image
+                figure.image.is-16by9
+                  img(src='http://bulma.io/images/placeholders/1280x960.png', alt='Image')
+              .card-content
+                article.media
+                  .media-content
+                    p.title.is-4 그룹 이름
+                    div
+                      span 멤버 5
+                      |  · 
+                      a(aria-label="open leave group modal" @click="openLeaveGroupModal") 
+                        span.icon.is-small
+                          i.fa.fa-cog(aria-hidden='true')
+                        | 그룹 설정
+                .content
+                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  | Phasellus nec iaculis mauris. 
+
+
+          
+          
+          //- feed 영역
+          .column.is-9
+            //- 글쓰기 영역
+            div.feed-box
+              .card
+                a(aria-label="open write modal" @click="openWriteModal")
+                  .card-content
+                    p 소식을 남겨주세요.
+                    | &nbsp; 
+                  footer.card-footer
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-picture-o
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-play-circle-o
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-folder-open-o
+                    a(aria-label="open write modal" @click="openWriteModal").card-footer-item
+                      span.icon
+                        i.fa.fa-pencil
+                      p.is-hidden-mobile 
+                        | &nbsp; 
+                        |글쓰기
+                
+
+
+            //- 컨텐츠가 들어간 글
+            div.feed-box
+              .card
+                .card-content
+                  article.media
+                    .media-left
+                      figure.image.is-64x64.img-user
+                        img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
+                    .media-content
+                      p.title.is-4.user-name John Smith
+                      p.subtitle.is-6 11:09 PM - 1 Jan 2016
+
+
+                    //- 드롭다운 버튼
+                    .dropdown.is-right
+                      .dropdown-trigger
+                        button(aria-haspopup='true', aria-controls='dropdown-menu3', @click="openDropdown")
+                          span.icon
+                            i.icon-more.ion-android-more-vertical(aria-hidden='true')
+
+                      #dropdown-menu3.dropdown-custom(role='menu' v-show="dropdownvisible")
+                        .dropdown-content
+                          ul
+                            li
+                              a.dropdown-item(href='#')
+                                | 글 수정
+                            li
+                              a.dropdown-item(href='#')
+                                | 글 삭제
+
+                  //- 글 (최상위)
+                  .content
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    | Phasellus nec iaculis mauris. 
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    | Phasellus nec iaculis mauris. 
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    | Phasellus nec iaculis mauris. 
+
+                    
+                  //- 이미지 - 1개일 때
+                  .content
+                    figure.image
+                      img(src='http://bulma.io/images/placeholders/480x320.png')
+
+
+                  //- 동영상
+                  .content
+                    figure
+                      video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
+                        source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
+                        track(src='', kind='captions', srclang='en', label='English captions', default='')
+
+
+
+
+                  //- 첨부파일
+                  .content
+                    .file-box
+                      a(href='#')
+                        .columns.is-mobile
+                          .column.is-1
+                            span
+                              i.fa.fa-folder-open-o
+                          .column 
+                            span
+                              p README.md
+                          .column.is-1
+                            span
+                              i.fa.fa-arrow-down
+                
+                //- 좋아요, 댓글 개수
+                footer.card-footer
+                  a(href='#').card-footer-item
+                    span
+                      i.fa.fa-heart-o
+                        | &nbsp;  
+                        | 5
+                  a(href='#').card-footer-item
+                    | 댓글
+                    | 5
+                    | &nbsp; 
+                    span.icon.is-small
+                      i.fa.fa-angle-down(aria-hidden='true')
+                      
+
+              //- 댓글 작성 영역
+              .card
+                .card-content
+                  article.media
+                    .media-content.columns.is-mobile
+                      .field.column.is-10.is-3-mobile
+                        .control
+                          textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment")
+                      .field.column.is-2.is-1-mobile
+                        .control
+                          button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit") 댓글 달기
+                          button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit")
+                            span.icon
+                              i.fa.fa-pencil
+                  
+                  //- 댓글 리스트 영역
+                  article.media
+                    figure.media-left
+                      p.image.is-48x48
+                        img.user-img(src='http://bulma.io/images/placeholders/128x128.png')
+                    .media-content
+                      .content
+                        p
+                          strong Barbara Middleton
+                          br
+                          |         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                          br
+                          small
+                            | 3 hrs
+                    
+                    //- 드롭다운 버튼
+                    .dropdown.is-right.is-active
+                      .dropdown-trigger
+                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdown")
+                          span.icon.is-small
+                            i.icon-more.ion-android-more-vertical(aria-hidden='true')
+                      #dropdown-menu3.dropdown-custom(role='menu' v-show="dropdownvisible")
+                        .dropdown-content
+                          ul
+                            li
+                              a.dropdown-item(href='#')
+                                | 댓글 수정
+                            li
+                              a.dropdown-item(href='#')
+                                | 댓글 삭제
+                            
+        write-modal(close_message="close lightbox" ref='write_modal')
+        leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
+
+        
+</template>
+
+<script>
+import WriteModal from './WriteModal';
+import LeaveGroupModal from './LeaveGroupModal';
+
+export default {
+  name: 'JointGroupFeed',
+  props: {
+  },
+  data() {
+    return {
+      write_comment: '',
+      visible: false,
+      dropdownvisible: false
+      
+    }
+  },
+  components: {
+    WriteModal,
+    LeaveGroupModal
+  },
+  methods: {
+    openWriteModal(){
+      this.$refs.write_modal.visible = true;
+    },
+    openLeaveGroupModal(){
+      this.$refs.leave_group_modal.visible = true;
+    },
+    writeCommentSubmit(){
+      // console.log(this.$http);
+      // console.log(this.write_comment);
+      this.$http.post('', this.write_comment).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.error(error.message);
+      });
+    },
+    openDropdown() {
+      this.dropdownvisible = !this.dropdownvisible;
+    }
+  }
+}
+</script>
+
+
+<style lang="sass" scoped>
+@import "~bulma"
+@import "~style"
+
+
+
+body
+  background: #eee
+
+.page-wrapper
+  min-height: 87vh
+
+
+.icon-more
+  font-size: 1.5rem
+  color: $grey
+  &:hover
+    color: $bond
+  &:focus
+    color: $bond
+  &:active
+    color: $bond
+
+
+
+
+.navbar-burger.burger
+  padding-top: 8px
+  padding-left: 10px
+
+.dropdownhr
+  margin: 5px
+
+
+
+
+</style>
