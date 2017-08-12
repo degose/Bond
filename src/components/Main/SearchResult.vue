@@ -116,9 +116,10 @@ export default {
   components: {
     MainHeader,
     MainFooter
-  }
-
+  },
 }
+
+
 </script>
 
 <style lang="sass" scoped>
