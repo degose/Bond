@@ -23,27 +23,27 @@ import SearchResult from './components/Main/SearchResult';
 
 // Set
 
-//Route Setting
+// Route Setting
 export const routes = [
-    //Feed
-    {path: '/Feed', component: Feed},
-    {path: '/MyWriteFeed', component: MyWriteFeed},
-    {path: '/MyGroupFeed', component: MyGroupFeed},
-    {path: '/NoneJointGroupFeed', component: NoneJointGroupFeed},
+    // Feed
+    { path: '/Feed', component: Feed },
+    { path: '/MyWriteFeed', component: MyWriteFeed },
+    { path: '/MyGroupFeed', component: MyGroupFeed },
+    { path: '/NoneJointGroupFeed', component: NoneJointGroupFeed },
 
     // Group
     // {path: '/JointGroup', component: JointGroup},
-    {path: '/JointGroup', component: JointGroup, children: [
-      {path: '', component: JointGroupFeed},
-      {path: '/JointGroup/GroupMemberList', component: GroupMemberList},
-    ]},
+  { path: '/JointGroup', component: JointGroup, children: [
+      { path: '', component: JointGroupFeed },
+      { path: '/JointGroup/GroupMemberList', component: GroupMemberList }
+  ] },
     // {path: '/JointGroupFeed', component: JointGroupFeed},
     // {path: '/GroupMemberList', component: GroupMemberList},
 
-    //Home
-    {
-      path: '/', 
-      component: Home,
+    // Home
+  {
+    path: '/',
+    component: Home
       // beforeEnter(to, from, next){
       //   let tk = window.localStorage.getItem('token');
       //   if (tk) {
@@ -52,22 +52,22 @@ export const routes = [
       //     next();
       //   }
       // },
-    },
-    {path: '/FindPassword', component: FindPassword},
-    {
-      path: '/SignInPage', 
-      component: SignInPage,
-    },
-    {path: '/SignUpPage', component: SignUpPage},
+  },
+    { path: '/FindPassword', component: FindPassword },
+  {
+    path: '/SignInPage',
+    component: SignInPage
+  },
+    { path: '/SignUpPage', component: SignUpPage },
 
-    //Main
-    {path: '/MainPage', component: MainPage},
-    {path: '/MyGroup', component: MyGroup},
-    {path: '/SearchResult', component: SearchResult},
+    // Main
+    { path: '/MainPage', component: MainPage },
+    { path: '/MyGroup', component: MyGroup },
+    { path: '/SearchResult', component: SearchResult },
     // {path: '/InvitationModal', component: InvitationModal},
-    
-    //Set
+
+    // Set
 
     // *
-    {path: '*', component: Home}
-]
+    { path: '*', component: Home }
+];

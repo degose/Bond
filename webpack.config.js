@@ -1,5 +1,7 @@
 let path    = require('path');
 let webpack = require('webpack');
+require('es6-promise').polyfill();
+
 
 module.exports = {
   entry: './src/main.js',
