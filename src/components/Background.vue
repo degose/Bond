@@ -12,17 +12,18 @@ export default {
 </script>
 
 <style lang="sass">
-body
-    // background: none
+
+.video-container
+  width: 100%
+  height: 100vh
+  overflow: hidden
+  position: absolute
+  z-index: -1
+
 video 
-     position: absolute
-     top: 0px
-     left: 0px
-     min-width: 100%
-     min-height: 100%
-     width: auto
-     height: auto
-     z-index: -1
-     overflow: hidden
+  object-fit: cover
+  width: 100%
+  height: 100%
 
 </style>
+

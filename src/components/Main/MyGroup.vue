@@ -130,7 +130,7 @@
 <script>
 import MakingGroupModal from '../Group/MakingGroupModal';
 export default {
-  name: 'app',
+  name: 'MyGroup',
   components: {
     MakingGroupModal
   },
