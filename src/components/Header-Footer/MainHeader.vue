@@ -21,7 +21,7 @@
 
 
 
-          #navMenuburger.navbar-menu    
+          #navMenuburger.navbar-menu
             .navbar-end
               .navbar-item.has-dropdown.is-hoverable.is-right
                 a.navbar-link
