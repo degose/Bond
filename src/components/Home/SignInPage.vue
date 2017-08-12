@@ -42,6 +42,7 @@
 
 <script>
 import Background from '../Background';
+
 export default {
   name: 'SignInPage',
   components: {
@@ -52,7 +53,8 @@ export default {
       signin: {
         email: '',
         password: ''
-      }
+      },
+      
     }
   },
   methods: {
@@ -69,8 +71,13 @@ export default {
         console.log('성공');
       })
       .catch(error => {
+        // 이메일만 빈칸 일 때의 오류 메시지
+        if (this.signin.email === '' && this.signin.password !== ''){alert(error.response.data.email[0]);}
+        // 패스워드만 빈칸 일 때의 오류 메시지
+        else if(this.signin.password === '' && this.signin.email !== ''){alert(error.response.data.password[0]);}
+        // 틀린 정보를 시도했을 때의 오류 메시지
+        else alert(error.response.data.non_field_errors[0]);
         console.log(error.response);
-        console.log('실패');
       })
     }
   }
