@@ -24,7 +24,7 @@ Vue.prototype.$http = axios;
 // Vue.http.options.root = 'https://bond-43bc3.firebaseio.com/signup.json';
 
 // 만약 토큰값이 있다면
-// Vue.http.headers.common['Authorization'] = 'Token 값 ';
+// Vue.http.headers.common['Authorization'] = 'Token eeb72f8f9333c8ca69a1c9f66e3a3e3fa90b7b2f';
 
 // "token": "eeb72f8f9333c8ca69a1c9f66e3a3e3fa90b7b2f"
 
