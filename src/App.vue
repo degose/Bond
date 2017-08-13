@@ -1,110 +1,78 @@
 <template lang="pug">
   #app
-    // component insert : CamelCase
-    .wrapper
-      MemberList
-      //- GroupList
-      //- MysettingModal
-      //- MakingGroupModal
+    div
+      background
+      //- Home
+      //- main-page
+      router-view
+      //- app-nav
+      //- joint-group
+      //- feed
+
+    //- main-footer
+
 </template>
 
 <script>
-import Vue from 'Vue';
-// import Home from './components/Home/Home';
-// // import HeaderUser from './components/HeaderUser';
-// import Feed from './components/Feed/Feed';
-import GroupList from './components/Grouplist/GroupList';
-import MakingGroupModal from './components/Grouplist/MakingGroupModal';
-import MysettingModal from './components/Home/MysettingModal';
-import MemberList from './components/Feed/MemberList';
+import Home from './components/Home/Home';
+import Navigation from './components/Navigation';
+import MainHeader from './components/Header-Footer/MainHeader';
+import MainPage from './components/Main/MainPage';
+import JointGroup from './components/Group/JointGroup';
+import Feed from './components/Feed/Feed';
+import MyGroup from './components/Main/MyGroup';
+import MainFooter from './components/Header-Footer/MainFooter';
+import Background from './components/Background';
 
 export default {
   name: 'app',
   components: {
-    // HeaderMain,
-    // Home,
-    // Feed,
-    GroupList,
-    MysettingModal,
-    MakingGroupModal,
-    MemberList
+    Home,
+    appNav: Navigation,
+    MainHeader,
+    MainPage,
+    JointGroup,
+    Feed,
+    MyGroup,
+    MainFooter,
+    Background
   },
   data () {
     return {
-      vue: {
-        // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
-        // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        path: './src/assets/logo.png',
-        label: 'Vue.js'
       }
     }
-  },
-  methods: {
-    openModal(){
-      this.$refs.my_modal.visible = true;
-    },
-    openMessage(){
-      this.$refs.slide_anim.is_visible = true;
-    }
- }
-}
+  }
 </script>
 
 <style lang="sass">
 @import "~bulma"
+@import "~style"
+
 body
-  background-color: #eee
-.open-modal
-  margin-bottom: 20px
+  
+  // font-size: 100%
+  // margin: 0
+  // padding: 0
+  // min-height: 100vh
+.wrapper
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+  // height: 100vh
+  // justify-content: flex-start
+  // align-items: flex-start
+  // align-content: stretch
+  background: #eee
+// header
+//   flex: 0 1 auto
+//   align-self: auto
+// main
+//   flex: 1 1 auto
+//   align-self: auto
+footer
+  // flex: 0 1 auto
+  // align-self: auto
 
-.fade-enter
-.fade-leave-to
-  opacity: 0
-.fade-enter-active
-.fade-leave-active
-  transition: all 0.8s ease-out
-
-.slide-enter,
-.slide-leave-to
-  opacity: 0
-  transform: translateX(-100vw)
-
-.slide-enter-active,
-.slide-leave-active
-  transition: all 0.45s ease-in-out
-
-// .slide-in-enter
-.slide-anim-enter-active
-  animation: slide-in 0.6s ease-in-out
-// .slide-in-enter-to
-// .slide-in-leave
-.slide-anim-leave-active
-  animation: slide-out 0.6s ease-in-out
-.slide-anim-leave-to
-
-// .slide-out-enter
-// .slide-out-enter-active
-// .slide-out-enter-to
-// .slide-out-leave
-// .slide-out-leave-active
-// .slide-out-leave-to
-
-// 애니매이션 정의
-// 슬라이드 인
-@keyframes slide-in
-  from
-    opacity: 0
-    transform: translateX(-100vw)
-  to
-    opacity: 1
-    transform: translateX(0)
-
-@keyframes slide-out
-  from
-    opacity: 1
-    transform: translateX(0)
-  to
-    opacity: 0
-    transform: translateX(-100vw)
 
 </style>
+

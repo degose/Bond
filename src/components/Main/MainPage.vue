@@ -1,42 +1,34 @@
 <template lang="pug">
-  .wrapper
+  div
     main-header
-    //- router-view
-    //- my-group-feed
-    none-joint-feed
-    
-    
-    
-
-
+    //- router-link
+    my-group
+    main-footer
 </template>
 
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
+import MainFooter from '../Header-Footer/MainFooter';
 import MyGroup from '../Main//MyGroup';
-import MyGroupFeed from '../Feed/MyGroupFeed';
-import MyWriteFeed from '../Feed/MyWriteFeed';
-import NoneJointFeed from '../Feed/NoneJointGroupFeed';
-
-
 export default {
   name: 'app',
   components: {
     MainHeader,
     MyGroup,
-    MyGroupFeed,
-    MyWriteFeed,
-    NoneJointFeed,
+    MainFooter,
     
   },
-
+  
 }
 </script>
-
 
 <style lang="sass">
 @import "~bulma"
 @import "~style"
 
+body
+  background: #eee
 
 </style>
+
+

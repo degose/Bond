@@ -1,25 +1,78 @@
 <template lang="pug">
-  div
-    .container.header
-        .grid(role='banner')
-          .col.col-m-1.col-t-2.col-t-offset-1.col-d-2
-            .logo(aria-labelledby='bond-heading')
-              h1.readable-hidden#webcafe-heading 
-              //- img(src="./assets/logo-01.svg", :alt="vue.label")
-              picture
-                source(srcset='/src/assets/logo-02.svg', media='(max-width: 767px)')
-                source(srcset='/src/assets/logo-01.svg', media='(min-width: 768px)')
-                img.responsive-svg(src='/src/assets/logo-02.svg', alt='')
-    login
+div
+  //- background
+  .container
+    header.header
+      .columns.is-centered.is-mobile
+        .column.is-half.is-narrow.has-text-centered.logo
+          router-link(to='/')
+            picture
+              img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
+
+    main.is-hidden-mobile
+      .columns.is-mobile.home-box-wrapper
+        .box.column.is-half.is-offset-one-quarter.home-box
+          h1.is-size-4.has-text-centered.title.home-heading 로그인
+          .control.column.is-half.is-offset-one-quarter.email-login
+            router-link(to='/SignInPage', active-class='current-page')
+              button.column.btn-default.btn-login 이메일로 로그인
+          .control.column.is-half.is-offset-one-quarter.facebook-login
+            router-link(to='/#', active-class='current-page')
+              button.column.btn-default.btn-login 페이스북으로 로그인
+          //- .control.column.is-half.is-offset-one-quarter
+          //-   label.checkbox
+          //-     input(type='checkbox')
+          //-     |       로그인 상태유지
+          .control.column.is-half.is-offset-one-quarter.has-text-centered
+            //- a(href='/SignUpPage')
+            router-link(to="/SignUpPage")
+              |       처음이신가요? 회원가입
+
+
+    main.is-hidden-tablet.is-hidden-desktop
+      .mobile-wrapper
+        .columns.is-mobile.home-box-wrapper
+          .box.column.home-box
+            h1.is-size-4.has-text-centered.title.home-heading 로그인
+            .control.column.is-half.is-offset-one-quarter.email-login
+              router-link(to='/SignInPage', active-class='current-page')
+                button.column.btn-default.btn-login 이메일로 로그인
+            .control.column.is-half.is-offset-one-quarter.facebook-login
+              router-link(to='/#', active-class='current-page')
+                button.column.btn-default.btn-login 페이스북으로 로그인
+            //- .control.column.is-half.is-offset-one-quarter
+            //-   label.checkbox
+            //-     input(type='checkbox')
+            //-     |       로그인 상태유지
+            .control.column.is-half.is-offset-one-quarter.has-text-centered
+              //- a(href='/SignUpPage')
+              router-link(to="/SignUpPage")
+                |       처음이신가요? 회원가입
 </template>
 
 <script>
-import Login from './Login';
-
+import Background from '../Background';
 export default {
   name: 'app',
   components: {
-    Login,
+    Background
   },
 }
 </script>
+
+<style lang="sass" scoped>
+@import "~bulma"
+@import "~style"
+
+.logo
+  padding: 60px 0 90px 0
+
+.home-box
+  background-color: hsla(0, 0%, 100%, .7)
+  padding: 40px 0
+.container
+  min-height: 87vh
+.mobile-wrapper
+  padding: 0 40px
+
+</style>
