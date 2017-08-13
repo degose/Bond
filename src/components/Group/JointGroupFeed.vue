@@ -54,7 +54,6 @@
                 
 
 
-            //- 컨텐츠가 들어간 글
             div.feed-box
               .card
                 .card-content
@@ -63,8 +62,8 @@
                       figure.image.is-64x64.img-user
                         img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
                     .media-content
-                      p.title.is-4.user-name John Smith
-                      p.subtitle.is-6 11:09 PM - 1 Jan 2016
+                      p.title.is-4.user-name 유저이름
+                      p.subtitle.is-6 작성시간
 
 
                     //- 드롭다운 버튼
@@ -86,12 +85,12 @@
 
                   //- 글 (최상위)
                   .content
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
+                    .get-http 
+                      button(type='button', @click='fetchData') fetch
+                    .del-http 
+                      button(type='button', @click='delData') delete
+                      p.fetched-data
+                        p.fetched-data-item(v-for='data in datalist') {{ data.text }}
 
                     
                   //- 이미지 - 1개일 때
@@ -201,6 +200,12 @@ import LeaveGroupModal from './LeaveGroupModal';
 
 export default {
   name: 'JointGroupFeed',
+  mounted(){
+    this.fetchData()
+  },
+  updated(){
+    this.fetchData()
+  },
   props: {
   },
   data() {
@@ -210,7 +215,9 @@ export default {
       dropdownpost: false,
       dropdowncomment: false,
       showcomment: false,
-      like: false
+      like: false,
+      write:'',
+      datalist:[]
       // target: ''
     }
   },
@@ -246,6 +253,27 @@ export default {
     addLike() {
       
       this.like = !this.like;
+    },
+    fetchData(){
+      this.$http.get(this.$store.state.api_write, this.write)
+                .then(response=> 
+                  {
+                  return console.log(response)
+                }
+                
+                  // console.log(response)}
+                ).then(write => {const datalist = Object.values(write);
+                this.datalist = datalist;
+                }
+                )
+                // .then(data => console.log(data))
+                .catch(error => console.log(error.message));
+    },
+    delData(){
+      this.$http.delete(this.$store.state.api_write, this.write)
+      .then(response => console.log(response)
+      //  { return response.json()}
+       ).catch(error => console.log(error.message));
     }
   }
 }

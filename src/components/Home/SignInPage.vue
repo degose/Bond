@@ -61,7 +61,7 @@ export default {
     signinSubmit(){
       this.$http.post(this.$store.state.api_signin, this.signin)
       .then(response => {
-        let token = response.data.key;
+        let token = response.data.token;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
         }
@@ -72,9 +72,9 @@ export default {
       })
       .catch(error => {
         // 이메일만 빈칸 일 때의 오류 메시지
-        if (this.signin.email === '' && this.signin.password !== ''){alert(error.response.data.email[0]);}
+        if (this.signin.email === '' && this.signin.password !== ''){alert('이메일 <- ' + error.response.data.email[0]);}
         // 패스워드만 빈칸 일 때의 오류 메시지
-        else if(this.signin.password === '' && this.signin.email !== ''){alert(error.response.data.password[0]);}
+        else if(this.signin.password === '' && this.signin.email !== ''){alert('비밀번호 <- ' + error.response.data.password[0]);}
         // 틀린 정보를 시도했을 때의 오류 메시지
         else alert(error.response.data.non_field_errors[0]);
         console.log(error.response);
