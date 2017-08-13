@@ -17,6 +17,7 @@ state:{
   api_signin: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login/',
   api_write: 'https://bond-43bc3.firebaseio.com/write.json',
   api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
+  api_MainPage: 'https://bond-accf7.firebaseio.com/'
   
 },
 getters: {

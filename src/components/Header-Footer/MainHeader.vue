@@ -12,14 +12,11 @@
           .search.column
             .field.has-addons
               .control.has-icons-left.is-expanded
-                input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요')
+                input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요', v-model="group_input.name")
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
               .control
-                router-link(to="/SearchResult")
-                  button.button.btn-search(type="button") Search
-
-
+                  button.button.btn-search(type="button" @click="fetch") Search
 
           #navMenuburger.navbar-menu
             .navbar-end
@@ -50,21 +47,37 @@ export default {
   },
   data(){
     return{
-        vue: {
-        // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
-        // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        // path: './src/assets/logo.png',
-        // label: 'Vue.js'
+      group_input: {
+        done: false,
+        name: ''
       },
-
+      datalist: []
     }
   },
   methods: {
-    console() {
-      conlsole.log('눌렀다!');
-    },
     openMySetting() {
       this.$refs.my_setting.visible = true;
+    },
+    submit(){
+      //VueResource === this.$http
+      this.$http.post('https://bond-accf7.firebaseio.com/group.json', this.group_input)
+                .then(function(response){
+                  console.log(response);
+                })
+                .catch(function(error){
+                  console.error(error.message);
+                })
+    },
+    fetch(){
+      this.$http.get('https://bond-accf7.firebaseio.com/group.json')
+                .then(response => {
+                    return response.json();
+                    })
+                .then(data => {
+                    const datalist = Object.values(data);
+                    this.datalist = datalist;
+                    })
+                .catch(error => console.error(error.message));
     }
   }
 }
