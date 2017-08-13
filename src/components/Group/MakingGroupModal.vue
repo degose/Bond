@@ -58,16 +58,15 @@ export default {
       this.visible = false;
     },
     createGroup(){
-      // this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group.json', this.group)
-      //           .then(response => console.log(response))
-      //           .catch(error => console.log(error.message));
-      this.$http.post('https://bond-43bc3.firebaseio.com/group.json', this.group)
-                .then(
-                  response => {
-                    console.log(response);
-                    this.$router.push('/MainPage');
-                  })
-                .catch(error => console.log(error.message));
+      let user_token = window.localStorage.getItem('token');
+      this.$http.post(this.$store.state.api_grouplist, this.group,{ headers: { 'Authorization' : `Token ${user_token}` }})
+      .then(response => {
+      console.log(response);
+      this.$router.push('/MainPage');
+    })
+    .catch(error => {if(this.group.name === ''){alert('그룹이름 <- ' + error.response.data.name[0])}
+    else alert("입력하신 그룹 이름은 이미 존재합니다.")
+    console.log(error.response)});
     }
   }
 }

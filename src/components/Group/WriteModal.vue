@@ -8,7 +8,7 @@
 
       section.modal-card-body
         .card-content
-          textarea.write-text-modal(placeholder='소식을 남겨주세요.', rows='10' v-model="write.task")
+          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('text', $event)" @value='write.text')
         //- footer.card-footer
       footer.card-footer
         a.file.card-footer-item
@@ -51,9 +51,9 @@ export default {
     return {
       visible: this.is_visible,
       write: {
-        done: false,
-        task: ''
-      }
+        text:''
+      },
+      datalist:[]
     }
   },
   methods: {
@@ -61,17 +61,15 @@ export default {
       this.visible = false;
     },
     writeTextSubmit(){
-      // console.log(this.write_text);
-      // this.$http.post('https://bond-43bc3.firebaseio.com/write_text.json', this.write_text.task).then(response => {
-      //   console.log(response);
-      // }).catch((error) => {
-      //   console.error(error.message);
-      //   console.log('실패');
-      // })
       this.$http.post(this.$store.state.api_write, this.write)
                 .then(response => console.log(response))
                 .catch(error => console.log(error.message));
-    }
+      this.visible = false;
+    },
+      writePost(target, e){
+      let input = e.target.value;
+      this.write[target] = input;
+    },
   }
 }
 </script>
