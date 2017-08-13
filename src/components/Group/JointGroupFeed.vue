@@ -51,7 +51,107 @@
                       p.is-hidden-mobile 
                         | &nbsp; 
                         |글쓰기
-                
+
+            div.feed-box
+                .card
+                  .card-content
+                    article.media
+                      .media-left
+                        figure.image.is-64x64.img-user
+                          img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
+                      .media-content
+                        p.title.is-4.user-name 유저 이름
+                        p.subtitle.is-6 작성시간
+
+
+                      //- 드롭다운 버튼
+                      .dropdown.is-right
+                        .dropdown-trigger
+                          button(aria-haspopup='true', aria-controls='dropdown-menu3')
+                            span.icon
+                              i.icon-more.ion-android-more-vertical(aria-hidden='true')
+                        #dropdown-menu3.dropdown-menu(role='menu')
+                          .dropdown-content
+                            ul
+                              li
+                                a.dropdown-item(href='#')
+                                  | 글 수정
+                              li
+                                a.dropdown-item(href='#')
+                                  | 글 삭제
+                            
+                    .content
+                      .get-http 
+                        button(type='button', @click='fetchData') fetch
+                      .del-http 
+                        button(type='button', @click='delData') delete
+                        p.fetched-data
+                          p.fetched-data-item(v-for='data in datalist') {{ data.text }}
+
+
+                  
+                  //- 좋아요, 댓글 개수
+                  footer.card-footer
+                    a(href='#').card-footer-item
+                      span
+                        i.fa.fa-heart
+                          | &nbsp;  
+                          | 5
+                    a(href='#').card-footer-item
+                      | 댓글
+                      | 5
+                      | &nbsp; 
+                      span.icon.is-small
+                        i.fa.fa-angle-down(aria-hidden='true')
+                        
+
+                //- 댓글 작성 영역
+                .card
+                  .card-content
+                    article.media
+                      .media-content.columns.is-mobile
+                        .field.column.is-10.is-3-mobile
+                          p.control
+                            textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.')
+                        .field.column.is-2.is-1-mobile
+                          p.control
+                            button.btn-comment.btn-default.is-hidden-mobile 댓글 달기
+                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet
+                              span.icon
+                                //- i.ion-chatbox-working
+                                i.fa.fa-pencil
+                    
+                    //- 댓글 리스트 영역
+                    article.media
+                      figure.media-left
+                        p.image.is-48x48
+                          img.user-img(src='http://bulma.io/images/placeholders/128x128.png')
+                      .media-content
+                        .content
+                          p
+                            strong Barbara Middleton
+                            br
+                            |         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                            br
+                            small
+                              | 3 hrs
+                      
+                      //- 드롭다운 버튼
+                      .dropdown.is-right.is-active
+                        .dropdown-trigger
+                          button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3')
+                            span.icon.is-small
+                              i.icon-more.ion-android-more-vertical(aria-hidden='true')
+                        #dropdown-menu3.dropdown-menu(role='menu')
+                          .dropdown-content
+                            ul
+                              li
+                                a.dropdown-item(href='#')
+                                  | 댓글 수정
+                              li
+                                a.dropdown-item(href='#')
+                                  | 댓글 삭제
+        
 
 
             //- 컨텐츠가 들어간 글
@@ -85,13 +185,9 @@
                                 | 글 삭제
 
                   //- 글 (최상위)
-                  .content
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    | Phasellus nec iaculis mauris. 
+                .content
+                  //- p.fetched-data
+                  //-   p.fetched-data-item(v-for='data in datalist') {{ data.text }}
 
                     
                   //- 이미지 - 1개일 때
@@ -201,6 +297,12 @@ import LeaveGroupModal from './LeaveGroupModal';
 
 export default {
   name: 'JointGroupFeed',
+  mounted(){
+    this.fetchData()
+  },
+  updated(){
+    this.fetchData()
+  },
   props: {
   },
   data() {
@@ -210,7 +312,9 @@ export default {
       dropdownpost: false,
       dropdowncomment: false,
       showcomment: false,
-      like: false
+      like: false,
+      write:'',
+      datalist:[]
       // target: ''
     }
   },
@@ -246,6 +350,27 @@ export default {
     addLike() {
       
       this.like = !this.like;
+    },
+    fetchData(){
+      this.$http.get(this.$store.state.api_write, this.write)
+                .then(response=> 
+                  {
+                  return console.log(response)
+                }
+                
+                  // console.log(response)}
+                ).then(write => {const datalist = Object.values(write);
+                this.datalist = datalist;
+                }
+                )
+                // .then(data => console.log(data))
+                .catch(error => console.log(error.message));
+    },
+    delData(){
+      this.$http.delete(this.$store.state.api_write, this.write)
+      .then(response => console.log(response)
+      //  { return response.json()}
+       ).catch(error => console.log(error.message));
     }
   }
 }
