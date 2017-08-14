@@ -43,7 +43,10 @@
               
             .card-content
               table.table.is-fullwidth
-                
+                //- col(width="20%")
+                //- col(width="20%")
+                //- col(width="60%")
+                caption.a11y-hidden 그룹멤버
                 thead
                   tr
                     th 멤버

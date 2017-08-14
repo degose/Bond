@@ -7,24 +7,24 @@
           img(v-if="group.profile_img" :src="uploadGroupImg", alt='그룹 대표 사진')
       section.modal-card-body 
         .file.has-name.is-fullwidth.is-primary
-          label.file-label
-            input.file-input(@change="groupImgUpload" type='file' name='resume')
-            span.file-cta
-              span.file-icon
-                i.fa.fa-upload
-              span.file-label
-                | 사진을 선택해주세요
-            span.file-name
-              | Screen Shot 2017-07-29 at 15.54.25.png
+          form(id="uploadImg" name="uploadImg")
+            label.file-label
+              input.file-input(@change="previewFile" type='file' name='resume' id="imgfileinput")
+              span.file-cta
+                span.file-icon
+                  i.fa.fa-upload
+                span.file-label
+                  | 사진을 선택해주세요
+              span.file-name(v-if="file_name.length == 0")
+                | 이미지 파일만 선택 가능합니다.
+              span.file-name(v-else)
+                | {{ file_name }}
         hr
         .field
           .control
             input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요')
             textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
-            //- columns 
-            //- columns 
-            //- textarea.is-12
-          //- // Content ...
+
       footer.modal-card-foot
         button.button.is-primary(type="button" @click="createGroup") 그룹 만들기
         button.button(@click="closeModal") 취소
@@ -47,6 +47,9 @@ export default {
     return {
       visible: this.is_visible,
       uploadGroupImg: '',
+      file_url: '',
+      file_name: '',
+      flie: null,
       group: {
         name: '',
         description: '',
@@ -61,20 +64,49 @@ export default {
     closeModal(){
       this.visible = false;
     },
-    createGroup(fromData){
-      // let formData = Vue.setFormData(this.group);
-      // let preview = document.querySelector('img');
-      // let file    = document.querySelector('input[type=file]').files[0];
-      // let reader  = new FileReader();
+    checkImage(file){
+      if(/.*\.(gif)|(jpeg)|(jpg)|(png)$/.test(file.name.toLowerCase())){
+          return true;
+      }
+    },
+    previewFile(e) {
+      let _this = this;
+      let file = e.target.files[0];
+      this.group.profile_img = file;
+      let reader = new FileReader();
+      if(this.checkImage(file)){
+        this.file = file;
+        reader.readAsDataURL(file);
+        this.file_name = file.name;
+        reader.onload = data => {
+          this.uploadGroupImg = data.srcElement.result;
+          this.group.proflie_img = data.srcElement.result;
+          _this.file_url = reader.result;
+        }
+      } else { alert('이미지 파일만 선택 가능합니다.')}
+      console.log('file:',file);
+    },
+    createGroup(){
 
-      // reader.addEventListener("load", function () {
-      //     preview.src = reader.result;
-      // }, false);
-      // let refile = reader.readAsDataURL(file);
+      let imgfileinput = document.getElementById('imgfileinput').files[0];
+      let formData = new FormData();
+      let reader = new FileReader();
+      reader.readAsDataURL(imgfileinput);
+      formData.append('profile_img', imgfileinput);
+      console.log('img',this.formData);
+      this.group.proflie_img = formData;
+
+
+
+      let groupinfo = {
+        name: this.group.name,
+        description: this.group.description,
+        proflie_img: this.group.proflie_img
+      }
 
 
       let user_token = window.localStorage.getItem('token');
-      this.$http.post(this.$store.state.api_grouplist, this.group,{ headers: { 'Authorization' : `Token ${user_token}` }})
+      this.$http.post(this.$store.state.api_grouplist, groupinfo, { headers: {'Authorization' : `Token ${user_token}`}})
         .then(response => {
           console.log(response);
           this.visible = false;
@@ -87,19 +119,11 @@ export default {
           console.log(error.response)});
     },
 
-    groupImgUpload(e) {
-      let file = e.target.files[0];
-      this.group.profile_img = file;
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = data => {
-        this.uploadGroupImg = data.srcElement.result;
-      };
-    },
   }
 }
 </script>
 <style lang="sass" scoped>
+
 
 .img-group-wrapper
   width: 100%
