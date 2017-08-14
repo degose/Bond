@@ -7,7 +7,7 @@
           img(v-if="group.profile_img" :src="uploadGroupImg", alt='그룹 대표 사진')
       section.modal-card-body 
         .file.has-name.is-fullwidth.is-primary
-          form(id="uploadImg" name="uploadImg")
+          form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data")
             label.file-label
               input.file-input(@change="previewFile" type='file' name='resume' id="imgfileinput")
               span.file-cta
@@ -26,7 +26,7 @@
             textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
 
       footer.modal-card-foot
-        button.button.is-primary(type="button" @click="createGroup") 그룹 만들기
+        button.button.is-primary(type="submit" @click="createGroup") 그룹 만들기
         button.button(@click="closeModal") 취소
 
 </template>
@@ -53,7 +53,7 @@ export default {
       group: {
         name: '',
         description: '',
-        proflie_img: null
+        proflie_img: 'null'
       }
     }
   },
@@ -93,10 +93,11 @@ export default {
       let reader = new FileReader();
       reader.readAsDataURL(imgfileinput);
       formData.append('profile_img', imgfileinput);
+      reader.onload = data => {
+          this.group.proflie_img = data.srcElement.result;
+      }
       console.log('img',this.formData);
       this.group.proflie_img = formData;
-
-
 
       let groupinfo = {
         name: this.group.name,
@@ -104,11 +105,15 @@ export default {
         proflie_img: this.group.proflie_img
       }
 
-
       let user_token = window.localStorage.getItem('token');
-      this.$http.post(this.$store.state.api_grouplist, groupinfo, { headers: {'Authorization' : `Token ${user_token}`}})
+      this.$http.post(this.$store.state.api_grouplist, groupinfo, 
+        { headers: {'Authorization' : `Token ${user_token}`}}
+        )
         .then(response => {
           console.log(response);
+          console.log('groupinfo.proflie_img:',groupinfo.proflie_img);
+          console.log('formData:',formData);
+          console.log('imgfileinput:',imgfileinput);
           this.visible = false;
         })
         .catch(error => {

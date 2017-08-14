@@ -75,9 +75,9 @@ export default {
       count: '',
       datalist: [],
       group: {
-        name: '',
-        description: '',
-        proflie_img: null
+        // name: '',
+        // description: '',
+        // proflie_img: null
       }
     };
   },
@@ -89,10 +89,9 @@ export default {
     getMyGroupList(){
       let user_token = window.localStorage.getItem('token');
       
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', this.group, {
-      // this.$http.get('https://bond-43bc3.firebaseio.com/group.json', this.group, {
-        headers: { 'Authorization' : `Token ${user_token}` }
-      })
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
+        {headers: { 'Authorization' : `Token ${user_token}` }}
+      )
       .then(group => {
         const datalist = Object.values(group);
         this.datalist = datalist;
