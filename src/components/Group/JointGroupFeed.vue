@@ -62,8 +62,8 @@
                       figure.image.is-64x64.img-user
                         img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
                     .media-content
-                      p.title.is-4.user-name 유저이름
-                      p.subtitle.is-6 작성시간
+                      p.title.is-4.user-name(v-for='data in datalist') {{ data.name }}
+                      //- p.subtitle.is-6(v-for='data in datalist') 작성시간
 
 
                     //- 드롭다운 버튼
@@ -203,8 +203,8 @@ export default {
   mounted(){
     this.fetchData()
   },
-  updated(){
-    this.fetchData()
+  beforeUpdate(){
+    // this.fetchData()
   },
   props: {
   },
@@ -256,13 +256,10 @@ export default {
     },
     fetchData(){
       this.$http.get(this.$store.state.api_write, this.write)
-                .then(response=> 
-                  {
-                  return console.log(response)
-                }
-                
-                  // console.log(response)}
-                ).then(write => {const datalist = Object.values(write);
+                .then(response=> {
+                  this.datalist = response.data
+                })
+                .then(write => {const datalist = Object.values(write);
                 this.datalist = datalist;
                 }
                 )

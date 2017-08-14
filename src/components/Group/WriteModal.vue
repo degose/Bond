@@ -27,6 +27,7 @@
             span
               i.fa.fa-folder-open-o
       footer.modal-card-foot
+        //- button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-3(:aria-label="close_message" @click="closeModal") 취소
 
@@ -66,7 +67,7 @@ export default {
                 .catch(error => console.log(error.message));
       this.visible = false;
     },
-      writePost(target, e){
+    writePost(target, e){
       let input = e.target.value;
       this.write[target] = input;
     },
