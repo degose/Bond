@@ -47,6 +47,7 @@ export default {
   },
   data(){
     return{
+      console,
       group_input: {
         done: false,
         name: ''
@@ -60,7 +61,7 @@ export default {
     },
     submit(){
       //VueResource === this.$http
-      this.$http.post('https://bond-accf7.firebaseio.com/group.json', this.group_input)
+      this.$http.post('https://bond-accf7.firebaseio.com/0.json', this.group_input)
                 .then(function(response){
                   console.log(response);
                 })
@@ -69,7 +70,7 @@ export default {
                 })
     },
     fetch(){
-      this.$http.get('https://bond-accf7.firebaseio.com/group.json')
+      this.$http.get('https://bond-accf7.firebaseio.com/')
                 .then(response => {
                     return response.json();
                     })
@@ -78,7 +79,10 @@ export default {
                     this.datalist = datalist;
                     })
                 .catch(error => console.error(error.message));
-    }
+    },
+    // gotoSearchResult(){
+    //   this.$router.push({path:'/SearchResult'});
+    // }
   }
 }
 </script>

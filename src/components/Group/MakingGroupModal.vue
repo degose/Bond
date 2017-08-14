@@ -71,8 +71,6 @@ export default {
       //     preview.src = reader.result;
       // }, false);
       // let refile = reader.readAsDataURL(file);
-
-
       let user_token = window.localStorage.getItem('token');
       this.$http.post(this.$store.state.api_grouplist, this.group,{ headers: { 'Authorization' : `Token ${user_token}` }})
         .then(response => {

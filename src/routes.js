@@ -67,7 +67,6 @@ export const routes = [
     // {path: '/InvitationModal', component: InvitationModal},
     
     // Set
-
     // *
     {path: '*', component: Home}
 ]

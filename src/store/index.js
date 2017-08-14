@@ -17,21 +17,10 @@ export const store = new Vuex.Store({
   api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
   api_signin: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login/',
   api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
-<<<<<<< HEAD
-  api_MainPage: 'https://bond-accf7.firebaseio.com/'
-  
-},
-getters: {
-  
-},
-mutations: {
-  
-=======
   // 이 아래는 자기가 테스트해볼 파이어 베이스 주소
   // api_write: 'https://bond-43bc3.firebaseio.com/write.json',
   api_write: 'https://vue-planlist-f14d2.firebaseio.com/test.json/',
 
->>>>>>> 670dd2eea72c2eae0670684935df432ad6e57739
 },
   getters: {
 
