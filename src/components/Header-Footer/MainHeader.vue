@@ -35,7 +35,8 @@
                   router-link.navbar-item(to="/MyGroupFeed")
                     | 새 글 보기
                   hr.dropdownhr
-                  a.navbar-item(@click="console")
+                  a.navbar-item(@click="signOut")
+                    //- a.navbar-item(@click="console")
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
         my-setting(close_message="close lightbox" ref='my_setting')
@@ -62,8 +63,21 @@ export default {
     }
   },
   methods: {
-    console() {
-      console.log('눌렀다!');
+    signOut(){
+      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
+      //  { headers: {'Authorization' : `Token ${user_token}`}})
+      .then(response => {
+        let token = response.data.token;
+        if ( window.localStorage.getItem('token') ) {
+          window.localStorage.removeItem('token', token);
+        }
+        this.$router.push( {path: "/Home"} );
+        // console.log(response);
+        // console.log('성공');
+      })
+      .catch(error => {
+        console.log(error.response);
+      })
     },
     openMySetting() {
       this.$refs.my_setting.visible = true;

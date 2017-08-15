@@ -23,7 +23,7 @@
           .level-item.has-text-centered
             .field.has-addons
               p.control
-                input.input(type='text', placeholder='현재 내이름' disabled)           
+                input.input(type='text', v-model="user.username" disabled) 
         nav.level
           .level-item.has-text-centered
             .field.has-addons
@@ -45,6 +45,9 @@
 
 <script>
 export default {
+  // created:{
+  //  getUserInfo(){}
+  // },
   props: {
     close_message: {
       type: String,
@@ -57,12 +60,38 @@ export default {
   },
   data() {
     return {
-      visible: this.is_visible
+      visible: this.is_visible,
+      user:{
+        pk:'',
+        email:'',
+        nickname:'',
+        username:'',
+
+      }
     }
   },
   methods: {
     closeModal(){
       this.visible = false;
+    },
+    getUserInfo(){
+      let user_token = window.localStorage.getItem('token');
+      let userinfo = {
+        pk: this.user.pk,
+        email: this.user.email,
+        nickname: this.user.nickname,
+        username: this.user.username
+      }
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/', this.user,
+      { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response => console.log(response) )
+                // .then(response => {          
+                //   console.log(response);
+                //   console.log('userinfo.pk:',userinfo.pk);
+                //   console.log('userinfo.email:',userinfo.email);
+                //   console.log('userinfo.nickname:',userinfo.nickname)
+                //   console.log('userinfo.username:',userinfo.username)})
+                .catch(error => console.log(error.response));
     }
   }
 }

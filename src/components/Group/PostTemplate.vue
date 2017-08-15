@@ -208,6 +208,9 @@ export default {
     WriteModal,
     LeaveGroupModal
   },
+  // computed:{
+  //   fetchData(){}
+  // },
   methods: {
     openWriteModal(){
       this.$refs.write_modal.visible = true;

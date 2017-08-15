@@ -24,7 +24,7 @@
         hr
         nav.level
           .level-item.has-text-centered
-            a.field.has-addons
+            a.field.has-addons(@click="signOut")
               p 로그아웃
       footer.modal-card-foot
         button.button.is-primary(@click="closeModal") 확인
@@ -57,6 +57,22 @@ export default {
     }
   },
   methods: {
+      signOut(){
+      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
+      //  { headers: {'Authorization' : `Token ${user_token}`}})
+      .then(response => {
+        let token = response.data.token;
+        if ( window.localStorage.getItem('token') ) {
+          window.localStorage.removeItem('token', token);
+        }
+        this.$router.push( {path: "/Home"} );
+        // console.log(response);
+        // console.log('성공');
+      })
+      .catch(error => {
+        console.log(error.response);
+      })
+    },
     closeModal(){
       this.visible = false;
     },
