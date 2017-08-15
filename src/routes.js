@@ -66,8 +66,7 @@ export const routes = [
     {path: '/SearchResult', component: SearchResult},
     // {path: '/InvitationModal', component: InvitationModal},
     
-    //Set
-
+    // Set
     // *
     {path: '*', component: Home}
 ]

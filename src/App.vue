@@ -1,7 +1,7 @@
 <template lang="pug">
   #app
     div
-      background
+      //- background
       //- Home
       //- main-page
       router-view
@@ -22,7 +22,7 @@ import JointGroup from './components/Group/JointGroup';
 import Feed from './components/Feed/Feed';
 import MyGroup from './components/Main/MyGroup';
 import MainFooter from './components/Header-Footer/MainFooter';
-import Background from './components/Background';
+// import Background from './components/Background';
 
 export default {
   name: 'app',
@@ -35,7 +35,7 @@ export default {
     Feed,
     MyGroup,
     MainFooter,
-    Background
+    // Background
   },
   data () {
     return {
