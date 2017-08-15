@@ -8,7 +8,7 @@
 
       section.modal-card-body
         .card-content
-          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('text', $event)" @value='write.text')
+          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content')
         //- footer.card-footer
       footer.card-footer
         a.file.card-footer-item
@@ -52,9 +52,15 @@ export default {
     return {
       visible: this.is_visible,
       write: {
-        text:''
+        // 텍스트 내용
+        content:'',
+        // 그룹 pk값..임의로 정해둠
+        group: 29
       },
-      datalist:[]
+      datalist:[],
+      file_url: '',
+      file_name: '',
+      flie: null,
     }
   },
   methods: {
@@ -62,14 +68,24 @@ export default {
       this.visible = false;
     },
     writeTextSubmit(){
-      this.$http.post(this.$store.state.api_write, this.write)
+      // 토큰 값으로 유저가 누구인지 인증
+      let user_token = window.localStorage.getItem('token');
+      this.$http.post(this.$store.state.api_write, this.write,
+      { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => console.log(response))
-                .catch(error => console.log(error.message));
+                .catch(error => console.log(error.response));
       this.visible = false;
     },
+    // 한글 양방향 데이터 바인딩 메서드
     writePost(target, e){
       let input = e.target.value;
       this.write[target] = input;
+    },
+    // 이미지가 있나 체크해서 v-if활용해 사진 없으면 사진틀 안보이게 하고 싶음..ㅠ
+    checkImage(file){
+      if(/.*\.(gif)|(jpeg)|(jpg)|(png)$/.test(file.name.toLowerCase())){
+          return true;
+      }
     },
   }
 }

@@ -17,13 +17,15 @@ export const store = new Vuex.Store({
     api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
     api_signin: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login/',
     api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
-    // api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/'
+    api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/'
     // api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
+    // console.log('%c——————————————————————————————————————————————————','color: #00737d');
+
   // 이 아래는 자기가 테스트해볼 파이어 베이스 주소
   // 세민
   // api_write: 'https://bond-43bc3.firebaseio.com/write.json',
   // 태훈
-    api_write: 'https://vue-planlist-f14d2.firebaseio.com/test.json/'
+    // api_write: 'https://vue-planlist-f14d2.firebaseio.com/test.json/'
 
   },
   getters: {

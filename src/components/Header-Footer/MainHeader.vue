@@ -6,7 +6,7 @@
               picture
                 img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                 img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
-            .navbar-burger.burger(data-target="navMenuburger")
+            .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
               figure
                 img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
           .search.column
@@ -39,14 +39,16 @@
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
         my-setting(close_message="close lightbox" ref='my_setting')
-    
+        mobile-my-menu(close_message="close lightbox" ref='mobile_my_menu')
 </template>
 
 <script>
 import MySetting from '../Main/MySetting';
+import MobileMyMenu from './MobileMyMenu';
 export default {
   components:{
-    MySetting
+    MySetting,
+    MobileMyMenu
   },
   data(){
     return{
@@ -56,16 +58,20 @@ export default {
         // path: './src/assets/logo.png',
         // label: 'Vue.js'
       },
-
+      
     }
   },
   methods: {
     console() {
-      conlsole.log('눌렀다!');
+      console.log('눌렀다!');
     },
     openMySetting() {
       this.$refs.my_setting.visible = true;
-    }
+    },
+    openMobileMyMenu() {
+      this.$refs.mobile_my_menu.visible = true;
+    },
+    
   }
 }
 </script>

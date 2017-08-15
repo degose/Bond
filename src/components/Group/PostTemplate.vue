@@ -40,6 +40,8 @@
                 .media-content
                   //- p.title.is-4.user-name(v-for='data in datalist') 작성자
                   //- p.subtitle.is-6(v-for='data in datalist') 작성시간
+                  p.title.is-4.user-name 작성자
+                  p.subtitle.is-6 작성시간
 
 
                 //- 드롭다운 버튼
@@ -66,7 +68,7 @@
                 .del-http 
                   button(type='button', @click='delData') delete
                   p.fetched-data
-                    p.fetched-data-item(v-for='data in datalist') {{ data.text }}
+                    p.fetched-data-item(v-for='write in datalist') {{ write.data }}
 
                 
               //- 이미지 - 1개일 때
@@ -192,7 +194,12 @@ export default {
       dropdowncomment: false,
       showcomment: false,
       like: false,
-      write:'',
+      write: {
+        // 텍스트 내용
+        content:'',
+        // 그룹 pk값..임의로 정해둠
+        group: 29
+      },
       datalist:[]
       // target: ''
     }
@@ -230,19 +237,35 @@ export default {
       
       this.like = !this.like;
     },
+    // fetchData(){
+    //   let user_token = window.localStorage.getItem('token');
+    //   this.$http.get(this.$store.state.api_write, this.write,
+    //    { headers: {'Authorization' : `Token ${user_token}`}})
+    //             .then(response=> {
+    //               this.datalist = response.results
+    //             })
+    //             // .then(write => {const datalist = Object.values(write);
+    //             // this.datalist = datalist;
+    //             // })
+    //             // 
+    //             // .then(data => console.log(data))
+    //             .catch(error => console.log(error.response));
+    // },
     fetchData(){
-      // event.preventDefault()
-      this.$http.get(this.$store.state.api_write, this.write)
+      let user_token = window.localStorage.getItem('token');
+      this.$http.get(this.$store.state.api_write, this.write,
+       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.datalist = response.data
                 })
-                .then(write => {const datalist = Object.values(write);
-                this.datalist = datalist;
-                }
-                )
+                // .then(write => {const datalist = Object.values(write);
+                // this.datalist = datalist;
+                // })
+                // 
                 // .then(data => console.log(data))
-                .catch(error => console.log(error.message));
+                .catch(error => console.log(error.response));
     },
+
     delData(){
       this.$http.delete(this.$store.state.api_write, this.write)
       .then(response => console.log(response)
