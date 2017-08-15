@@ -59,13 +59,13 @@ export default {
   methods: {
       signOut(){
       this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
-      //  { headers: {'Authorization' : `Token ${user_token}`}})
       .then(response => {
         let token = response.data.token;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
         }
         this.$router.push( {path: "/Home"} );
+        alert("성공적으로 로그아웃 하셨습니다.")
         // console.log(response);
         // console.log('성공');
       })
