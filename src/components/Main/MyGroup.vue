@@ -102,8 +102,7 @@ export default {
         console.log(error.message);
       })
     }
-  }
-}
+}}
 </script>
 
 <style lang="sass" scoped>

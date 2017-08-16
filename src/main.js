@@ -1,21 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import VueResource from 'vue-resource';
+// import VueResource from 'vue-resource';
 import axios from 'axios';
 import App from './App';
 import {routes} from './routes';
 import {store} from './store';
 
 
-
 Vue.use(VueRouter);
-Vue.use(VueResource);
+// Vue.use(VueResource);
 
-//Global Settings
-Vue.http.options.root = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/'
-
-// Vue.prototype.$http = axios;
-Vue.http = axios;
+Vue.prototype.$http = axios;
+// Vue.http = axios;
 // Vue.prototype.$http.headers.common
 
 // Vue.http.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:8080'

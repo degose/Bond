@@ -6,7 +6,7 @@
               picture
                 img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                 img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
-            .navbar-burger.burger(data-target="navMenuburger")
+            .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
               figure
                 img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
           .search.column
@@ -33,59 +33,60 @@
                   router-link.navbar-item(to="/MyGroupFeed")
                     | 새 글 보기
                   hr.dropdownhr
-                  //- a.navbar-item(@click="console")
-                  a.navbar-item()
+                  a.navbar-item(@click="signOut")
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
         my-setting(close_message="close lightbox" ref='my_setting')
-    
+        mobile-my-menu(close_message="close lightbox" ref='mobile_my_menu')
 </template>
 
 <script>
 import MySetting from '../Main/MySetting';
+import MobileMyMenu from './MobileMyMenu';
 export default {
   components:{
-    MySetting
+    MySetting,
+    MobileMyMenu
   },
   // created(){
   //   this.group_list_keys = Object.keys(this.group_list[0]);
   // },
   data(){
     return{
-      search: '',
-      group_list_keys: [],
-      group_list:[],
-      datalist: []
-    }
-  },
-  computed: {
-    filtered_group_list(){
-      let group_list = this.group_list;
-      let search = this.search.trim();
-      //사용자가 정보를 입력한 경우
-      if(search){
-        group_list = group_list.filter(task => Object.values(task).some(value=>value.includes(search)));
-      }
+        vue: {
+        // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
+        // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
+        // path: './src/assets/logo.png',
+        // label: 'Vue.js'
+      },
+      
     }
   },
   methods: {
+    signOut(){
+      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
+      //  { headers: {'Authorization' : `Token ${user_token}`}})
+      .then(response => {
+        let token = response.data.token;
+        if ( window.localStorage.getItem('token') ) {
+          window.localStorage.removeItem('token', token);
+        }
+        this.$router.push( {path: "/"} );
+        alert("성공적으로 로그아웃 하셨습니다.")
+        // console.log(response);
+        // console.log('성공');
+      })
+      .catch(error => {
+        console.log(error.response);
+      })
+    },
     openMySetting() {
       this.$refs.my_setting.visible = true;
     },
-    fetch(){
-      this.$http.get('https://bond-accf7.firebaseio.com/0.json')
-                .then(response => {
-                    return response.json();
-                    })
-                .then(data => {
-                    const datalist = Object.values(data);
-                    this.datalist = datalist;
-                    })
-                .catch(error => console.error(error.message));
+    openMobileMyMenu() {
+      this.$refs.mobile_my_menu.visible = true;
     },
-    inputChangeSearch(event){
-      this.search = event.target.value;
-    }
+    
   }
 }
 </script>
