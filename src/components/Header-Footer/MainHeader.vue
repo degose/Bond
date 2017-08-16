@@ -13,7 +13,12 @@
             .field.has-addons
               .control.has-icons-left.is-expanded
                 label.label.is-hidden(for="search")
-                input.input(id="search" type='text', placeholder='그룹이나 게시글을 검색해보세요' @input="inputChangeSearch" v-bind:value = "search")
+                input.input(
+                  id="search" 
+                  type='text' 
+                  placeholder='그룹이나 게시글을 검색해보세요' 
+                  @input="inputSearch" 
+                  :value = "search")
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
               .control
@@ -48,25 +53,14 @@ export default {
     MySetting,
     MobileMyMenu
   },
-  // created(){
-  //   this.group_list_keys = Object.keys(this.group_list[0]);
-  // },
+  created(){
+    // this.group_list = Object.keys(this.group_list[0]); 
+    this.fetch();
+  },
   data(){
     return{
       search: '',
-      group_list_keys: [],
       group_list:[],
-      datalist: []
-    }
-  },
-  computed: {
-    filtered_group_list(){
-      let group_list = this.group_list;
-      let search = this.search.trim();
-      //사용자가 정보를 입력한 경우
-      if(search){
-        group_list = group_list.filter(task => Object.values(task).some(value=>value.includes(search)));
-      }
     }
   },
   methods: {
@@ -93,18 +87,28 @@ export default {
     openMobileMyMenu() {
       this.$refs.mobile_my_menu.visible = true;
     },
+    // fetch(){
+    //   this.$http.get('https://bond-accf7.firebaseio.com/0.json')
+    //             .then(response => {
+    //                 return response.json();
+    //                 })
+    //             .then(data => {
+    //                 const datalist = Object.values(data);
+    //                 this.datalist = datalist;
+    //                 })
+    //             .catch(error => console.error(error.message));
+    // },
     fetch(){
-      this.$http.get('https://bond-accf7.firebaseio.com/0.json')
+      let search = this.search.trim();
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
                 .then(response => {
-                    return response.json();
-                    })
-                .then(data => {
-                    const datalist = Object.values(data);
-                    this.datalist = datalist;
-                    })
-                .catch(error => console.error(error.message));
+                  this.group_list = response.data.results;
+                  console.log(this.group_list)
+                  this.$router.push('/SearchResult')
+                })
+                .catch(error => console.error(error.message))
     },
-    inputChangeSearch(event){
+    inputSearch(event){
       this.search = event.target.value;
     }
     

@@ -1,49 +1,6 @@
-<template lang="pug">
-div
-  .nav-bg
-    nav.navbar.container
-      .navbar-brand
-        router-link.navbar-item(to="MainPage")
-          picture
-            img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
-            img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
-        .navbar-burger.burger(data-target="navMenuburger")
-          figure
-            img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
-      .search.column
-        .field.has-addons
-          .control.has-icons-left.is-expanded
-            input.input(
-              type='text'
-              placeholder='그룹이나 게시글을 검색해보세요' 
-              v-model = "search"
-              )
-            span.span.icon.is-small.is-left
-              i.fa.fa-search
-          .control
-              button.button.btn-search(type="button" @click="fetch") Search
-
-      #navMenuburger.navbar-menu
-        .navbar-end
-          .navbar-item.has-dropdown.is-hoverable.is-right
-            a.navbar-link
-              figure
-                img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-            .navbar-dropdown
-              a.navbar-item(@click="openMySetting")
-                | 내 정보
-              router-link.navbar-item(to="/MyWriteFeed")
-                | 내 글 보기
-              router-link.navbar-item(to="/MyGroupFeed")
-                | 새 글 보기
-              hr.dropdownhr
-              a.navbar-item(@click="console")
-                | 로그 아웃
-    hr.navhr.is-hidden-mobile
-    my-setting(close_message="close lightbox" ref='my_setting')
-  
-  
+<template lang="pug">  
   div
+    main-header
     .container
       .columns
         .column.is-10.is-offset-1
@@ -86,17 +43,19 @@ div
                 span.pagination-ellipsis …
               li
                 a.pagination-link 86
-  main-footer
+    main-footer
 
 </template>
 
 <script>
 import MySetting from '../Main/MySetting';
+import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 export default {
   name: 'app',
   components: {
     MySetting,
+    MainHeader,
     MainFooter,
   },
   data(){
@@ -129,22 +88,14 @@ export default {
                 })
     },
     // fetch(){
-    //   this.$http.get(''+'group/')
+    //   let search = this.search.trim();
+    //   this.$http.get(''+'group/?search='+`${search}`)
     //             .then(response => {
     //               this.group_list = response.data.results;
-    //               console.log(this.group_list);
+    //               console.log(this.group_list)
     //             })
     //             .catch(error => console.error(error.message))
     // },
-    fetch(){
-      let search = this.search.trim();
-      this.$http.get(''+'group/?search='+`${search}`)
-                .then(response => {
-                  this.group_list = response.data.results;
-                  console.log(this.group_list)
-                })
-                .catch(error => console.error(error.message))
-    },
   }
 }
 
