@@ -12,14 +12,12 @@
           .search.column
             .field.has-addons
               .control.has-icons-left.is-expanded
-                input.input(type='text', placeholder='그룹이나 게시글을 검색해보세요')
+                label.label.is-hidden(for="search")
+                input.input(id="search" type='text', placeholder='그룹이나 게시글을 검색해보세요' @input="inputChangeSearch" v-bind:value = "search")
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
               .control
-                router-link(to="/SearchResult")
-                  button.button.btn-search(type="button") Search
-
-
+                button.button.btn-search(type="button" @click="fetch") Search
 
           #navMenuburger.navbar-menu
             .navbar-end
@@ -36,7 +34,6 @@
                     | 새 글 보기
                   hr.dropdownhr
                   a.navbar-item(@click="signOut")
-                    //- a.navbar-item(@click="console")
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
         my-setting(close_message="close lightbox" ref='my_setting')
@@ -51,6 +48,9 @@ export default {
     MySetting,
     MobileMyMenu
   },
+  // created(){
+  //   this.group_list_keys = Object.keys(this.group_list[0]);
+  // },
   data(){
     return{
         vue: {

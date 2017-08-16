@@ -48,10 +48,10 @@ export const routes = [
     beforeEnter (to, from, next) {
       const tk = window.localStorage.getItem('token');
       if (tk) {
-          next('/MainPage');
-        } else {
-          next();
-        }
+        next('/MainPage');
+      } else {
+        next();
+      }
     }
   },
     { path: '/FindPassword', component: FindPassword },
