@@ -71,7 +71,7 @@ export default {
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
         }
-        this.$router.push( {path: "/Home"} );
+        this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
         // console.log(response);
         // console.log('성공');
