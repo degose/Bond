@@ -97,6 +97,7 @@ export default {
         // this.datalist = datalist;
         this.group_list = response.data.results;
        console.log(response);
+       console.log('pk:', this.group.pk);
       })
       .catch(error => {
         console.log(error.message);

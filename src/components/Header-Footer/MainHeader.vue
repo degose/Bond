@@ -53,10 +53,10 @@ export default {
     MySetting,
     MobileMyMenu
   },
-  created(){
-    // this.group_list = Object.keys(this.group_list[0]); 
-    this.fetch();
-  },
+  // created(){
+  //   // this.group_list = Object.keys(this.group_list[0]); 
+  //   this.fetch();
+  // },
   data(){
     return{
       search: '',

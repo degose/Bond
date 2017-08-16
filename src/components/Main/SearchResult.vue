@@ -64,6 +64,10 @@ export default {
       group_list: []
     }
   },
+  created(){
+    // this.group_list = Object.keys(this.group_list[0]); 
+    this.fetch();
+  },
   computed: {
     filtered_group_list(){
       let search = this.search.trim();
@@ -87,15 +91,16 @@ export default {
                   console.error(error.message);
                 })
     },
-    // fetch(){
-    //   let search = this.search.trim();
-    //   this.$http.get(''+'group/?search='+`${search}`)
-    //             .then(response => {
-    //               this.group_list = response.data.results;
-    //               console.log(this.group_list)
-    //             })
-    //             .catch(error => console.error(error.message))
-    // },
+    fetch(){
+      let search = this.search.trim();
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
+                .then(response => {
+                  this.group_list = response.data.results;
+                  console.log(this.group_list)
+                  this.$router.push('/SearchResult')
+                })
+                .catch(error => console.error(error.message))
+    },
   }
 }
 
