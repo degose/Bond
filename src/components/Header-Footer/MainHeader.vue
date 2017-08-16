@@ -53,13 +53,20 @@ export default {
   // },
   data(){
     return{
-        vue: {
-        // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
-        // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        // path: './src/assets/logo.png',
-        // label: 'Vue.js'
-      },
-      
+      search: '',
+      group_list_keys: [],
+      group_list:[],
+      datalist: []
+    }
+  },
+  computed: {
+    filtered_group_list(){
+      let group_list = this.group_list;
+      let search = this.search.trim();
+      //사용자가 정보를 입력한 경우
+      if(search){
+        group_list = group_list.filter(task => Object.values(task).some(value=>value.includes(search)));
+      }
     }
   },
   methods: {
@@ -86,6 +93,20 @@ export default {
     openMobileMyMenu() {
       this.$refs.mobile_my_menu.visible = true;
     },
+    fetch(){
+      this.$http.get('https://bond-accf7.firebaseio.com/0.json')
+                .then(response => {
+                    return response.json();
+                    })
+                .then(data => {
+                    const datalist = Object.values(data);
+                    this.datalist = datalist;
+                    })
+                .catch(error => console.error(error.message));
+    },
+    inputChangeSearch(event){
+      this.search = event.target.value;
+    }
     
   }
 }

@@ -128,11 +128,20 @@ export default {
                   console.error(error.message);
                 })
     },
+    // fetch(){
+    //   this.$http.get(''+'group/')
+    //             .then(response => {
+    //               this.group_list = response.data.results;
+    //               console.log(this.group_list);
+    //             })
+    //             .catch(error => console.error(error.message))
+    // },
     fetch(){
-      this.$http.get(''+'group/')
+      let search = this.search.trim();
+      this.$http.get(''+'group/?search='+`${search}`)
                 .then(response => {
                   this.group_list = response.data.results;
-                  console.log(this.group_list);
+                  console.log(this.group_list)
                 })
                 .catch(error => console.error(error.message))
     },

@@ -24,7 +24,6 @@ div
           //-     input(type='checkbox')
           //-     |       로그인 상태유지
           .control.column.is-half.is-offset-one-quarter.has-text-centered
-            //- a(href='/SignUpPage')
             router-link(to="/SignUpPage")
               |       처음이신가요? 회원가입
 
@@ -68,7 +67,7 @@ export default {
   padding: 60px 0 90px 0
 
 .home-box
-  background-color: hsla(0, 0%, 100%, .7)
+  background-color: hsla(0, 0%, 100%, .9)
   padding: 40px 0
 .container
   min-height: 87vh

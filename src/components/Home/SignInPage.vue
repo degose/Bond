@@ -98,7 +98,7 @@ export default {
   margin-bottom: 0
 
 .home-box
-  background-color: hsla(0, 0%, 100%, .7)
+  background-color: hsla(0, 0%, 100%, .9)
   padding: 40px 0
 
 fieldset
