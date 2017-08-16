@@ -33,21 +33,22 @@
                 span.icon.is-small.is-left
                   i.fa.fa-envelope
                 span.icon.is-small.is-right
-                  i.fa.fa-warning
+                  i.fa.fa-check
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
                 input.input(type='password', v-model="signup.password1" placeholder='비밀번호')
                 span.icon.is-small.is-left
-                  i.fa.fa-envelope
+                  i.fa.fa-lock
                 span.icon.is-small.is-right
-                  i.fa.fa-warning
+                  i.fa.fa-check
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
                 input.input(type='password', v-model="signup.password2" placeholder='비밀번호 확인')
                 span.icon.is-small.is-left
-                  i.fa.fa-envelope
+                  i.fa.fa-lock
                 span.icon.is-small.is-right
-                  i.fa.fa-warning
+                  i.fa.fa-check
+
 
 
             .field.column.is-grouped.is-grouped-centered
@@ -84,21 +85,18 @@
                   span.icon.is-small.is-left
                     i.fa.fa-envelope
                   span.icon.is-small.is-right
-                    i.fa.fa-warning
+                    i.fa.fa-check
               .column.is-half.is-offset-one-quarter
                 .control.has-icons-left.has-icons-right
                   input.input(type='password', v-model="signup.password1" placeholder='비밀번호')
                   span.icon.is-small.is-left
-                    i.fa.fa-envelope
-                  span.icon.is-small.is-right
-                    i.fa.fa-warning
+                    i.fa.fa-lock
               .column.is-half.is-offset-one-quarter
                 .control.has-icons-left.has-icons-right
                   input.input(type='password', v-model="signup.password2" placeholder='비밀번호 확인')
                   span.icon.is-small.is-left
-                    i.fa.fa-envelope
-                  span.icon.is-small.is-right
-                    i.fa.fa-warning
+                    i.fa.fa-lock
+
 
 
               .field.column.is-grouped.is-grouped-centered
@@ -161,7 +159,7 @@ export default {
   margin-bottom: 0
 
 .home-box
-  background-color: hsla(0, 0%, 100%, .7)
+  background-color: hsla(0, 0%, 100%, .9)
   padding: 40px 0
 
 fieldset

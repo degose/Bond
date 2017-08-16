@@ -1,7 +1,7 @@
 <template lang="pug">
   .video-container
     video(autoplay, loop, muted)
-        source(src="https://firebasestorage.googleapis.com/v0/b/bond-accf7.appspot.com/o/Runner.mp4?alt=media&token=77484523-64ad-4f3e-aab8-3e5b190f1a40", type="video/mp4")
+        source(src="https://firebasestorage.googleapis.com/v0/b/bond-43bc3.appspot.com/o/722783965.mp4?alt=media&token=46cbc37a-ed19-47d8-ada4-aa5a7000bf75", type="video/mp4")
 
 </template>
 
