@@ -34,10 +34,13 @@ export const routes = [
 
     // Group
     // {path: '/JointGroup', component: JointGroup},
-  { path: '/JointGroup', component: JointGroup, children: [
+  { path: '/JointGroup', 
+    component: JointGroup, 
+    children: [
       { path: '', component: JointGroupFeed },
       { path: '/JointGroup/GroupMemberList', component: GroupMemberList }
-  ] },
+    ] 
+  },
     // {path: '/JointGroupFeed', component: JointGroupFeed},
     // {path: '/GroupMemberList', component: GroupMemberList},
 
