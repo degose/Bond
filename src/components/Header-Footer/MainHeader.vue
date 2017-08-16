@@ -12,12 +12,12 @@
           .search.column
             .field.has-addons
               .control.has-icons-left.is-expanded
-                label.label(for="search")
+                label.label.is-hidden(for="search")
                 input.input(id="search" type='text', placeholder='그룹이나 게시글을 검색해보세요' @input="inputChangeSearch" v-bind:value = "search")
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
               .control
-                  button.button.btn-search(type="button" @click="fetch") Search
+                button.button.btn-search(type="button" @click="fetch") Search
 
           #navMenuburger.navbar-menu
             .navbar-end
@@ -33,7 +33,8 @@
                   router-link.navbar-item(to="/MyGroupFeed")
                     | 새 글 보기
                   hr.dropdownhr
-                  a.navbar-item(@click="console")
+                  //- a.navbar-item(@click="console")
+                  a.navbar-item()
                     | 로그 아웃
         hr.navhr.is-hidden-mobile
         my-setting(close_message="close lightbox" ref='my_setting')
@@ -46,9 +47,9 @@ export default {
   components:{
     MySetting
   },
-  created(){
-    this.group_list_keys = Object.keys(this.group_list[0]);
-  },
+  // created(){
+  //   this.group_list_keys = Object.keys(this.group_list[0]);
+  // },
   data(){
     return{
       search: '',

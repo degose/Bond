@@ -106,8 +106,16 @@ export default {
       }
 
       let user_token = window.localStorage.getItem('token');
-      this.$http.post(this.$store.state.api_grouplist, groupinfo, 
-        { headers: {'Authorization' : `Token ${user_token}`}}
+      this.$http.post(
+        this.$store.state.api_grouplist, 
+        groupinfo, 
+        { 
+          headers: {
+            'Authorization' : `Token ${user_token}`,
+            // 'Content-Type': 'multipart/form-data'
+          }
+          
+        }
         )
         .then(response => {
           console.log(response);
