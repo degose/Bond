@@ -15,7 +15,7 @@ Vue.use(VueResource);
 Vue.http.options.root = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/'
 
 // Vue.prototype.$http = axios;
-// Vue.http = axios;
+Vue.http = axios;
 // Vue.prototype.$http.headers.common
 
 // Vue.http.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:8080'
