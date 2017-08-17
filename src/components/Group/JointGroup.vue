@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.all-wrapper
     main-header
     feed-menu
     main-footer
@@ -27,8 +27,10 @@ export default {
 @import "~bulma"
 @import "~style"
 
+.all-wrapper
+  background: #eee
 
 body
-  background: #eee
+  // background: #eee
 
 </style>

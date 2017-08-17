@@ -7,23 +7,22 @@
             .card
               .card-image
                 figure.image.is-16by9
-                  img(src='http://bulma.io/images/placeholders/1280x960.png', alt='Image')
+                  img.group_profile_img(:src='group_data.profile_img', alt='Image')
               .card-content
                 article.media
                   .media-content
-                    p.title.is-4 그룹 이름
+                    p.title.is-4 {{ group_data.name }}
                     div
-                      span 멤버 5
+                      span 멤버 {{ group_data.num_of_members }}
                       |  · 
-                      a(aria-label="open leave group modal" @click="openLeaveGroupModal") 
+                      a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal") 
                         span.icon.is-small
                           i.fa.fa-cog(aria-hidden='true')
                         | 그룹 설정
-                .content
-                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  | Phasellus nec iaculis mauris. 
-
-
+                .content {{ group_data.description }}
+                  
+          //- .column.is-9
+          //-   post-template
           
           
           //- feed 영역
@@ -52,28 +51,35 @@
                         | &nbsp; 
                         |글쓰기
                 
+            div.feed-box(v-show="post_data.length <= 0")
+              .card
+                .card-content
+                  .content
+                    | 그룹에 재미있는 이야기를 써보세요.
 
-
-            div.feed-box
+            div.feed-box(v-for="(post, i) in post_data")
               .card
                 .card-content
                   article.media
                     .media-left
                       figure.image.is-64x64.img-user
-                        img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
+                        img.user-img(:src='post.author.profile_img', alt='Image')
                     .media-content
-                      p.title.is-4.user-name 유저이름
-                      p.subtitle.is-6 작성시간
+                      //- p.title.is-4.user-name(v-for='data in datalist') 작성자
+                      //- p.subtitle.is-6(v-for='data in datalist') 작성시간
+                      p.title.is-4.user-name {{ post.author.nickname }}
+                      p.subtitle.is-6 {{ post.created_date }}
 
 
                     //- 드롭다운 버튼
                     .dropdown.is-right.is-active
                       .dropdown-trigger
-                        button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownPost")
+                        button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownPost(post.pk, $event)")
                           span.icon
                             i.icon-more.ion-android-more-vertical(aria-hidden='true')
 
-                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownpost")
+                      //- #dropdown-menu3.dropdown-menu(role='menu' :class="post.pk")
+                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownpost" :class='post.pk')
                         .dropdown-content
                           ul
                             li
@@ -85,22 +91,23 @@
 
                   //- 글 (최상위)
                   .content
-                    .get-http 
-                      button(type='button', @click='fetchData') fetch
-                    .del-http 
-                      button(type='button', @click='delData') delete
-                      p.fetched-data
-                        p.fetched-data-item(v-for='data in datalist') {{ data.text }}
+                    | {{ post.content }}
+                    //- .get-http 
+                    //-   button(type='button', @click='fetchData') fetch
+                    //- .del-http 
+                    //-   button(type='button', @click='delData') delete
+                    //-   p.fetched-data
+                    //-     p.fetched-data-item(v-for='data in post_data') {{ write.data }}
 
                     
                   //- 이미지 - 1개일 때
-                  .content
+                  .content(v-if=' -1 > 0')
                     figure.image
                       img(src='http://bulma.io/images/placeholders/480x320.png')
 
 
                   //- 동영상
-                  .content
+                  .content(v-if=' -1 > 0')
                     figure
                       video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
                         source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
@@ -110,7 +117,7 @@
 
 
                   //- 첨부파일
-                  .content
+                  .content(v-if=' -1 > 0')
                     .file-box
                       a(href='#')
                         .columns.is-mobile
@@ -126,15 +133,15 @@
                 
                 //- 좋아요, 댓글 개수
                 footer.card-footer
-                  button(type="submit" @click="addLike").card-footer-item.btn-show-like
+                  button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
                     span.icon-like
                       i.fa.fa-heart-o(v-show="!like")
                       i.fa.fa-heart(v-show="like")
                     | &nbsp;  
-                    | 5
+                    | {{ post.like_count }}
                   button(@click="showComment").card-footer-item.btn-show-comment
                     | 댓글
-                    | 5
+                    | {{ post.comment_count }}
                     | &nbsp; 
                     span.icon.is-small(v-show="!showcomment")
                       i.fa.fa-angle-down(aria-hidden='true')
@@ -158,24 +165,24 @@
                               i.fa.fa-pencil
                   
                   //- 댓글 리스트 영역
-                  article.media(v-show="showcomment")
+                  article.media(v-show="showcomment" v-for="comment in comment_data")
                     figure.media-left
                       p.image.is-48x48
-                        img.user-img(src='http://bulma.io/images/placeholders/128x128.png')
+                        img.user-img(:src='comment.author.profile_img')
                     .media-content
                       .content
                         p
-                          strong Barbara Middleton
+                          strong {{ comment.author.nickname }}
                           br
-                          |         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                          | {{ comment.content }}
                           br
                           small
-                            | 3 hrs
+                            | {{ comment.created_date }}
                     
                     //- 드롭다운 버튼
                     .dropdown.is-right.is-active
                       .dropdown-trigger
-                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownComment")
+                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownComment(comment.pk)")
                           span.icon.is-small
                             i.icon-more.ion-android-more-vertical(aria-hidden='true')
                       #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdowncomment")
@@ -197,15 +204,21 @@
 <script>
 import WriteModal from './WriteModal';
 import LeaveGroupModal from './LeaveGroupModal';
+import PostTemplate from './PostTemplate';
 
 export default {
   name: 'JointGroupFeed',
+  created(){
+    // this.fetchGroupData();
+  },
   mounted(){
-    this.fetchData()
+    this.fetchGroupData();
+    this.fetchPostData();
+    this.fetchCommentData();
   },
-  updated(){
-    this.fetchData()
-  },
+  // beforeUpdate(){
+  //   // this.fetchData()
+  // },
   props: {
   },
   data() {
@@ -216,14 +229,24 @@ export default {
       dropdowncomment: false,
       showcomment: false,
       like: false,
-      write:'',
-      datalist:[]
+      like_or_not: '',
+      write: {
+        // 텍스트 내용
+        content:'',
+        // 그룹 pk값..임의로 정해둠
+        group: 29
+      },
+      group_data:[],
+      post_data:[],
+      comment_data:[],
       // target: ''
+      pk:'',
     }
   },
   components: {
     WriteModal,
-    LeaveGroupModal
+    LeaveGroupModal,
+    PostTemplate
   },
   methods: {
     openWriteModal(){
@@ -241,40 +264,87 @@ export default {
         console.error(error.message);
       });
     },
-    openDropdownPost() {
+    openDropdownPost(pk, e, i) {
+      console.log('postpk',pk);
+      console.log('e.target',e.target);
+      console.log('index',i);
       this.dropdownpost = !this.dropdownpost;
     },
-    openDropdownComment() {
+    openDropdownComment(pk) {
       this.dropdowncomment = !this.dropdowncomment;
     },
-    showComment() {
+    showComment(pk) {
       this.showcomment = !this.showcomment;
     },
-    addLike() {
-      
+    addLike(pk) {
+      let user_token = window.localStorage.getItem('token');
+      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle', this.like_or_not,
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  // this.like_or_not = response.like_or_not;
+                  // console.log('this.group_datalist:',this.group_data);
+                  // this.like_or_not = response.data;
+                  console.log('like.response:',response);
+                })
+                .catch(error => console.log(error.response));
       this.like = !this.like;
     },
-    fetchData(){
-      this.$http.get(this.$store.state.api_write, this.write)
-                .then(response=> 
-                  {
-                  return console.log(response)
-                }
-                
-                  // console.log(response)}
-                ).then(write => {const datalist = Object.values(write);
-                this.datalist = datalist;
-                }
-                )
+    fetchGroupData(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  this.group_data = response.data;
+                  // console.log('this.group_datalist:',this.group_data);
+                  // console.log('response:',response);
+                })
+                // .then(write => {const datalist = Object.values(write);
+                // this.datalist = datalist;
+                // })
+                // 
                 // .then(data => console.log(data))
-                .catch(error => console.log(error.message));
+                .catch(error => console.log(error.response));
+    },
+    fetchPostData(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
+       { headers: {'Authorization' : `Token ${user_token}`} })
+                .then(response=> {
+                  this.post_data = response.data.results;
+                  console.log('this.post_data:',this.post_data);
+                })
+                // .then(write => {const datalist = Object.values(write);
+                // this.datalist = datalist;
+                // })
+                // 
+                // .then(data => console.log(data))
+                .catch(error => console.log(error.response));
+    },
+    fetchCommentData(ppk){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      // let ppk = this.post.pk;
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
+       { headers: {'Authorization' : `Token ${user_token}`} })
+                .then(response=> {
+                  this.comment_data = response.data.results;
+                  console.log('this.comment_data:',this.comment_data);
+                })
+                // .then(write => {const datalist = Object.values(write);
+                // this.datalist = datalist;
+                // })
+                // 
+                // .then(data => console.log(data))
+                .catch(error => console.log(error.response));
     },
     delData(){
       this.$http.delete(this.$store.state.api_write, this.write)
       .then(response => console.log(response)
       //  { return response.json()}
        ).catch(error => console.log(error.message));
-    }
+    },
   }
 }
 </script>
@@ -284,7 +354,11 @@ export default {
 @import "~bulma"
 @import "~style"
 
-
+.group_profile_img
+  background: url('http://bulma.io/images/placeholders/1280x960.png')
+  // overflow: hidden
+.user-img
+  background: #eee
 
 body
   background: #eee

@@ -2,20 +2,19 @@
   div
     .page-wrapper
       .container.grouplist
-        .columns
+        .columns.grouplist-wrapper
           //- 그룹 정보 영역
-          .column.is-3
-            //- 그룹을 누르면 해당 그룹으로 이동하는 링크를 걸어야 한다.
-            //- a(href="/JointGroup")
-            router-link(to="/JointGroup")
+          .column.is-3(v-for="group in group_list")
+            //- router-link(to="/JointGroup")
+            a(@click.prevent="goGroup(group.pk, $event)")
               .card
                 .card-image
-                  figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                    img(src='http://bulma.io/images/placeholders/640x320.png', alt='Image')
+                  figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper
+                    img(:src="group.profile_img" alt='Image')
                 .card-content
                   .media
                     .media-content.has-text-centered
-                      p.title.is-4 그룹 이름
+                      p.title.is-4 {{ group.name }}
 
               
           .column.is-3
@@ -48,39 +47,81 @@
 
 <script>
 import MakingGroupModal from '../Group/MakingGroupModal';
+// let group_list_url = 'https://bond-43bc3.firebaseio.com/group.json';
+// let group_list_url = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/';
 export default {
   name: 'MyGroup',
   components: {
     MakingGroupModal
   },
+  created() {
+    this.getMyGroupList();
+  },
+  mounted(){
+    // this.getMyGroupList();
+  },
+  updated(){
+    // this.getMyGroupList();
+  },
   data () {
     return {
-      vue: {
-        // 동적 속성 바인딩 시에는 src/ 디렉토리에서 찾아야 이미지 출력
-        // file-loader를 사용하지 않고, 직접 속성 값을 설정하기 때문
-        // path: './src/assets/logo.png',
-        // label: 'Vue.js'
-      }
+      uploadGroupImg: '',
+      group_list: [],
+      group_pk: '',
+      group: {}
     };
+  },
+  watch: {
+    
   },
   methods: {
     openModal(){
       this.$refs.my_modal.visible = true;
     },
-  }
-}
+    getMyGroupList(){
+      let user_token = window.localStorage.getItem('token');
+      
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
+        {headers: { 'Authorization' : `Token ${user_token}` }}
+      )
+      .then(response => {
+        // const datalist = Object.values(response);
+        // this.datalist = datalist;
+        this.group_list = response.data.results;
+       console.log(response);
+      //  console.log('pk:', response.data.results[2].pk);
+      //  for(i){
+      //    g
+      //  }
+      //  this.group_pk = response.data.results[i].pk;
+      //  console.log(this.group_pk);
+      //  this.group_list.index.reverse();
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+    },
+    goGroup(pk, e){
+      // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
+      // http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/?group=1
+      // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
+      // this.$router.push('/JointGroup/?group=${}');
+      // this.$router.push({path: '/JointGroup', params: {id: pk}});
+      this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      window.localStorage.setItem('this_group',pk);
+      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
+      console.log(pk);
+    }
+}}
 </script>
 
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .page-wrapper
   min-height: 87vh
-
 .dropdownhr
   margin: 5px
-
 .column.is-3.is-hidden-mobile
   width: 238px
   height: 194px
@@ -93,4 +134,12 @@ export default {
   // margin-bottom: 200px
 .plusgroup
   background: yellow
+.img-grouplist-wrapper
+  width: auto
+  height: auto
+  min-height: 100px
+  max-height: 135px
+  overflow: hidden
+.grouplist-wrapper
+  flex-wrap: wrap
 </style>

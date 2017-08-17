@@ -23,12 +23,12 @@
           .level-item.has-text-centered
             .field.has-addons
               p.control
-                input.input(type='text', placeholder='현재 내이름' disabled)           
+                input.input(type='text', v-model="user.username" disabled) 
         nav.level
           .level-item.has-text-centered
             .field.has-addons
               p.control
-                input.input(type='email', placeholder='현재 내 이메일' disabled)
+                input.input(type='email', v-model='user.email' disabled)
         nav.level
           .level-item.has-text-centered
             .field.has-addons
@@ -45,6 +45,9 @@
 
 <script>
 export default {
+  created(){
+   this.getUserInfo();
+  },
   props: {
     close_message: {
       type: String,
@@ -57,12 +60,55 @@ export default {
   },
   data() {
     return {
-      visible: this.is_visible
+      visible: this.is_visible,
+      user:{
+        pk:'',
+        email:'',
+        nickname:'',
+        username:'',
+      }
     }
   },
   methods: {
     closeModal(){
       this.visible = false;
+    },
+    getUserInfo(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('pk');
+      let userinfo = {
+        email: this.user.email,
+        nickname: this.user.nickname,
+        username: this.user.username
+      }
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
+      { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response => {
+                  console.log(response);
+                  let data = response.data.results;
+                  // data.contains('email')
+                  let my_email = window.localStorage.getItem('email');
+                  if (data.includes(my_email)) {
+                    return data;
+                  }
+                  console.log('data:',data);
+
+                  // if(window.localStorage.getItem('email')){
+                  //   return 
+                  // }
+                  // this.user = response.data.results; 
+                  console.log('user:',this.user);
+                  }
+                  )
+    
+                // .then(response => {          
+                //   console.log(response);
+                //   console.log('userinfo.pk:',userinfo.pk);
+                //   console.log('userinfo.email:',userinfo.email);
+                //   console.log('userinfo.nickname:',userinfo.nickname)
+                //   console.log('userinfo.username:',userinfo.username)
+                // }
+                .catch(error => console.log(error.response));
     }
   }
 }
