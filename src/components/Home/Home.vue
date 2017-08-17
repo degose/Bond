@@ -43,7 +43,7 @@ div
 <script>
 import Background from '../Background';
 export default {
-  name: 'app',
+  // name: 'app',
   components: {
     Background
   },

@@ -42,7 +42,6 @@
 
 <script>
 import Background from '../Background';
-
 export default {
   name: 'SignInPage',
   components: {
@@ -54,16 +53,17 @@ export default {
         email: '',
         password: ''
       },
-      
     }
   },
   methods: {
     signinSubmit(){
       this.$http.post(this.$store.state.api_signin, this.signin)
       .then(response => {
-        let token = response.data.token;
+      let token = response.data.token;
+      let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
+          window.localStorage.setItem('pk', pk)
         }
         let my_email = this.signin.email;
         window.localStorage.setItem('email', my_email);
@@ -72,6 +72,7 @@ export default {
         // console.log('pk:',pk);
         // window.localStorage.setItem('pk',pk);
         console.log('success token:', window.localStorage.getItem('token'));
+        console.log('success pk:', window.localStorage.getItem('pk'));
         this.$router.push( {path: '/MainPage'} );
         console.log(response);
         console.log('성공');

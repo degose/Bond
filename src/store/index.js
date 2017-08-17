@@ -27,13 +27,24 @@ export const store = new Vuex.Store({
   // api_write: 'https://bond-43bc3.firebaseio.com/write.json',
   // 태훈
     // api_write: 'https://vue-planlist-f14d2.firebaseio.com/test.json/'
+  // console.log('%c——————————————————————————————————————————————————', 배경화면 동영상 상태);
+  // bg_clip: 1
 
   },
-  getters: {
+   getters: {
 
-  },
+    
+  //   bg_toggle: function (state) {
+  //     return state.bg_clip * - 1;
+  //   },
+    // bg_on: function (state) {
+    //   return state.bg_clip * - 1;
+
+    },
+  
   mutations: {
-
+    // bg_off: state => store.bg_clip * -1
+    // // bg_on: state => state.bg_clip + 2
   },
   actions: {
 

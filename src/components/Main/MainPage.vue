@@ -16,6 +16,14 @@ export default {
     MyGroup,
     MainFooter,
   },
+  methods:{
+
+  },
+  // watch: {
+  //   $route(newVal, oldVal) {
+  //     newVal.query.search !== oldVal.query.search && this.fetched();
+  //   },
+  // },
   
 }
 </script>

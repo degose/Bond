@@ -60,14 +60,17 @@ export default {
     }
   },
   methods: {
-    signOut(){
+      signOut(){
       this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
-      //  { headers: {'Authorization' : `Token ${user_token}`}})
       .then(response => {
         let token = response.data.token;
+        let pk = response.data.user;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
+          window.localStorage.removeItem('pk', pk)
         }
+        // this.$store.commit('bg_off')
+        // this.$store.commit('bg_on')
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
         // console.log(response);

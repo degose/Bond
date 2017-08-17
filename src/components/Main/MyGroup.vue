@@ -47,11 +47,8 @@
 
 <script>
 import MakingGroupModal from '../Group/MakingGroupModal';
-
 // let group_list_url = 'https://bond-43bc3.firebaseio.com/group.json';
 // let group_list_url = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/';
-
-
 export default {
   name: 'MyGroup',
   components: {
@@ -59,8 +56,6 @@ export default {
   },
   created() {
     this.getMyGroupList();
-
-
   },
   mounted(){
     // this.getMyGroupList();
@@ -83,7 +78,6 @@ export default {
     openModal(){
       this.$refs.my_modal.visible = true;
     },
-
     getMyGroupList(){
       let user_token = window.localStorage.getItem('token');
       
@@ -124,13 +118,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .page-wrapper
   min-height: 87vh
-
 .dropdownhr
   margin: 5px
-
 .column.is-3.is-hidden-mobile
   width: 238px
   height: 194px
@@ -151,5 +142,4 @@ export default {
   overflow: hidden
 .grouplist-wrapper
   flex-wrap: wrap
-
 </style>

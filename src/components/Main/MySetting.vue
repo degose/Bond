@@ -28,7 +28,7 @@
           .level-item.has-text-centered
             .field.has-addons
               p.control
-                input.input(type='email', placeholder='현재 내 이메일' disabled)
+                input.input(type='email', v-model='user.email' disabled)
         nav.level
           .level-item.has-text-centered
             .field.has-addons
@@ -66,7 +66,6 @@ export default {
         email:'',
         nickname:'',
         username:'',
-
       }
     }
   },
@@ -76,8 +75,8 @@ export default {
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('pk');
       let userinfo = {
-        pk: this.user.pk,
         email: this.user.email,
         nickname: this.user.nickname,
         username: this.user.username
@@ -107,7 +106,8 @@ export default {
                 //   console.log('userinfo.pk:',userinfo.pk);
                 //   console.log('userinfo.email:',userinfo.email);
                 //   console.log('userinfo.nickname:',userinfo.nickname)
-                //   console.log('userinfo.username:',userinfo.username)})
+                //   console.log('userinfo.username:',userinfo.username)
+                // }
                 .catch(error => console.log(error.response));
     }
   }
