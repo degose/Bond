@@ -48,13 +48,14 @@
 </template>
 
 <script>
-import MySetting from '../Main/MySetting';
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
+
+// const bus = new Vue();
+
 export default {
   name: 'app',
   components: {
-    MySetting,
     MainHeader,
     MainFooter,
   },
@@ -68,6 +69,9 @@ export default {
     // this.group_list = Object.keys(this.group_list[0]); 
     this.fetch();
   },
+  mounted(){
+    // this.fetch();
+  },
   computed: {
     filtered_group_list(){
       let search = this.search.trim();
@@ -78,29 +82,34 @@ export default {
     },
   },
   methods: {
-    openMySetting() {
-      this.$refs.my_setting.visible = true;
-    },
-    submit(){
-      //VueResource === this.$http
-      this.$http.post('', this.group_list)
-                .then(function(response){
-                  console.log(response);
-                })
-                .catch(function(error){
-                  console.error(error.message);
-                })
-    },
     fetch(){
+      // bus.$on('call-child', (payload)=>{
+      //   this.payload = payload;
+      //   })
       let search = this.search.trim();
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
+      // window.localStorage.setItem('searchKeyword',search)
+      let searchkeyword = window.localStorage.getItem('searchKeyword');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${searchkeyword}`)
                 .then(response => {
                   this.group_list = response.data.results;
-                  console.log(this.group_list)
-                  this.$router.push('/SearchResult')
+                  
+                  console.log('searchKeyword:',searchkeyword);
+                  // let data = response.data;
+                  // let name = data.name;
+                  // let description = data.description;
+                  // let profile_img = data.profile_img;
+                  // console.log(this.group_list)
+                  // this.$router.push('/SearchResult')
+                  console.log('response:',response);
+                  console.log('search:',search);
+                  this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+                  console.log('search:',search);
                 })
                 .catch(error => console.error(error.message))
     },
+    inputSearch(event){
+      this.search = event.target.value;
+    }
   }
 }
 

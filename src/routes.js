@@ -34,7 +34,7 @@ export const routes = [
 
     // Group
     // {path: '/JointGroup', component: JointGroup},
-  { path: '/JointGroup', 
+  { path: '/JointGroup/', 
     component: JointGroup, 
     children: [
       { path: '', component: JointGroupFeed },
@@ -67,7 +67,7 @@ export const routes = [
     // Main
     { path: '/MainPage', component: MainPage },
     { path: '/MyGroup', component: MyGroup },
-    { path: '/SearchResult', component: SearchResult },
+    { path: '/SearchResult/group/', component: SearchResult },
     // {path: '/InvitationModal', component: InvitationModal},
     { path: '/MyMenu', component: MobileMyMenu },
 
