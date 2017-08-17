@@ -2,7 +2,6 @@
   div
     .page-wrapper
       .container.grouplist
-        p Mygroup: {{ count }}
         .columns.grouplist-wrapper
           //- 그룹 정보 영역
           .column.is-3(v-for="group in group_list")
@@ -16,7 +15,6 @@
                   .media
                     .media-content.has-text-centered
                       p.title.is-4 {{ group.name }}
-                      //- p.title.is-4 그룹 이름
 
               
           .column.is-3
@@ -68,9 +66,9 @@ export default {
   data () {
     return {
       uploadGroupImg: '',
-      count: '',
       group_list: [],
       group_pk: '',
+<<<<<<< HEAD
       group: {
         // name: '',
         // description: '',
@@ -80,6 +78,13 @@ export default {
   },
   computed:{
 
+=======
+      group: {}
+    };
+  },
+  watch: {
+    
+>>>>>>> 049a20fc133b2f2e4310aedf438d6cfe677f0d7a
   },
   methods: {
     openModal(){
@@ -97,7 +102,13 @@ export default {
         this.group_list = response.data.results;
        console.log(response);
       //  console.log('pk:', response.data.results[2].pk);
+<<<<<<< HEAD
       
+=======
+      //  for(i){
+      //    g
+      //  }
+>>>>>>> 049a20fc133b2f2e4310aedf438d6cfe677f0d7a
       //  this.group_pk = response.data.results[i].pk;
       //  console.log(this.group_pk);
       //  this.group_list.index.reverse();
@@ -107,11 +118,13 @@ export default {
       })
     },
     goGroup(pk, e){
-      this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
-      // let ggroup = e.target.data.pk;
-      // let ggroup = this.group_pk;
+      // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
+      // http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/?group=1
       // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
-      this.$router.push('/JointGroup/?group=${}');
+      // this.$router.push('/JointGroup/?group=${}');
+      // this.$router.push({path: '/JointGroup', params: {id: pk}});
+      this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
     }
@@ -140,8 +153,9 @@ export default {
 .img-grouplist-wrapper
   width: auto
   height: auto
+  min-height: 100px
+  max-height: 135px
   overflow: hidden
-  background: url('http://bulma.io/images/placeholders/640x320.png')
 .grouplist-wrapper
   flex-wrap: wrap
 </style>

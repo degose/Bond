@@ -27,7 +27,7 @@
             
       //- section.modal-card-body.is-hidden-tablet
       //-   .file.is-centered.is-boxed.is-primary.has-name
-      //-     form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="") 
+      //-     form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="")
       //-       label.file-label
       //-         input.file-input(ref="file_input" @change="previewFile" type='file' name='resume' id="imgfileinput")
       //-         span.file-cta
@@ -78,7 +78,10 @@ export default {
     }
   },
   watch: {
-
+    // $route(newVal, oldVal) {
+    //   newVal.query.search !== oldVal.query.search && this.fetched();
+    // },
+    // createGroup()
   },
   methods: {
     closeModal(){

@@ -2,7 +2,7 @@
       div.nav-bg
         nav.navbar.container
           .navbar-brand
-            router-link.navbar-item(to="MainPage")
+            router-link.navbar-item(to="/MainPage")
               picture
                 img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                 img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
@@ -18,12 +18,12 @@
                   type='text' 
                   placeholder='그룹이나 게시글을 검색해보세요' 
                   @input="inputSearch" 
-                  :value = "search")
+                  :value="search"
+                  )
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
               .control
-                button.button.btn-search(type="button" @click="fetch") Search
-
+                button.button.btn-search(type="button" @click.prevent="fetch") Search
           #navMenuburger.navbar-menu
             .navbar-end
               .navbar-item.has-dropdown.is-hoverable.is-right
@@ -51,12 +51,8 @@ import MobileMyMenu from './MobileMyMenu';
 export default {
   components:{
     MySetting,
-    MobileMyMenu
+    MobileMyMenu,
   },
-  // created(){
-  //   // this.group_list = Object.keys(this.group_list[0]); 
-  //   this.fetch();
-  // },
   data(){
     return{
       search: '',
@@ -90,20 +86,29 @@ export default {
     openMobileMyMenu() {
       this.$refs.mobile_my_menu.visible = true;
     },
-    fetch(){
+    filtered_group_list(){
       let search = this.search.trim();
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
-                .then(response => {
-                  this.group_list = response.data.results;
-                  console.log(this.group_list)
-                  this.$router.push('/SearchResult')
-                })
-                .catch(error => console.error(error.message))
+      //사용자가 정보를 입력한 경우
+      if(search){
+        this.group_list = group_list.filter(search => Object.values(search));
+      }
     },
     inputSearch(event){
-      this.search = event.target.value;
-    }
-    
+    this.search = event.target.value;
+    },
+    fetch(){
+      let search = this.search.trim();
+      window.localStorage.setItem('searchKeyword',search)
+      this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+      // let searchkeyword = window.localStorage.getItem('searchKeyword');
+      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
+      //           .then(response => {
+      //             this.group_list = response.data.results;
+      //             console.log('results:',this.group_list);
+      //             this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+      //           })
+      //           .catch(error => console.error(error.message))
+    },
   }
 }
 </script>
@@ -111,10 +116,8 @@ export default {
 <style lang="sass">
 @import "~bulma"
 @import "~style"
-
 body
-  background: #eee
-
+  // background: #eee
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px
@@ -123,7 +126,6 @@ body
   // margin: 0
 .dropdownhr
   margin: 5px
-
 .nav-fixed
   position: fixed
 .nav-bg
