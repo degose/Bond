@@ -81,12 +81,6 @@ export default {
         nickname: this.user.nickname,
         username: this.user.username
       }
-<<<<<<< HEAD
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/34', this.user,
-      { headers: {'Authorization' : `Token ${user_token}`}},
-      { headers: {'pk' : `Pk ${pk}`}})
-                .then(response => {console.log(response);
-=======
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
@@ -107,14 +101,13 @@ export default {
                   }
                   )
     
->>>>>>> 049a20fc133b2f2e4310aedf438d6cfe677f0d7a
                 // .then(response => {          
                 //   console.log(response);
-                  console.log('userinfo.pk:',userinfo.pk);
-                  console.log('userinfo.email:',userinfo.email);
-                  console.log('userinfo.nickname:',userinfo.nickname)
-                  console.log('userinfo.username:',userinfo.username)
-                })
+                //   console.log('userinfo.pk:',userinfo.pk);
+                //   console.log('userinfo.email:',userinfo.email);
+                //   console.log('userinfo.nickname:',userinfo.nickname)
+                //   console.log('userinfo.username:',userinfo.username)
+                // }
                 .catch(error => console.log(error.response));
     }
   }

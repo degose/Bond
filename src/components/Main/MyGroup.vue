@@ -68,23 +68,11 @@ export default {
       uploadGroupImg: '',
       group_list: [],
       group_pk: '',
-<<<<<<< HEAD
-      group: {
-        // name: '',
-        // description: '',
-        // proflie_img: null
-      }
-    };
-  },
-  computed:{
-
-=======
       group: {}
     };
   },
   watch: {
     
->>>>>>> 049a20fc133b2f2e4310aedf438d6cfe677f0d7a
   },
   methods: {
     openModal(){
@@ -102,13 +90,9 @@ export default {
         this.group_list = response.data.results;
        console.log(response);
       //  console.log('pk:', response.data.results[2].pk);
-<<<<<<< HEAD
-      
-=======
       //  for(i){
       //    g
       //  }
->>>>>>> 049a20fc133b2f2e4310aedf438d6cfe677f0d7a
       //  this.group_pk = response.data.results[i].pk;
       //  console.log(this.group_pk);
       //  this.group_list.index.reverse();
