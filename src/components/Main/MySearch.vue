@@ -1,11 +1,11 @@
 <template lang="pug">  
-  div.all-wrapper
+  div
     .container
       .columns
         .column.is-10.is-offset-1
-          .box.fetched-data
-            article.media.fetched-data-item(v-for = "group in group_list")
-              a(@click.prevent ="goGroup(group.pk, $event)")
+          .box.fetched-data(v-for = "group in group_list")
+            article.media.fetched-data-item
+            a(@click.prevent ="goGroup(group.pk, $event)")
                 .media-left
                   figure.image.is-64x64
                     img(:src='group.profile_img', alt='Image')
@@ -75,8 +75,6 @@ export default {
       // this.$router.push('/JointGroup/?group=${}');
       // this.$router.push({path: '/JointGroup', params: {id: pk}});
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-
-      window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
     }
@@ -92,10 +90,7 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-.all-wrapper
-  background: #eee
-  // height: 100vh
 
 body
-  // background: #eee
+  background: #eee
 </style>
