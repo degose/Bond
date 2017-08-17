@@ -1,5 +1,5 @@
 <template lang="pug">
-  .video-container(v-if="this.$store.state.bg_clip > 0")
+  .video-container
     video(autoplay, loop, muted)
         source(src="https://firebasestorage.googleapis.com/v0/b/bond-43bc3.appspot.com/o/722783965.mp4?alt=media&token=46cbc37a-ed19-47d8-ada4-aa5a7000bf75", type="video/mp4")
 

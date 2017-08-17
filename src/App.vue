@@ -1,7 +1,7 @@
 <template lang="pug">
   #app
     div
-      background
+      background(v-if='!!needs_to_login')
       //- Home
       //- main-page
       router-view
@@ -39,6 +39,7 @@ export default {
   },
   data () {
     return {
+      needs_to_login : !window.localStorage.getItem('token')
       }
     }
   }

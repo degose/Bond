@@ -74,7 +74,7 @@ export default {
           window.localStorage.removeItem('pk', pk)
         }
         // this.$store.commit('bg_off')
-        this.$store.commit('bg_on')
+        // this.$store.commit('bg_on')
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
         // console.log(response);

@@ -56,6 +56,9 @@ export default {
       visible: this.is_visible
     }
   },
+  computed:{
+    
+  },
   methods: {
       signOut(){
       this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
@@ -66,7 +69,7 @@ export default {
           window.localStorage.removeItem('token', token);
           window.localStorage.removeItem('pk', pk)
         }
-        this.$store.commit('bg_off')
+        // this.$store.commit('bg_off')
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
         // console.log(response);
@@ -82,7 +85,7 @@ export default {
     openMySetting() {
       this.$refs.my_setting.visible = true;
     },
-        getUserInfo(){
+    getUserInfo(){
       let user_token = window.localStorage.getItem('token');
       // let userinfo = {
       //   pk: this.user.pk,

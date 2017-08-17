@@ -42,7 +42,6 @@
 
 <script>
 import Background from '../Background';
-
 export default {
   name: 'SignInPage',
   components: {
@@ -55,8 +54,6 @@ export default {
         password: ''
       },
     }
-  },
-  getters:{
   },
   methods: {
     signinSubmit(){
@@ -74,7 +71,7 @@ export default {
         this.$router.push( {path: '/MainPage'} );
         console.log(response);
         console.log('성공');
-        this.$store.commit('bg_off')
+        
       })
       .catch(error => {
         // 이메일만 빈칸 일 때의 오류 메시지
