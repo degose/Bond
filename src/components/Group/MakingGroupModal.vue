@@ -23,13 +23,13 @@
         .field
           .control
             input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요')
-            textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
+            textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=100)
             
       //- section.modal-card-body.is-hidden-tablet
       //-   .file.is-centered.is-boxed.is-primary.has-name
-      //-     form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data")
+      //-     form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="") 
       //-       label.file-label
-      //-         input.file-input(@change="previewFile" type='file' name='resume' id="imgfileinput")
+      //-         input.file-input(ref="file_input" @change="previewFile" type='file' name='resume' id="imgfileinput")
       //-         span.file-cta
       //-           span.file-icon
       //-             i.fa.fa-upload

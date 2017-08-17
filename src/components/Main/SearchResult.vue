@@ -52,7 +52,7 @@ import MySetting from '../Main/MySetting';
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 export default {
-  name: 'app',
+  // name: 'app',
   components: {
     MySetting,
     MainHeader,
@@ -101,7 +101,11 @@ export default {
                 })
                 .catch(error => console.error(error.message))
     },
-    
+  watch: {
+    $route(newVal, oldVal) {
+      newVal.query.search !== oldVal.query.search && this.fetched();
+      },
+    },
   }
 }
 

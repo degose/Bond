@@ -12,7 +12,7 @@ import MainFooter from '../Header-Footer/MainFooter';
 import MyGroup from '../Main//MyGroup';
 export default {
 
-  name: 'app',
+  // name: 'app',
   components: {
     MainHeader,
     MyGroup,
@@ -21,7 +21,12 @@ export default {
   },
   methods:{
 
-  }
+  },
+  // watch: {
+  //   $route(newVal, oldVal) {
+  //     newVal.query.search !== oldVal.query.search && this.fetched();
+  //   },
+  // },
   
 }
 </script>

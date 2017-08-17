@@ -134,7 +134,7 @@ export default {
       this.$http.post(this.$store.state.api_signup, this.signup)
                 .then(response => {
                   console.log(response);
-                  this.$router.push( {path: '/MainPage'} );
+                  this.$router.push( {path: '/SignInPage'} );
                   })
                 .catch(error => {
                   console.log(error.message);
