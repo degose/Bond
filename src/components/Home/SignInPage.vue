@@ -75,7 +75,7 @@ export default {
         this.$router.push( {path: '/MainPage'} );
         console.log(response);
         console.log('성공');
-        this.$store.state.video_visible = false;
+        // this.$store.state.video_visible = false;
 
       })
       .catch(error => {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.all-wrapper
     main-header
     my-group
     main-footer
@@ -10,6 +10,7 @@ import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 import MyGroup from '../Main//MyGroup';
 export default {
+  name: 'MainPage',
   components: {
     MainHeader,
     MyGroup,
@@ -23,8 +24,9 @@ export default {
 @import "~bulma"
 @import "~style"
 
-body
-  // background: #eee
+// body
+.all-wrapper
+  background: #eee
 
 </style>
 

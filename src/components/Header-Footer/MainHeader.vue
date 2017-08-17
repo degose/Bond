@@ -53,7 +53,6 @@ export default {
     MySetting,
     MobileMyMenu,
   },
-
   data(){
     return{
       search: '',
@@ -114,10 +113,8 @@ export default {
 <style lang="sass">
 @import "~bulma"
 @import "~style"
-
 body
-  background: #eee
-
+  // background: #eee
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px
@@ -126,7 +123,6 @@ body
   // margin: 0
 .dropdownhr
   margin: 5px
-
 .nav-fixed
   position: fixed
 .nav-bg

@@ -167,19 +167,17 @@
                             | 댓글 삭제
                         
     write-modal(close_message="close lightbox" ref='write_modal')
-    leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
 
         
 </template>
 
 <script>
 import WriteModal from './WriteModal';
-import LeaveGroupModal from './LeaveGroupModal';
 
 export default {
   name: 'PostTemplate',
   mounted(){
-    this.fetchData()
+    this.fetchData();
   },
   beforeUpdate(){
     // this.fetchData()
@@ -206,7 +204,6 @@ export default {
   },
   components: {
     WriteModal,
-    LeaveGroupModal
   },
   // computed:{
   //   fetchData(){}
@@ -256,10 +253,11 @@ export default {
     // },
     fetchData(){
       let user_token = window.localStorage.getItem('token');
-      this.$http.get(this.$store.state.api_write, this.write,
+      this.$http.get(this.$store.state.api_write,
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
-                  this.datalist = response.data
+                  this.datalist = response.data.results;
+                  console.log(this.datalist);
                 })
                 // .then(write => {const datalist = Object.values(write);
                 // this.datalist = datalist;

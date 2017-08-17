@@ -1,5 +1,5 @@
 <template lang="pug">
-  .video-container(v-show="video_visible")
+  .video-container(v-show="this.$store.state.video_visible")
     video(autoplay, loop, muted)
       source(src="https://firebasestorage.googleapis.com/v0/b/bond-43bc3.appspot.com/o/722783965.mp4?alt=media&token=46cbc37a-ed19-47d8-ada4-aa5a7000bf75", type="video/mp4")
 
@@ -10,9 +10,11 @@ export default {
   name: 'Video',
   data(){
     return {
-      video_visible: true
+      // video_visible: true
+      // this.$store.state.video_visible
     }
   },
+
 }
 </script>
 
