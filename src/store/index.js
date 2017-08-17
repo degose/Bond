@@ -17,9 +17,10 @@ export const store = new Vuex.Store({
     api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
     api_signin: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login/',
     api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
-    api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/'
+    api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
     // api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
     // console.log('%c——————————————————————————————————————————————————','color: #00737d');
+    video_visible: true
 
   // 이 아래는 자기가 테스트해볼 파이어 베이스 주소
   // 세민

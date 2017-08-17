@@ -166,7 +166,7 @@ fieldset
   border: 0 none
   margin: 0
 .container
-  min-height: 87vh
+  // min-height: 87vh
 .mobile-wrapper
   padding: 0 40px
 

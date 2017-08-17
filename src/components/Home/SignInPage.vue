@@ -65,10 +65,18 @@ export default {
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
         }
+        let my_email = this.signin.email;
+        window.localStorage.setItem('email', my_email);
+        console.log('my_email',my_email);
+        // let pk = response.data.pk;
+        // console.log('pk:',pk);
+        // window.localStorage.setItem('pk',pk);
         console.log('success token:', window.localStorage.getItem('token'));
         this.$router.push( {path: '/MainPage'} );
         console.log(response);
         console.log('성공');
+        this.$store.state.video_visible = false;
+
       })
       .catch(error => {
         // 이메일만 빈칸 일 때의 오류 메시지

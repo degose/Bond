@@ -45,9 +45,9 @@
 
 <script>
 export default {
-  // created:{
-  //  getUserInfo(){}
-  // },
+  created(){
+   this.getUserInfo();
+  },
   props: {
     close_message: {
       type: String,
@@ -82,9 +82,26 @@ export default {
         nickname: this.user.nickname,
         username: this.user.username
       }
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/', this.user,
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response => console.log(response) )
+                .then(response => {
+                  console.log(response);
+                  let data = response.data.results;
+                  // data.contains('email')
+                  let my_email = window.localStorage.getItem('email');
+                  if (data.includes(my_email)) {
+                    return data;
+                  }
+                  console.log('data:',data);
+
+                  // if(window.localStorage.getItem('email')){
+                  //   return 
+                  // }
+                  // this.user = response.data.results; 
+                  console.log('user:',this.user);
+                  }
+                  )
+    
                 // .then(response => {          
                 //   console.log(response);
                 //   console.log('userinfo.pk:',userinfo.pk);
