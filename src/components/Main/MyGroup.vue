@@ -76,6 +76,9 @@ export default {
       group: {}
     };
   },
+  watch: {
+    
+  },
   methods: {
     openModal(){
       this.$refs.my_modal.visible = true;
@@ -111,6 +114,7 @@ export default {
       // this.$router.push('/JointGroup/?group=${}');
       // this.$router.push({path: '/JointGroup', params: {id: pk}});
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
     }

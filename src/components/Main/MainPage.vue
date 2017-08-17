@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.all-wrapper
     main-header
     //- router-link
     my-group
@@ -11,7 +11,7 @@ import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 import MyGroup from '../Main//MyGroup';
 export default {
-  name: 'app',
+  name: 'MainPage',
   components: {
     MainHeader,
     MyGroup,
@@ -26,8 +26,9 @@ export default {
 @import "~bulma"
 @import "~style"
 
-body
-  // background: #eee
+// body
+.all-wrapper
+  background: #eee
 
 </style>
 

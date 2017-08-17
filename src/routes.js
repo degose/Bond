@@ -72,7 +72,6 @@ export const routes = [
     { path: '/MyMenu', component: MobileMyMenu },
 
     // Set
-
     // *
     { path: '*', component: Home }
 ];

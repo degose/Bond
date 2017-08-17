@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div.all-wrapper
       main-header
       .container
         //- 가입한 그룹의 feed
@@ -226,8 +226,10 @@ export default {
 @import "~bulma"
 @import "~style"
 
-body
+.all-wrapper
   background: #eee
+body
+  // background: #eee
 
 .icon-more
   font-size: 1.5rem
