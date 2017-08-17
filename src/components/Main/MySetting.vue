@@ -28,7 +28,7 @@
           .level-item.has-text-centered
             .field.has-addons
               p.control
-                input.input(type='email', placeholder='현재 내 이메일' disabled)
+                input.input(type='email', v-model='user.email' disabled)
         nav.level
           .level-item.has-text-centered
             .field.has-addons
@@ -45,8 +45,8 @@
 
 <script>
 export default {
-  // created:{
-  //  getUserInfo(){}
+  // created(){
+  //   this.getUserInfo()
   // },
   props: {
     close_message: {
@@ -76,21 +76,23 @@ export default {
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('pk');
       let userinfo = {
-        pk: this.user.pk,
         email: this.user.email,
         nickname: this.user.nickname,
         username: this.user.username
       }
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/', this.user,
-      { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response => console.log(response) )
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/34', this.user,
+      { headers: {'Authorization' : `Token ${user_token}`}},
+      { headers: {'pk' : `Pk ${pk}`}})
+                .then(response => {console.log(response);
                 // .then(response => {          
                 //   console.log(response);
-                //   console.log('userinfo.pk:',userinfo.pk);
-                //   console.log('userinfo.email:',userinfo.email);
-                //   console.log('userinfo.nickname:',userinfo.nickname)
-                //   console.log('userinfo.username:',userinfo.username)})
+                  console.log('userinfo.pk:',userinfo.pk);
+                  console.log('userinfo.email:',userinfo.email);
+                  console.log('userinfo.nickname:',userinfo.nickname)
+                  console.log('userinfo.username:',userinfo.username)
+                })
                 .catch(error => console.log(error.response));
     }
   }

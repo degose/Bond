@@ -54,21 +54,27 @@ export default {
         email: '',
         password: ''
       },
-      
     }
+  },
+  getters:{
   },
   methods: {
     signinSubmit(){
       this.$http.post(this.$store.state.api_signin, this.signin)
       .then(response => {
-        let token = response.data.token;
+      let token = response.data.token;
+      let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
+          window.localStorage.setItem('pk', pk)
         }
+
         console.log('success token:', window.localStorage.getItem('token'));
+        console.log('success pk:', window.localStorage.getItem('pk'));
         this.$router.push( {path: '/MainPage'} );
         console.log(response);
         console.log('성공');
+        this.$store.commit('bg_off')
       })
       .catch(error => {
         // 이메일만 빈칸 일 때의 오류 메시지

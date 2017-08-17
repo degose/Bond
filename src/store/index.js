@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
     api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
     api_signin: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login/',
     api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
-    api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/'
+    api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
     // api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
     // console.log('%c——————————————————————————————————————————————————','color: #00737d');
 
@@ -26,13 +26,15 @@ export const store = new Vuex.Store({
   // api_write: 'https://bond-43bc3.firebaseio.com/write.json',
   // 태훈
     // api_write: 'https://vue-planlist-f14d2.firebaseio.com/test.json/'
-
+  // console.log('%c——————————————————————————————————————————————————', 배경화면 동영상 상태);
+    bg_clip: 1
   },
   getters: {
 
   },
   mutations: {
-
+    bg_off: state => state.bg_clip - 2,
+    bg_on: state => state.bg_clip + 2
   },
   actions: {
 

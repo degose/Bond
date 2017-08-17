@@ -6,7 +6,8 @@
         .columns.grouplist-wrapper
           //- 그룹 정보 영역
           .column.is-3(v-for="group in group_list")
-            router-link(to="/JointGroup")
+            //- router-link(to="/JointGroup")
+            a(@click.prevent="goGroup(group.pk, $event)")
               .card
                 .card-image
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper
@@ -48,11 +49,8 @@
 
 <script>
 import MakingGroupModal from '../Group/MakingGroupModal';
-
 // let group_list_url = 'https://bond-43bc3.firebaseio.com/group.json';
 // let group_list_url = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/';
-
-
 export default {
   name: 'MyGroup',
   components: {
@@ -60,8 +58,6 @@ export default {
   },
   created() {
     this.getMyGroupList();
-
-
   },
   mounted(){
     // this.getMyGroupList();
@@ -74,6 +70,7 @@ export default {
       uploadGroupImg: '',
       count: '',
       group_list: [],
+      group_pk: '',
       group: {
         // name: '',
         // description: '',
@@ -81,11 +78,13 @@ export default {
       }
     };
   },
+  computed:{
+
+  },
   methods: {
     openModal(){
       this.$refs.my_modal.visible = true;
     },
-
     getMyGroupList(){
       let user_token = window.localStorage.getItem('token');
       
@@ -97,11 +96,24 @@ export default {
         // this.datalist = datalist;
         this.group_list = response.data.results;
        console.log(response);
-       console.log('pk:', this.group.pk);
+      //  console.log('pk:', response.data.results[2].pk);
+      
+      //  this.group_pk = response.data.results[i].pk;
+      //  console.log(this.group_pk);
+      //  this.group_list.index.reverse();
       })
       .catch(error => {
         console.log(error.message);
       })
+    },
+    goGroup(pk, e){
+      this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
+      // let ggroup = e.target.data.pk;
+      // let ggroup = this.group_pk;
+      // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
+      this.$router.push('/JointGroup/?group=${}');
+      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
+      console.log(pk);
     }
 }}
 </script>
@@ -109,13 +121,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .page-wrapper
   min-height: 87vh
-
 .dropdownhr
   margin: 5px
-
 .column.is-3.is-hidden-mobile
   width: 238px
   height: 194px
@@ -135,5 +144,4 @@ export default {
   background: url('http://bulma.io/images/placeholders/640x320.png')
 .grouplist-wrapper
   flex-wrap: wrap
-
 </style>
