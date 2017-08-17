@@ -1,5 +1,5 @@
 <template lang="pug">  
-  div
+  div.all-wrapper
     .container
       .columns
         .column.is-10.is-offset-1
@@ -75,6 +75,7 @@ export default {
       // this.$router.push('/JointGroup/?group=${}');
       // this.$router.push({path: '/JointGroup', params: {id: pk}});
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+
       window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
@@ -91,7 +92,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+.all-wrapper
+  background: #eee
+  // height: 100vh
 
 body
-  background: #eee
+  // background: #eee
 </style>

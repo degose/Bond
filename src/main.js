@@ -62,6 +62,17 @@ const router = new VueRouter({
   mode: 'history',
   routes
 });
+
+//전역 내비게이션 가드
+router.beforeEach((to, from, next)=> {
+  // console.log('global route transition');
+  // console.log('to:', to);
+  // console.log('from', from);
+//   //다음 페이지로 전환
+  next(true);
+});
+
+
 new Vue({
   el: '#app',
   router,

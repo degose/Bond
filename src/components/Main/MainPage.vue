@@ -1,7 +1,6 @@
 <template lang="pug">
   div.all-wrapper
     main-header
-    //- router-link
     my-group
     main-footer
 </template>
@@ -16,7 +15,6 @@ export default {
     MainHeader,
     MyGroup,
     MainFooter,
-    
   },
   
 }
