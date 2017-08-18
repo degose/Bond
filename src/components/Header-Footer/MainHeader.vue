@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-      signOut(){
+    signOut(){
       this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
       .then(response => {
         let token = response.data.token;
@@ -85,13 +85,6 @@ export default {
     },
     openMobileMyMenu() {
       this.$refs.mobile_my_menu.visible = true;
-    },
-    filtered_group_list(){
-      let search = this.search.trim();
-      //사용자가 정보를 입력한 경우
-      if(search){
-        this.group_list = group_list.filter(search => Object.values(search));
-      }
     },
     inputSearch(event){
     this.search = event.target.value;
