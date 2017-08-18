@@ -23,35 +23,40 @@
                         i.fa.fa-user-circle-o(aria-hidden='true')
                       small    {{group.owner.nickname}}
 
-      //- .columns
-      //-   .column
-      //-     nav.pagination.is-centered
-      //-       a.pagination-previous 이전 그룹 
-      //-       a.pagination-next 다음 그룹 
-      //-       ul.pagination-list
-      //-         li
-      //-           a.pagination-link 1
-      //-         li
-      //-           span.pagination-ellipsis …
-      //-         li
-      //-           a.pagination-link 45
-      //-         li
-      //-           a.pagination-link.is-current 46
-      //-         li
-      //-           a.pagination-link 47
-      //-         li
-      //-           span.pagination-ellipsis …
-      //-         li
-      //-           a.pagination-link 86
+      .columns
+        .column
+          nav.pagination.is-centered
+            a.pagination-previous(@click="prevPage()") 이전 페이지
+            a.pagination-next(@click="nextPage()") 다음 페이지 
+            //- ul.pagination-list
+            //-   li
+            //-     a.pagination-link 1
+            //-   li
+            //-     span.pagination-ellipsis …
+            //-   li
+            //-     a.pagination-link 45
+            //-   li
+            //-     a.pagination-link.is-current 46
+            //-   li
+            //-     a.pagination-link 47
+            //-   li
+            //-     span.pagination-ellipsis …
+            //-   li
+            //-     a.pagination-link 86
 </template>
 
 <script>
 export default {
-  name: 'app',
   data(){
     return{
       group_list: [],
-      search: ''
+      search: '',
+      pagination:{
+        next: '', 
+        prev: ''
+      }
+       
+    
     }
   },
   created(){
@@ -64,9 +69,56 @@ export default {
                 .then(response => {
                   this.group_list = response.data.results;
                   console.log(this.group_list);
+                  this.pagination.next = response.data.next
+                  this.pagination.prev = response.data.previous
+                  console.log(this.pagination.next)
+                  console.log(this.pagination.prev)
+                  // let response.data.next
+                  // this.makePagination(response.data)
+                  // this.nextPage()
+                  // this.prevPage()
                   // this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
                 })
                 .catch(error => console.error(error.message))
+    },
+  nextPage(){
+    this.$http.get(this.pagination.next)
+    .then(response => {
+        this.group_list = response.data.results;
+        console.log(this.group_list);
+        console.log(response)})
+    .catch(error => console.error(error.message))
+  },
+  prevPage(){
+    this.$http.get(this.pagination.prev)
+    .then(response => {
+        this.group_list = response.data.results;
+        console.log(this.group_list);
+        console.log(response)})
+    .catch(error => console.error(error.message))
+  },
+    // makePagination(){
+    //   this.$router.push({ path: '/MySearch/api/group/', query: {search: `${search}`= }})
+    // },
+
+    // makePagination(){
+    //   this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
+    //              .then(response => {
+    //                let pagination = this.response = {
+    //                  next_page_url: response.data.next,
+    //                   prev_page_url: response.data.previous
+    //                }
+    //                console.log(response)
+    //              })
+    // },
+    // makePagination(response){
+    //      pagination = {
+    //         // current_page: data.current_page,
+    //         // last_page: data.last_page,
+    //         next: data.next,
+    //         prev: data.previous
+    //     }
+    //     this.pagination = pagination
     },
      goGroup(pk, e){
       // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
@@ -80,8 +132,7 @@ export default {
       window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
-    }
-  },
+    },
   watch: {
     $route(newVal, oldVal) {
       newVal.query.search !== oldVal.query.search && this.fetched();
