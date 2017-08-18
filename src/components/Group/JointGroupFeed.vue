@@ -134,6 +134,7 @@
                 //- 좋아요, 댓글 개수
                 footer.card-footer
                   button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
+                  button(@click="console()")
                     span.icon-like
                       i.fa.fa-heart-o(v-show="!like")
                       i.fa.fa-heart(v-show="like")
@@ -249,6 +250,9 @@ export default {
     PostTemplate
   },
   methods: {
+    console(){
+      console.log(post_data)
+    },
     openWriteModal(){
       this.$refs.write_modal.visible = true;
     },

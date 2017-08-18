@@ -55,7 +55,7 @@ export default {
         // 텍스트 내용
         content:'',
         // 그룹 pk값..임의로 정해둠
-        group: 29
+        group: ''
       },
       datalist:[],
       file_url: '',
@@ -97,7 +97,7 @@ export default {
 .card-footer-item
   background: #fff
 .ca
-  cursur: pointer
+  cursor: pointer
 
 .write-text-modal
   border: none

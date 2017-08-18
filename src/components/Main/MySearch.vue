@@ -50,94 +50,72 @@ export default {
   data(){
     return{
       group_list: [],
-      search: '',
+      page_num: '',
       pagination:{
         next: '', 
         prev: ''
       }
-       
-    
     }
   },
   created(){
     this.fetched();
   },
   methods: {
-    fetched(){
-      let search = window.localStorage.getItem('searchKeyword');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
-                .then(response => {
-                  this.group_list = response.data.results;
-                  console.log(this.group_list);
-                  this.pagination.next = response.data.next
-                  this.pagination.prev = response.data.previous
-                  console.log(this.pagination.next)
-                  console.log(this.pagination.prev)
-                  // let response.data.next
-                  // this.makePagination(response.data)
-                  // this.nextPage()
-                  // this.prevPage()
-                  // this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-                })
-                .catch(error => console.error(error.message))
+    fetched(direction){
+      let path = null;
+      let search = null;
+      if ( this.page_num.trim() === '' ) {
+        search = window.localStorage.getItem('searchKeyword');
+        path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
+      } else {
+        path = this.pagination[direction];
+        search = this.page_num;
+      }
+      this.$http
+          .get(path)
+          .then(response => {
+            let data = response.data;
+            this.group_list = data.results;
+            this.pagination.next = data.next;
+            this.pagination.prev = data.previous;
+            this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+          })
+          .catch(error => console.error(error.message));
     },
-  nextPage(){
-    this.$http.get(this.pagination.next)
-    .then(response => {
-        this.group_list = response.data.results;
-        console.log(this.group_list);
-        console.log(response)})
-    .catch(error => console.error(error.message))
-  },
-  prevPage(){
-    this.$http.get(this.pagination.prev)
-    .then(response => {
-        this.group_list = response.data.results;
-        console.log(this.group_list);
-        console.log(response)})
-    .catch(error => console.error(error.message))
-  },
-    // makePagination(){
-    //   this.$router.push({ path: '/MySearch/api/group/', query: {search: `${search}`= }})
-    // },
-
-    // makePagination(){
-    //   this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
-    //              .then(response => {
-    //                let pagination = this.response = {
-    //                  next_page_url: response.data.next,
-    //                   prev_page_url: response.data.previous
-    //                }
-    //                console.log(response)
-    //              })
-    // },
-    // makePagination(response){
-    //      pagination = {
-    //         // current_page: data.current_page,
-    //         // last_page: data.last_page,
-    //         next: data.next,
-    //         prev: data.previous
-    //     }
-    //     this.pagination = pagination
+    nextPage(){
+      let api_path = this.pagination.next;
+      let first = api_path.indexOf('?page=');
+      let last = api_path.indexOf('&');
+      let page_path = api_path.slice(first, last);
+      this.page_num = page_path[page_path.length - 1];
+      this.fetched('next');
+      // let path = this.$route.path;
+      // let query = {
+      //   search: page_num
+      // }
+      // this.$router.push({
+      //   path, query
+      // });
     },
-     goGroup(pk, e){
-      // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
-      // http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/?group=1
-      // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
-      // this.$router.push('/JointGroup/?group=${}');
-      // this.$router.push({path: '/JointGroup', params: {id: pk}});
+    prevPage(){
+      this.$http.get(this.pagination.prev)
+      .then(response => {
+          this.group_list = response.data.results;
+          console.log(this.group_list);
+          console.log(response)})
+      .catch(error => console.error(error.message))
+    },
+    goGroup(pk, e){
       this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
-      // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-
       window.localStorage.setItem('this_group',pk);
-      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
     },
-  watch: {
-    $route(newVal, oldVal) {
-      newVal.query.search !== oldVal.query.search && this.fetched();
-    },
   },
+  // watch: {
+  //   $route(newVal, oldVal) {
+  //     newVal.query.search !== oldVal.query.search;
+  //   },
+  // }
 }
 </script>
 
