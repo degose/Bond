@@ -5,29 +5,9 @@
       header.modal-card-head
         figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
           img(v-if="group.profile_img" :src="uploadGroupImg", alt='그룹 대표 사진')
-      section.modal-card-body.is-hidden-mobile
-        .file.has-name.is-fullwidth.is-primary
-          form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="") 
-            label.file-label
-              input.file-input(ref="file_input" @change="previewFile" type='file' name='resume' id="imgfileinput")
-              span.file-cta
-                span.file-icon
-                  i.fa.fa-upload
-                span.file-label
-                  | 사진을 선택해주세요
-              span.file-name(v-if="file_name.length == 0")
-                | 이미지 파일만 선택 가능합니다.
-              span.file-name(v-else)
-                | {{ file_name }}
-        hr
-        .field
-          .control
-            input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요')
-            textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=100)
-            
-      //- section.modal-card-body.is-hidden-tablet
-      //-   .file.is-centered.is-boxed.is-primary.has-name
-      //-     form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="")
+      //- section.modal-card-body.is-hidden-mobile
+      //-   .file.has-name.is-fullwidth.is-primary
+      //-     form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="") 
       //-       label.file-label
       //-         input.file-input(ref="file_input" @change="previewFile" type='file' name='resume' id="imgfileinput")
       //-         span.file-cta
@@ -43,7 +23,27 @@
       //-   .field
       //-     .control
       //-       input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요')
-      //-       textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
+      //-       textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=100)
+            
+      section.modal-card-body
+        .file.is-centered.is-boxed.is-primary.has-name
+          form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="")
+            label.file-label
+              input.file-input(ref="file_input" @change="previewFile" type='file' name='resume' id="imgfileinput")
+              span.file-cta
+                span.file-icon
+                  i.fa.fa-upload
+                span.file-label
+                  | 사진을 선택해주세요
+              span.file-name(v-if="file_name.length == 0")
+                | 이미지 파일만 선택 가능합니다.
+              span.file-name(v-else)
+                | {{ file_name }}
+        hr
+        .field
+          .control
+            input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요')
+            textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
 
       footer.modal-card-foot
         button.button.is-primary(type="submit" @click="createGroup") 그룹 만들기
@@ -79,8 +79,11 @@ export default {
   },
   watch: {
     // $route(newVal, oldVal) {
-    //   newVal.query.search !== oldVal.query.search && this.fetched();
+    //   newVal.query.group_list !== oldVal.query.group_list && this.getMyGroupList();
     // },
+    $route(newVal, oldVal) {
+      newVal.query.group_list !== oldVal.query.group_list && this.getMyGroupList();
+    },
     // createGroup()
   },
   methods: {
@@ -107,7 +110,7 @@ export default {
           _this.file_url = reader.result;
         }
       } else { alert('이미지 파일만 선택 가능합니다.')}
-      // console.log('file:',file);
+      console.log('file:',file);
     },
     createGroup(){
 
@@ -133,8 +136,9 @@ export default {
         let name = data.name;
         let description = data.description;
         let profile_img = data.profile_img;
-        console.log(profile_img);
+        // console.log(profile_img);
         this.visible = false;
+        // getMyGroupList();
       })
       .catch(error => {
         if(this.group.name === ''){

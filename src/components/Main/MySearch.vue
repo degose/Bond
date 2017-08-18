@@ -97,6 +97,4 @@ export default {
   background: #eee
   // height: 100vh
 
-body
-  // background: #eee
 </style>

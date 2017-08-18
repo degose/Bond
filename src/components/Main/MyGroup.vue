@@ -3,6 +3,16 @@
     .page-wrapper
       .container.grouplist
         .columns.grouplist-wrapper
+          .column.is-3
+            .card
+              .card-image.makegroup
+                figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
+                  a(@click="openModal")
+                    img(src='../../assets/group-add-hoverx2.png', alt='Image')
+              .card-content
+                .media
+                  .media-content.has-text-centered
+                    p.title.is-4 그룹 만들기
           //- 그룹 정보 영역
           .column.is-3(v-for="group in group_list")
             //- router-link(to="/JointGroup")
@@ -17,26 +27,10 @@
                       p.title.is-4 {{ group.name }}
 
               
-          .column.is-3
-            .card
-              .card-image.makegroup
-                figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                  a(@click="openModal")
-                    img(src='../../assets/group-add-hoverx2.png', alt='Image')
-              .card-content
-                .media
-                  .media-content.has-text-centered
-                    p.title.is-4 그룹 만들기
+
         nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
           a.pagination-previous(title='This is the first page', disabled='') Previous
           a.pagination-next Next page
-          ul.pagination-list
-            li
-              a.pagination-link.is-current.is-dark 1
-            li
-              a.pagination-link.is-dark 2
-            li
-              a.pagination-link.is-dark 3
       
       MakingGroupModal(
         ref="my_modal"
@@ -72,7 +66,9 @@ export default {
     };
   },
   watch: {
-    
+    $route() {
+      this.getMyGroupList();
+    },
   },
   methods: {
     openModal(){
@@ -85,17 +81,8 @@ export default {
         {headers: { 'Authorization' : `Token ${user_token}` }}
       )
       .then(response => {
-        // const datalist = Object.values(response);
-        // this.datalist = datalist;
         this.group_list = response.data.results;
-       console.log(response);
-      //  console.log('pk:', response.data.results[2].pk);
-      //  for(i){
-      //    g
-      //  }
-      //  this.group_pk = response.data.results[i].pk;
-      //  console.log(this.group_pk);
-      //  this.group_list.index.reverse();
+
       })
       .catch(error => {
         console.log(error.message);
@@ -107,10 +94,11 @@ export default {
       // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
       // this.$router.push('/JointGroup/?group=${}');
       // this.$router.push({path: '/JointGroup', params: {id: pk}});
-      this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      this.$router.push({ path: '/JointGroup/'});
+      // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
-      console.log(pk);
+      // console.log(pk);
     }
 }}
 </script>
