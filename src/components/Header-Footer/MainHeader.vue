@@ -8,7 +8,7 @@
                 img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
             .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
               figure
-                img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image', width=30, height=30)
+                img.image.is-35x35.user-img(:src='user.profile_img', alt='Image', width=35, height=35)
           .search.column
             .field.has-addons
               .control.has-icons-left.is-expanded
@@ -16,7 +16,7 @@
                 input.input(
                   id="search" 
                   type='text' 
-                  placeholder='그룹이나 게시글을 검색해보세요' 
+                  placeholder='그룹이나 게시글을 검색해보세요'  
                   @input="inputSearch" 
                   :value="search"
                   )
@@ -29,7 +29,7 @@
               .navbar-item.has-dropdown.is-hoverable.is-right
                 a.navbar-link
                   figure
-                    img.image.is-30x30.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
+                    img.image.is-35x35.user-img(:src='user.profile_img', alt='Image')
                 .navbar-dropdown
                   a.navbar-item(@click="openMySetting")
                     | 내 정보
@@ -57,9 +57,23 @@ export default {
     return{
       search: '',
       group_list:[],
+      user: {}
     }
   },
+  created(){
+    this.getUserImg();
+  },
   methods: {
+    getUserImg(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('pk');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/',
+      { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response => {
+                  this.user = response.data;
+                  })
+                .catch(error => console.log(error.response));
+    },
     signOut(){
       this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
       .then(response => {
@@ -109,6 +123,8 @@ export default {
 <style lang="sass">
 @import "~bulma"
 @import "~style"
+.user-img
+  background: #eee
 body
   // background: #eee
 .navbar-burger.burger

@@ -93,6 +93,4 @@ export default {
 @import "~bulma"
 @import "~style"
 
-body
-  background: #eee
 </style>

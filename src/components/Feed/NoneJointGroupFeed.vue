@@ -104,6 +104,7 @@ export default {
         this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/', {group: pk},
                   { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
+                    console.log(response)
                     if(response.status === 201){
                       this.$router.push({path: '/JointGroup/', query: {group: response.data.group}});
                     }

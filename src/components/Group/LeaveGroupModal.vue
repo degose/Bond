@@ -37,9 +37,11 @@ export default {
       this.visible = false;
     },
     deletegroup(){
-          let pk = window.localStorage.getItem('this_group')
-          let user_token = window.localStorage.getItem('token')
-          this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/',{group: pk},
+          let pk = window.localStorage.getItem('this_group');
+          console.log(pk)
+          let user_token = window.localStorage.getItem('token');
+          console.log(user_token)
+          this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/', {group: pk},
                     { headers: {'Authorization' : `Token ${user_token}`}})
                     .then(response => {
                       console.log(response)
