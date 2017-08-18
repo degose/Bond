@@ -45,9 +45,9 @@ export default {
                     { headers: {'Authorization' : `Token ${user_token}`}})
                     .then(response => {
                       console.log(response)
-                      if(response.status === 204){
-                        this.$router.push({path: '/NoneJointGroupFeed/', query: {group: response.data.group}});
-                      }
+                      // if(response.status === 204){
+                      //   this.$router.push({path: '/NoneJointGroupFeed/', query: {group: response.data.group}});
+                      // }
                     })
                     .catch(error =>{
                       console.error(error.response)

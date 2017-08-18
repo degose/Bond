@@ -15,10 +15,10 @@
                     div
                       span 멤버 {{ group_data.num_of_members }}
                       |  · 
-                      a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal") 
+                      a(aria-label="open leave group modal" @click.prevent="deletegroup") 
                         span.icon.is-small
                           i.fa.fa-cog(aria-hidden='true')
-                        | 그룹 설정
+                        | 그룹 탈퇴하기
                 .content {{ group_data.description }}
                   
                   
@@ -157,6 +157,25 @@ export default {
       //  { return response.json()}
        ).catch(error => console.log(error.message));
     },
+    deletegroup(){
+          let pk = window.localStorage.getItem('this_group');
+          console.log(pk)
+          let user_token = window.localStorage.getItem('token');
+          console.log(user_token)
+          this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/', {group: pk},
+                    { headers: {'Authorization' : `Token ${user_token}`}})
+                    .then(response => {
+                      console.log(response)
+                      // if(response.status === 204){
+                      //   this.$router.push({path: '/NoneJointGroupFeed/', query: {group: response.data.group}});
+                      // }
+                    })
+                    .catch(error =>{
+                      console.error(error.response)
+                      if(error.response.status === 401)
+                        alert(error.response.data.detail)
+                    })
+    }         
   }
 }
 </script>
