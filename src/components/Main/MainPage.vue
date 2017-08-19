@@ -10,7 +10,6 @@ import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 import MyGroup from '../Main//MyGroup';
 export default {
-  name: 'MainPage',
   components: {
     MainHeader,
     MyGroup,

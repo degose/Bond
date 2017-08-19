@@ -60,7 +60,6 @@
 <script>
 import Background from '../Background';
 export default {
-  name: 'app',
   components: {
     Background
   },

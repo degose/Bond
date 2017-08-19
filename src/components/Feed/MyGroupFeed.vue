@@ -186,7 +186,6 @@ import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
 
 export default {
-  name: 'MyWriteFeed',
   components: {
     MainHeader,
     MakingGroupModal,

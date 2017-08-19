@@ -43,7 +43,6 @@
 <script>
 import Background from '../Background';
 export default {
-  name: 'SignInPage',
   components: {
     Background
   },
