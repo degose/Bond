@@ -67,7 +67,8 @@ export default {
       if ( this.page_num.trim() === '' ) {
         search = window.localStorage.getItem('searchKeyword');
         path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
-      } else {
+      }
+      else {
         path = this.pagination[direction];
         search = this.page_num;
       }
@@ -81,6 +82,26 @@ export default {
             this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
           })
           .catch(error => console.error(error.message));
+    // fetched(direction){
+    //   let path = null;
+    //   let search = null;
+    //   if ( this.page_num.trim() === '' ) {
+    //     search = window.localStorage.getItem('searchKeyword');
+    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
+    //   } else {
+    //     path = this.pagination[direction];
+    //     search = this.page_num;
+    //   }
+    //   this.$http
+    //       .get(path)
+    //       .then(response => {
+    //         let data = response.data;
+    //         this.group_list = data.results;
+    //         this.pagination.next = data.next;
+    //         this.pagination.prev = data.previous;
+    //         this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+    //       })
+    //       .catch(error => console.error(error.message));
     },
     nextPage(){
       let api_path = this.pagination.next;
@@ -98,12 +119,12 @@ export default {
       // });
     },
     prevPage(){
-      this.$http.get(this.pagination.prev)
-      .then(response => {
-          this.group_list = response.data.results;
-          console.log(this.group_list);
-          console.log(response)})
-      .catch(error => console.error(error.message))
+      let api_path = this.pagination.prev;
+      let first = api_path.indexOf('?page=');
+      let last = api_path.indexOf('&');
+      let page_path = api_path.slice(first, last);
+      this.page_num = page_path[page_path.length - 1];
+      this.fetched('prev');
     },
     goGroup(pk, e){
       this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});

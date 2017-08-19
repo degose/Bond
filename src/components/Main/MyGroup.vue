@@ -86,18 +86,10 @@ export default {
         {headers: { 'Authorization' : `Token ${user_token}` }}
       )
       .then(response => {
-        // const datalist = Object.values(response);
-        // this.datalist = datalist;
         this.group_list = response.data.results;
        console.log(response);
        console.log(this.group_list)
-      //  console.log('pk:', response.data.results[2].pk);
-      //  for(i){
-      //    g
-      //  }
-      //  this.group_pk = response.data.results[i].pk;
-      //  console.log(this.group_pk);
-      //  this.group_list.index.reverse();
+
       })
       .catch(error => {
         console.log(error.message);
