@@ -5,6 +5,7 @@ import axios from 'axios';
 import App from './App';
 import {routes} from './routes';
 import {store} from './store';
+import {bus} from './bus'
 
 
 Vue.use(VueRouter);
@@ -60,17 +61,18 @@ Vue.prototype.$http = axios;
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  bus
 });
 
 //전역 내비게이션 가드
-router.beforeEach((to, from, next)=> {
-  // console.log('global route transition');
-  // console.log('to:', to);
-  // console.log('from', from);
-//   //다음 페이지로 전환
-  next(true);
-});
+// router.beforeEach((to, from, next)=> {
+//   // console.log('global route transition');
+//   // console.log('to:', to);
+//   // console.log('from', from);
+// //   //다음 페이지로 전환
+//   next(true);
+// });
 
 
 new Vue({

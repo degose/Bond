@@ -1,5 +1,6 @@
 <template lang="pug">  
-  div.all-wrapper
+div.all-wrapper
+  .page-wrapper
     .container
       .columns
         .column.is-10.is-offset-1
@@ -69,17 +70,35 @@ export default {
                 .catch(error => console.error(error.message))
     },
      goGroup(pk, e){
-      // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
-      // http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/?group=1
-      // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
-      // this.$router.push('/JointGroup/?group=${}');
-      // this.$router.push({path: '/JointGroup', params: {id: pk}});
-      this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
-      // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      let user_token = window.localStorage.getItem('token');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
+        {headers: { 'Authorization' : `Token ${user_token}` }}
+      )
+      .then(response => {
+        let data = response.data.results;
+        let data_pk = []
+        console.log('data::',data);
+        data.pk.forEach(item => {
+          // if(data.includes(pk))
+          data_pk.push(item);
+        });
+        console.log('data_pk::',data_pk);
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
 
+      // if(this.data.includes(pk)){
+      //   this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      // } else {
+        //   this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+      // }
+        this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+
+        // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
-      console.log(pk);
+      // console.log(pk);
     }
   },
   watch: {
@@ -96,5 +115,7 @@ export default {
 .all-wrapper
   background: #eee
   // height: 100vh
+.page-wrapper
+  min-height: 87vh
 
 </style>

@@ -23,7 +23,7 @@
 
               //- 가입하기 버튼
               .columns.is-mobile
-                button.column.btn-default.btn-fill 그룹 가입하기
+                button.column.btn-default.btn-fill(@click.prevent = "jointgroup") 그룹 가입하기
 
 
         //- feed 영역
@@ -97,13 +97,24 @@ export default {
     MainHeader,
     MainFooter
   },
-  // name: 'app',
-  // data () {
-  //   return {
-  //     switchState: true,
-  //     checkboxState: true
-  //   }
-  // }
+  methods: {
+    jointgroup(){
+        let pk = window.localStorage.getItem('this_group')
+        let user_token = window.localStorage.getItem('token')
+        this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/', {group: pk},
+                  { headers: {'Authorization' : `Token ${user_token}`}})
+                  .then(response => {
+                    console.log(response)
+                    if(response.status === 201){
+                      this.$router.push({path: '/JointGroup/', query: {group: response.data.group}});
+                    }
+                  })
+                  .catch(error =>{
+                    if(error.response.status === 400)
+                      alert(error.response.data.group[0])
+                  })
+      }           
+  }
 }
 </script>
 
@@ -113,10 +124,6 @@ export default {
 .all-wrapper
   background: #eee
   height: 100vh
-
-
 .group-info
   // position: fixed
-
-
 </style>
