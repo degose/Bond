@@ -23,70 +23,120 @@
                         i.fa.fa-user-circle-o(aria-hidden='true')
                       small    {{group.owner.nickname}}
 
-      //- .columns
-      //-   .column
-      //-     nav.pagination.is-centered
-      //-       a.pagination-previous 이전 그룹 
-      //-       a.pagination-next 다음 그룹 
-      //-       ul.pagination-list
-      //-         li
-      //-           a.pagination-link 1
-      //-         li
-      //-           span.pagination-ellipsis …
-      //-         li
-      //-           a.pagination-link 45
-      //-         li
-      //-           a.pagination-link.is-current 46
-      //-         li
-      //-           a.pagination-link 47
-      //-         li
-      //-           span.pagination-ellipsis …
-      //-         li
-      //-           a.pagination-link 86
+      .columns
+        .column
+          nav.pagination.is-centered
+            a.pagination-previous(@click="prevPage()") 이전 페이지
+            a.pagination-next(@click="nextPage()") 다음 페이지 
+            //- ul.pagination-list
+            //-   li
+            //-     a.pagination-link 1
+            //-   li
+            //-     span.pagination-ellipsis …
+            //-   li
+            //-     a.pagination-link 45
+            //-   li
+            //-     a.pagination-link.is-current 46
+            //-   li
+            //-     a.pagination-link 47
+            //-   li
+            //-     span.pagination-ellipsis …
+            //-   li
+            //-     a.pagination-link 86
 </template>
 
 <script>
 export default {
-  name: 'app',
   data(){
     return{
       group_list: [],
-      search: ''
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: ''
+      }
     }
   },
   created(){
     this.fetched();
   },
   methods: {
-    fetched(){
-      let search = window.localStorage.getItem('searchKeyword');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
-                .then(response => {
-                  this.group_list = response.data.results;
-                  console.log(this.group_list);
-                  // this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-                })
-                .catch(error => console.error(error.message))
+    fetched(direction){
+      let path = null;
+      let search = null;
+      if ( this.page_num.trim() === '' ) {
+        search = window.localStorage.getItem('searchKeyword');
+        path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
+      }
+      else {
+        path = this.pagination[direction];
+        search = this.page_num;
+      }
+      this.$http
+          .get(path)
+          .then(response => {
+            let data = response.data;
+            this.group_list = data.results;
+            this.pagination.next = data.next;
+            this.pagination.prev = data.previous;
+            this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+          })
+          .catch(error => console.error(error.message));
+    // fetched(direction){
+    //   let path = null;
+    //   let search = null;
+    //   if ( this.page_num.trim() === '' ) {
+    //     search = window.localStorage.getItem('searchKeyword');
+    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
+    //   } else {
+    //     path = this.pagination[direction];
+    //     search = this.page_num;
+    //   }
+    //   this.$http
+    //       .get(path)
+    //       .then(response => {
+    //         let data = response.data;
+    //         this.group_list = data.results;
+    //         this.pagination.next = data.next;
+    //         this.pagination.prev = data.previous;
+    //         this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+    //       })
+    //       .catch(error => console.error(error.message));
     },
-     goGroup(pk, e){
-      // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
-      // http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/?group=1
-      // let group_pk = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`;
-      // this.$router.push('/JointGroup/?group=${}');
-      // this.$router.push({path: '/JointGroup', params: {id: pk}});
+    nextPage(){
+      let api_path = this.pagination.next;
+      let first = api_path.indexOf('?page=');
+      let last = api_path.indexOf('&');
+      let page_path = api_path.slice(first, last);
+      this.page_num = page_path[page_path.length - 1];
+      this.fetched('next');
+      // let path = this.$route.path;
+      // let query = {
+      //   search: page_num
+      // }
+      // this.$router.push({
+      //   path, query
+      // });
+    },
+    prevPage(){
+      let api_path = this.pagination.prev;
+      let first = api_path.indexOf('?page=');
+      let last = api_path.indexOf('&');
+      let page_path = api_path.slice(first, last);
+      this.page_num = page_path[page_path.length - 1];
+      this.fetched('prev');
+    },
+    goGroup(pk, e){
       this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
-      // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-
       window.localStorage.setItem('this_group',pk);
-      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
       console.log(pk);
-    }
-  },
-  watch: {
-    $route(newVal, oldVal) {
-      newVal.query.search !== oldVal.query.search && this.fetched();
     },
   },
+  // watch: {
+  //   $route(newVal, oldVal) {
+  //     newVal.query.search !== oldVal.query.search;
+  //   },
+  // }
 }
 </script>
 

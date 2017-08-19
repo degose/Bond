@@ -27,6 +27,7 @@
                 .media
                   .media-content.has-text-centered
                     p.title.is-4 그룹 만들기
+
         nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
           a.pagination-previous(title='This is the first page', disabled='') Previous
           a.pagination-next Next page
@@ -85,17 +86,10 @@ export default {
         {headers: { 'Authorization' : `Token ${user_token}` }}
       )
       .then(response => {
-        // const datalist = Object.values(response);
-        // this.datalist = datalist;
         this.group_list = response.data.results;
        console.log(response);
-      //  console.log('pk:', response.data.results[2].pk);
-      //  for(i){
-      //    g
-      //  }
-      //  this.group_pk = response.data.results[i].pk;
-      //  console.log(this.group_pk);
-      //  this.group_list.index.reverse();
+       console.log(this.group_list)
+
       })
       .catch(error => {
         console.log(error.message);
