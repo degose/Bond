@@ -3,16 +3,7 @@
     .page-wrapper
       .container.grouplist
         .columns.grouplist-wrapper
-          .column.is-3
-            .card
-              .card-image.makegroup
-                figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                  a(@click="openModal")
-                    img(src='../../assets/group-add-hoverx2.png', alt='Image')
-              .card-content
-                .media
-                  .media-content.has-text-centered
-                    p.title.is-4 그룹 만들기
+          
           //- 그룹 정보 영역
           .column.is-3(v-for="group in group_list")
             //- router-link(to="/JointGroup")
@@ -29,14 +20,17 @@
               
           .column.is-3
             .card
-              .card-image.makegroup
-                figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                  a(@click="openModal")
-                    img(src='../../assets/group-add-hoverx2.png', alt='Image')
-              .card-content
-                .media
-                  .media-content.has-text-centered
-                    p.title.is-4 그룹 만들기
+              a(@click="openModal")
+                .card-image.makegroup
+                  figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper.is-hidden-mobile
+                      //- img(src='../../assets/group-add-hoverx2-mobile.png', alt='Image').is-hidden-desktop.is-hidden-tablet
+                      img(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
+                      img(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
+                .card-content
+                  .media
+                    .media-content.has-text-centered
+                      strong.title.is-4.make-group-title 그룹 만들기
+                      
 
         nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
           a.pagination-previous(title='This is the first page', disabled='') Previous
@@ -92,8 +86,6 @@ export default {
       )
       .then(response => {
         this.group_list = response.data.results;
-       console.log(response);
-       console.log(this.group_list)
 
       })
       .catch(error => {
@@ -110,7 +102,7 @@ export default {
       // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       window.localStorage.setItem('this_group',pk);
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/')
-      // console.log(pk);
+      console.log(pk);
     }
 }}
 </script>
@@ -118,17 +110,13 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
+.make-group-title
+  color: $bond
 .page-wrapper
   min-height: 87vh
 .dropdownhr
   margin: 5px
-.column.is-3.is-hidden-mobile
-  width: 238px
-  height: 194px
-.fa.fa-plus-circle.fa-5x
-  font-size: 119px
-  margin: 0 63px 0 63px
-  color: #E91E63
 .grouplist-nav
   margin-top: 100px
   // margin-bottom: 200px
@@ -140,6 +128,8 @@ export default {
   min-height: 100px
   max-height: 135px
   overflow: hidden
+  // background: #eee
+
 .grouplist-wrapper
   flex-wrap: wrap
 </style>

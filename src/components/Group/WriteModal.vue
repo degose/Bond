@@ -46,7 +46,7 @@
 </template>
 
 <script>
-
+// import {bus} from './bus'
 export default {
   name: 'app',
   props: {
@@ -58,6 +58,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  created(){
+    // bus.$emit('add-post-data')
   },
   data() {
     return {
@@ -128,17 +131,7 @@ export default {
       )
                 .then(response => {
                   let data = response.data;
-                  this.$parent.post_data.unshift({
-                    author: {},
-                    comment_count: 0,
-                    is_like: false,
-                    pk: data.pk,
-                    image: data.image,
-                    group: data.group,
-                    video: data.video,
-                    content: data.content
-                  });
-                  // this.$emit('add-post-data', {
+                  // this.$parent.post_data.unshift({
                   //   author: {},
                   //   comment_count: 0,
                   //   is_like: false,
@@ -148,6 +141,16 @@ export default {
                   //   video: data.video,
                   //   content: data.content
                   // });
+                  bus.$emit('add-post-data', {
+                    author: {},
+                    comment_count: 0,
+                    is_like: false,
+                    pk: data.pk,
+                    image: data.image,
+                    group: data.group,
+                    video: data.video,
+                    content: data.content
+                  });
                 })
                 .catch(error => console.log(error.response));
                 this.visible = false;
@@ -173,7 +176,7 @@ export default {
 .card-footer-item
   background: #fff
 .ca
-  cursor: pointer
+  cursur: pointer
 
 .write-text-modal
   border: none

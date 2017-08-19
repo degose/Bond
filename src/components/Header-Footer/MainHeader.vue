@@ -23,7 +23,7 @@
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
               .control
-                button.button.btn-search(type="button" @click="fetch") Search
+                button.button.btn-search(type="button" @click.prevent="fetch") Search
           #navMenuburger.navbar-menu
             .navbar-end
               .navbar-item.has-dropdown.is-hoverable.is-right
@@ -82,10 +82,6 @@ export default {
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
           window.localStorage.removeItem('pk', pk)
-          window.localStorage.removeItem('searchKeyword')
-          window.localStorage.removeItem('this_group')
-          window.localStorage.removeItem('email')
-
         }
         // this.$store.commit('bg_off')
         // this.$store.commit('bg_on')
@@ -111,7 +107,6 @@ export default {
       let search = this.search.trim();
       window.localStorage.setItem('searchKeyword',search)
       this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-      
       // let searchkeyword = window.localStorage.getItem('searchKeyword');
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
       //           .then(response => {
