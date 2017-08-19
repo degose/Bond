@@ -6,7 +6,7 @@
           .column.is-3
             .card
               .card-image
-                figure.image.is-16by9
+                figure.image.group_profile-wrapper.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
                   img.group_profile_img(:src='group_data.profile_img', alt='Image')
               .card-content
                 article.media
@@ -15,16 +15,13 @@
                     div
                       span 멤버 {{ group_data.num_of_members }}
                       |  · 
-                      a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal") 
+                      a(aria-label="open leave group modal" @click.prevent="deletegroup") 
                         span.icon.is-small
                           i.fa.fa-cog(aria-hidden='true')
-                        | 그룹 설정
+                        | 그룹 탈퇴하기
                 .content {{ group_data.description }}
                   
-          //- .column.is-9
-          //-   post-template
-          
-          
+                  
           //- feed 영역
           .column.is-9
             //- 글쓰기 영역
@@ -150,51 +147,6 @@
                       i.fa.fa-angle-up(aria-hidden='true')
                       
 
-              //- 댓글 작성 영역
-              .card
-                .card-content
-                  article.media
-                    .media-content.columns.is-mobile
-                      .field.column.is-10.is-3-mobile
-                        .control
-                          textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment")
-                      .field.column.is-2.is-1-mobile
-                        .control
-                          button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit") 댓글 달기
-                          button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit")
-                            span.icon
-                              i.fa.fa-pencil
-                  
-                  //- 댓글 리스트 영역
-                  article.media(v-show="showcomment" v-for="comment in comment_data")
-                    figure.media-left
-                      p.image.is-48x48
-                        img.user-img(:src='comment.author.profile_img')
-                    .media-content
-                      .content
-                        p
-                          strong {{ comment.author.nickname }}
-                          br
-                          | {{ comment.content }}
-                          br
-                          small
-                            | {{ comment.created_date }}
-                    
-                    //- 드롭다운 버튼
-                    .dropdown.is-right.is-active
-                      .dropdown-trigger
-                        button.btn-feed-dropdown(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownComment(comment.pk)")
-                          span.icon.is-small
-                            i.icon-more.ion-android-more-vertical(aria-hidden='true')
-                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdowncomment")
-                        .dropdown-content
-                          ul
-                            li
-                              a.dropdown-item(href='#')
-                                | 댓글 수정
-                            li
-                              a.dropdown-item(href='#')
-                                | 댓글 삭제
                             
         write-modal(close_message="close lightbox" ref='write_modal')
         leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
@@ -205,32 +157,27 @@
 <script>
 import WriteModal from './WriteModal';
 import LeaveGroupModal from './LeaveGroupModal';
-import PostTemplate from './PostTemplate';
+import PostCard from './PostCard';
 
 export default {
-  name: 'JointGroupFeed',
   created(){
-    // this.fetchGroupData();
-  },
-  mounted(){
     this.fetchGroupData();
     this.fetchPostData();
-    this.fetchCommentData();
+    // this.fetchCommentData();
   },
-  // beforeUpdate(){
-  //   // this.fetchData()
-  // },
+
   props: {
+
   },
   data() {
     return {
       write_comment: '',
       visible: false,
-      dropdownpost: false,
-      dropdowncomment: false,
-      showcomment: false,
-      like: false,
-      like_or_not: '',
+      // dropdownpost: false,
+      // dropdowncomment: false,
+      // showcomment: false,
+      // like: false,
+      // like_or_not: '',
       write: {
         // 텍스트 내용
         content:'',
@@ -247,51 +194,24 @@ export default {
   components: {
     WriteModal,
     LeaveGroupModal,
-    PostTemplate
+    PostCard
   },
   methods: {
+<<<<<<< HEAD
+    addPostData(o){
+      console.log(this.post_data);
+      this.post_data.unshift(o);
+      console.log(this.post_data);
+=======
     console(){
       console.log(post_data)
+>>>>>>> 349f567cebb6e0f8225b0e39ef025d124a688ef6
     },
     openWriteModal(){
       this.$refs.write_modal.visible = true;
     },
     openLeaveGroupModal(){
       this.$refs.leave_group_modal.visible = true;
-    },
-    writeCommentSubmit(){
-      // console.log(this.$http);
-      // console.log(this.write_comment);
-      this.$http.post('', this.write_comment).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        console.error(error.message);
-      });
-    },
-    openDropdownPost(pk, e, i) {
-      console.log('postpk',pk);
-      console.log('e.target',e.target);
-      console.log('index',i);
-      this.dropdownpost = !this.dropdownpost;
-    },
-    openDropdownComment(pk) {
-      this.dropdowncomment = !this.dropdowncomment;
-    },
-    showComment(pk) {
-      this.showcomment = !this.showcomment;
-    },
-    addLike(pk) {
-      let user_token = window.localStorage.getItem('token');
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle', this.like_or_not,
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  // this.like_or_not = response.like_or_not;
-                  // console.log('this.group_datalist:',this.group_data);
-                  // this.like_or_not = response.data;
-                  console.log('like.response:',response);
-                })
-                .catch(error => console.log(error.response));
-      this.like = !this.like;
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
@@ -303,11 +223,6 @@ export default {
                   // console.log('this.group_datalist:',this.group_data);
                   // console.log('response:',response);
                 })
-                // .then(write => {const datalist = Object.values(write);
-                // this.datalist = datalist;
-                // })
-                // 
-                // .then(data => console.log(data))
                 .catch(error => console.log(error.response));
     },
     fetchPostData(){
@@ -316,25 +231,12 @@ export default {
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
-                  this.post_data = response.data.results;
-                  console.log('this.post_data:',this.post_data);
-                })
-                // .then(write => {const datalist = Object.values(write);
-                // this.datalist = datalist;
-                // })
-                // 
-                // .then(data => console.log(data))
-                .catch(error => console.log(error.response));
-    },
-    fetchCommentData(ppk){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      // let ppk = this.post.pk;
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
-       { headers: {'Authorization' : `Token ${user_token}`} })
-                .then(response=> {
-                  this.comment_data = response.data.results;
-                  console.log('this.comment_data:',this.comment_data);
+                  // this.post_data = response.data.results;
+                  let data = response.data.results;
+                  data.forEach(item => {
+                    this.post_data.push(item);
+                  });
+                  // console.log('this.post_data:',this.post_data);
                 })
                 // .then(write => {const datalist = Object.values(write);
                 // this.datalist = datalist;
@@ -349,6 +251,25 @@ export default {
       //  { return response.json()}
        ).catch(error => console.log(error.message));
     },
+    deletegroup(){
+          let pk = window.localStorage.getItem('this_group');
+          console.log(pk)
+          let user_token = window.localStorage.getItem('token');
+          console.log(user_token)
+          this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/', {group: pk},
+                    { headers: {'Authorization' : `Token ${user_token}`}})
+                    .then(response => {
+                      console.log(response)
+                      // if(response.status === 204){
+                      //   this.$router.push({path: '/NoneJointGroupFeed/', query: {group: response.data.group}});
+                      // }
+                    })
+                    .catch(error =>{
+                      console.error(error.response)
+                      if(error.response.status === 401)
+                        alert(error.response.data.detail)
+                    })
+    }         
   }
 }
 </script>
@@ -357,6 +278,12 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+.group_profile-wrapper
+  width: auto
+  height: auto
+  min-height: 100px
+  max-height: 135px
+  overflow: hidden
 
 .group_profile_img
   background: url('http://bulma.io/images/placeholders/1280x960.png')
