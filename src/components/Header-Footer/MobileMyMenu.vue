@@ -68,9 +68,6 @@ export default {
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
           window.localStorage.removeItem('pk', pk)
-          window.localStorage.removeItem('searchKeyword')
-          window.localStorage.removeItem('this_group')
-          window.localStorage.removeItem('email')
         }
         // this.$store.commit('bg_off')
         this.$router.push( {path: "/"} );

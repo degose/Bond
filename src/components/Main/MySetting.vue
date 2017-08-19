@@ -148,29 +148,10 @@ export default {
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   // console.log(response);
-                  let data = response.data.results;
-                  // data.contains('email')
-                  let my_email = window.localStorage.getItem('email');
-                  if (data.includes(my_email)) {
-                    return data;
-                  }
-                  // console.log('data:',data);
-
-                  // if(window.localStorage.getItem('email')){
-                  //   return 
-                  // }
-                  // this.user = response.data.results; 
-                  // console.log('user:',this.user);
-                  }
-                  )
-    
-                // .then(response => {          
-                //   console.log(response);
-                //   console.log('userinfo.pk:',userinfo.pk);
-                //   console.log('userinfo.email:',userinfo.email);
-                //   console.log('userinfo.nickname:',userinfo.nickname)
-                //   console.log('userinfo.username:',userinfo.username)
-                // }
+                  this.user = response.data;
+                  // console.log('user.pk:',pk);
+                  // console.log('data:',this.user);
+                  })
                 .catch(error => console.log(error.response));
     }
   }

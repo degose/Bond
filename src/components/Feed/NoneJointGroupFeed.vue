@@ -124,10 +124,6 @@ export default {
 .all-wrapper
   background: #eee
   height: 100vh
-
-
 .group-info
   // position: fixed
-
-
 </style>

@@ -65,30 +65,18 @@ export default {
           window.localStorage.setItem('token', token);
           window.localStorage.setItem('pk', pk)
         }
-        let my_email = this.signin.email;
-        // window.localStorage.setItem('email', my_email);
-        // console.log('my_email',my_email);
-        // let pk = response.data.pk;
-        // console.log('pk:',pk);
-        // window.localStorage.setItem('pk',pk);
-        // console.log('success token:', window.localStorage.getItem('token'));
-        // console.log('success pk:', window.localStorage.getItem('pk'));
+        console.log('success token:', window.localStorage.getItem('token'));
+        console.log('success pk:', window.localStorage.getItem('pk'));
         this.$router.push( {path: '/MainPage'} );
-        // console.log(response);
-        // console.log('성공');
-        // this.$store.state.video_visible = false;
-
       })
       .catch(error => {
         // 이메일만 빈칸 일 때의 오류 메시지
         if (this.signin.email === '' && this.signin.password !== ''){alert('이메일 <- ' + error.response.data.email[0]);}
         // 패스워드만 빈칸 일 때의 오류 메시지
         else if(this.signin.password === '' && this.signin.email !== ''){alert('비밀번호 <- ' + error.response.data.password[0]);}
-        // 이메일, 패스워드 둘 다 빈칸 일 때의 오류 메시지
-        else if(this.signin.email === '' && this.signin.password ===''){alert('이메일과 비밀번호를 입력해주세요.')}
         // 틀린 정보를 시도했을 때의 오류 메시지
         else alert(error.response.data.non_field_errors[0]);
-        // console.log(error.response);
+        console.log(error.response);
       })
     }
   }
