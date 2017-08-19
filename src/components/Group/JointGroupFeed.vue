@@ -197,15 +197,10 @@ export default {
     PostCard
   },
   methods: {
-<<<<<<< HEAD
     addPostData(o){
       console.log(this.post_data);
       this.post_data.unshift(o);
       console.log(this.post_data);
-=======
-    console(){
-      console.log(post_data)
->>>>>>> 349f567cebb6e0f8225b0e39ef025d124a688ef6
     },
     openWriteModal(){
       this.$refs.write_modal.visible = true;
