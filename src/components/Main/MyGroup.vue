@@ -27,6 +27,16 @@
                       p.title.is-4 {{ group.name }}
 
               
+          .column.is-3
+            .card
+              .card-image.makegroup
+                figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
+                  a(@click="openModal")
+                    img(src='../../assets/group-add-hoverx2.png', alt='Image')
+              .card-content
+                .media
+                  .media-content.has-text-centered
+                    p.title.is-4 그룹 만들기
 
         nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
           a.pagination-previous(title='This is the first page', disabled='') Previous
@@ -82,6 +92,8 @@ export default {
       )
       .then(response => {
         this.group_list = response.data.results;
+       console.log(response);
+       console.log(this.group_list)
 
       })
       .catch(error => {

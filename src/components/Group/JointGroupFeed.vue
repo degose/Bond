@@ -54,9 +54,98 @@
                   .content
                     | 그룹에 재미있는 이야기를 써보세요.
 
-            //- div.feed-box(@add-post-data="addPostData" v-for="(post, i) in post_data")
-            div.feed-box
-              post-card
+            div.feed-box(v-for="(post, i) in post_data")
+              .card
+                .card-content
+                  article.media
+                    .media-left
+                      figure.image.is-64x64.img-user
+                        img.user-img(:src='post.author.profile_img', alt='Image')
+                    .media-content
+                      //- p.title.is-4.user-name(v-for='data in datalist') 작성자
+                      //- p.subtitle.is-6(v-for='data in datalist') 작성시간
+                      p.title.is-4.user-name {{ post.author.nickname }}
+                      p.subtitle.is-6 {{ post.created_date }}
+
+
+                    //- 드롭다운 버튼
+                    .dropdown.is-right.is-active
+                      .dropdown-trigger
+                        button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownPost(post.pk, $event)")
+                          span.icon
+                            i.icon-more.ion-android-more-vertical(aria-hidden='true')
+
+                      //- #dropdown-menu3.dropdown-menu(role='menu' :class="post.pk")
+                      #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownpost" :class='post.pk')
+                        .dropdown-content
+                          ul
+                            li
+                              a.dropdown-item(href='#')
+                                | 글 수정
+                            li
+                              a.dropdown-item(href='#')
+                                | 글 삭제
+
+                  //- 글 (최상위)
+                  .content
+                    | {{ post.content }}
+                    //- .get-http 
+                    //-   button(type='button', @click='fetchData') fetch
+                    //- .del-http 
+                    //-   button(type='button', @click='delData') delete
+                    //-   p.fetched-data
+                    //-     p.fetched-data-item(v-for='data in post_data') {{ write.data }}
+
+                    
+                  //- 이미지 - 1개일 때
+                  .content(v-if=' -1 > 0')
+                    figure.image
+                      img(src='http://bulma.io/images/placeholders/480x320.png')
+
+
+                  //- 동영상
+                  .content(v-if=' -1 > 0')
+                    figure
+                      video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
+                        source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
+                        track(src='', kind='captions', srclang='en', label='English captions', default='')
+
+
+
+
+                  //- 첨부파일
+                  .content(v-if=' -1 > 0')
+                    .file-box
+                      a(href='#')
+                        .columns.is-mobile
+                          .column.is-1
+                            span
+                              i.fa.fa-folder-open-o
+                          .column 
+                            span
+                              p README.md
+                          .column.is-1
+                            span
+                              i.fa.fa-arrow-down
+                
+                //- 좋아요, 댓글 개수
+                footer.card-footer
+                  button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
+                  button(@click="console()")
+                    span.icon-like
+                      i.fa.fa-heart-o(v-show="!like")
+                      i.fa.fa-heart(v-show="like")
+                    | &nbsp;  
+                    | {{ post.like_count }}
+                  button(@click="showComment").card-footer-item.btn-show-comment
+                    | 댓글
+                    | {{ post.comment_count }}
+                    | &nbsp; 
+                    span.icon.is-small(v-show="!showcomment")
+                      i.fa.fa-angle-down(aria-hidden='true')
+                    span.icon.is-small(v-show="showcomment")
+                      i.fa.fa-angle-up(aria-hidden='true')
+                      
 
                             
         write-modal(close_message="close lightbox" ref='write_modal')
@@ -93,7 +182,7 @@ export default {
         // 텍스트 내용
         content:'',
         // 그룹 pk값..임의로 정해둠
-        group: 29
+        group: 34
       },
       group_data:[],
       post_data:[],
@@ -108,10 +197,15 @@ export default {
     PostCard
   },
   methods: {
+<<<<<<< HEAD
     addPostData(o){
       console.log(this.post_data);
       this.post_data.unshift(o);
       console.log(this.post_data);
+=======
+    console(){
+      console.log(post_data)
+>>>>>>> 349f567cebb6e0f8225b0e39ef025d124a688ef6
     },
     openWriteModal(){
       this.$refs.write_modal.visible = true;

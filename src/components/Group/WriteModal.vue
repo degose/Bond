@@ -173,7 +173,7 @@ export default {
 .card-footer-item
   background: #fff
 .ca
-  cursur: pointer
+  cursor: pointer
 
 .write-text-modal
   border: none
