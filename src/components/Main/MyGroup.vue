@@ -31,10 +31,9 @@
                     .media-content.has-text-centered
                       strong.title.is-4.make-group-title 그룹 만들기
                       
-
-        nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
-          a.pagination-previous(title='This is the first page', disabled='') Previous
-          a.pagination-next Next page
+        nav.pagination.is-centered
+          button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+          button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
       
       MakingGroupModal(
         ref="my_modal"
@@ -66,13 +65,12 @@ export default {
       uploadGroupImg: '',
       group_list: [],
       group_pk: '',
-      group: {}
+      group: {},
+      pagination:{
+        next: '', 
+        prev: ''
+      },
     };
-  },
-  watch: {
-    $route() {
-      this.getMyGroupList();
-    },
   },
   methods: {
     openModal(){
@@ -80,13 +78,12 @@ export default {
     },
     getMyGroupList(){
       let user_token = window.localStorage.getItem('token');
-      
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
         {headers: { 'Authorization' : `Token ${user_token}` }}
       )
       .then(response => {
         this.group_list = response.data.results;
-
+        console.log(response)
       })
       .catch(error => {
         console.log(error.message);

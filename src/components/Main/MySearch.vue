@@ -26,8 +26,8 @@
       .columns
         .column
           nav.pagination.is-centered
-            a.pagination-previous(@click="prevPage()") 이전 페이지
-            a.pagination-next(@click="nextPage()") 다음 페이지 
+            button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+            button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
             //- ul.pagination-list
             //-   li
             //-     a.pagination-link 1
@@ -54,7 +54,7 @@ export default {
       pagination:{
         next: '', 
         prev: ''
-      }
+      },
     }
   },
   created(){
@@ -82,34 +82,22 @@ export default {
             this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
           })
           .catch(error => console.error(error.message));
-    // fetched(direction){
-    //   let path = null;
-    //   let search = null;
-    //   if ( this.page_num.trim() === '' ) {
-    //     search = window.localStorage.getItem('searchKeyword');
-    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
-    //   } else {
-    //     path = this.pagination[direction];
-    //     search = this.page_num;
-    //   }
-    //   this.$http
-    //       .get(path)
-    //       .then(response => {
-    //         let data = response.data;
-    //         this.group_list = data.results;
-    //         this.pagination.next = data.next;
-    //         this.pagination.prev = data.previous;
-    //         this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-    //       })
-    //       .catch(error => console.error(error.message));
     },
     nextPage(){
       let api_path = this.pagination.next;
+      if (api_path !== null) {
       let first = api_path.indexOf('?page=');
       let last = api_path.indexOf('&');
       let page_path = api_path.slice(first, last);
       this.page_num = page_path[page_path.length - 1];
       this.fetched('next');
+      // console.log('작동된다')
+      }
+      else {
+        // alert("마지막페이지.")
+        // console.log("마지막이다.")
+      }
+
       // let path = this.$route.path;
       // let query = {
       //   search: page_num
@@ -120,11 +108,17 @@ export default {
     },
     prevPage(){
       let api_path = this.pagination.prev;
-      let first = api_path.indexOf('?page=');
       let last = api_path.indexOf('&');
+      let first = api_path.indexOf('?page=');
+
+      if(this.page_num >= 3){
       let page_path = api_path.slice(first, last);
       this.page_num = page_path[page_path.length - 1];
-      this.fetched('prev');
+      this.fetched('prev');}
+      else{
+         let path = this.pagination.prev
+         this.fetched('prev');
+      }
     },
     goGroup(pk, e){
       this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
@@ -134,7 +128,7 @@ export default {
   },
   // watch: {
   //   $route(newVal, oldVal) {
-  //     newVal.query.search !== oldVal.query.search;
+  //     newVal.query.search !== oldVal.query.search && this.fetched();
   //   },
   // }
 }
@@ -146,7 +140,8 @@ export default {
 .all-wrapper
   background: #eee
   // height: 100vh
-
+.pagination-btn
+  color: $bond
 body
   // background: #eee
 </style>
