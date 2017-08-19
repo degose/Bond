@@ -3,18 +3,7 @@
     .page-wrapper
       .container.grouplist
         .columns.grouplist-wrapper
-          .column.is-3
-            .card
-              a(@click="openModal")
-                .card-image.makegroup
-                  figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper.is-hidden-mobile
-                      //- img(src='../../assets/group-add-hoverx2-mobile.png', alt='Image').is-hidden-desktop.is-hidden-tablet
-                      img(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
-                      img(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
-                .card-content
-                  .media
-                    .media-content.has-text-centered
-                      strong.title.is-4.make-group-title 그룹 만들기
+          
           //- 그룹 정보 영역
           .column.is-3(v-for="group in group_list")
             //- router-link(to="/JointGroup")
@@ -29,6 +18,19 @@
                       p.title.is-4 {{ group.name }}
 
               
+          .column.is-3
+            .card
+              a(@click="openModal")
+                .card-image.makegroup
+                  figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper.is-hidden-mobile
+                      //- img(src='../../assets/group-add-hoverx2-mobile.png', alt='Image').is-hidden-desktop.is-hidden-tablet
+                      img(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
+                      img(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
+                .card-content
+                  .media
+                    .media-content.has-text-centered
+                      strong.title.is-4.make-group-title 그룹 만들기
+                      
 
         nav.pagination.is-hidden-mobile.is-centered.grouplist-nav
           a.pagination-previous(title='This is the first page', disabled='') Previous
