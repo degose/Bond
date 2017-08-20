@@ -72,7 +72,7 @@ export default {
         prev: '',
         all: ''
       },
-    };
+    }
   },
   methods: {
     openModal(){
@@ -116,18 +116,6 @@ export default {
       this.getMyGroupList('next');
       // console.log('작동된다')
       }
-      else {
-        // alert("마지막페이지.")
-        // console.log("마지막이다.")
-      }
-
-      // let path = this.$route.path;
-      // let query = {
-      //   search: page_num
-      // }
-      // this.$router.push({
-      //   path, query
-      // });
     },
     prevPage(){
       let api_path = this.pagination.prev;
