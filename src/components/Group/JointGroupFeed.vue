@@ -451,7 +451,7 @@ export default {
                 .then(response=> {
                   this.comment_data = response.data.results;
                   // console.log('this.comment_data:',this.comment_data);
-                  console.log('comment::',response);
+                  // console.log('comment::',response);
                 })
                 .catch(error => console.log(error.response));
     },

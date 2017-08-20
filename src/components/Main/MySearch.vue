@@ -54,8 +54,11 @@ export default {
       page_num: '',
       pagination:{
         next: '', 
-        prev: ''
+        prev: '',
+        group_pk:[]
       },
+      // 내가 가입한 그룹들의 pk값
+      my_group:[]
     }
   },
   created(){
@@ -77,6 +80,13 @@ export default {
           .get(path)
           .then(response => {
             let data = response.data;
+            // console.log(data.results)
+            // console.log(data.results[0].pk)
+            // 검색된 그룹 결과들의 pk값을 배열로 저장..의미 없는 짓이었다..
+            for(let i=0;i<20;i++){
+              this.pagination.group_pk.push(data.results[i].pk)
+            }
+            console.log(this.pagination.group_pk)
             this.group_list = data.results;
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
@@ -122,8 +132,16 @@ export default {
       }
     },
     goGroup(pk, e){
-      this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
       window.localStorage.setItem('this_group',pk);
+      if(this.pagination.group_pk.indexOf('pk') > -1){
+        console.log("pk값이 있다")
+        this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      }
+      else{
+        console.log("pk값이 없다")
+        this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+
+      }
       console.log(pk);
     },
   },
