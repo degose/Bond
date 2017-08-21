@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     //- background
     .container
       header.header

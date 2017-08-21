@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal(v-if="visible" class="is-active")
+  .modal(v-if="visible" class="is-active" v-cloak)
     .modal-background(@click="closeModal")
     .modal-card
       header.modal-card-head
@@ -7,12 +7,8 @@
       section.modal-card-body
         nav.level
           .level-item.has-text-centered
-            figure.image.is-128x128
-              img.user-img.profilepic(
-                v-if='userinput.profile_img' 
-                :src='uploadMyImg' 
-                alt='my profile image'
-                )
+            figure.image.is-128x128.profilepic
+              img(v-if='userinput.profile_img' :src='uploadMyImg' alt='my profile image' width=128 height=128)
         nav.level
           .level-item.has-text-centered
             .file.is-primary.is-small
@@ -113,8 +109,13 @@ export default {
       let pk = window.localStorage.getItem('pk');
       let formData = new FormData();
 
-      formData.append('nickname', this.userinput.nickname);
-      formData.append('profile_img', this.$refs.file_input.files[0]);
+      if(!!this.userinput.nickname){
+        formData.append('nickname', this.userinput.nickname);
+      }
+      if(!!this.$refs.file_input.files[0]){
+        formData.append('profile_img', this.$refs.file_input.files[0]);
+      }
+
       // console.log('profile_img:',this.$refs.file_input.files[0])
 
       this.$http.patch(
@@ -131,14 +132,29 @@ export default {
         let data = response.data;
         let nickname = data.nickname;
         let profile_img = data.profile_img;
-        // console.log(profile_img);
+        // this.$parent.user.splice(1,1,{
+        //   email: '',
+        //   nickname: nickname,
+        //   pk: '',
+        //   profile_img: profile_img,
+        //   username: '',
+        // });
+        // this.$parent.user.unshift({
+        //   email: '',
+        //   nickname: nickname,
+        //   pk: '',
+        //   profile_img: profile_img,
+        //   username: '',
+        // });
+        console.log(profile_img);
         this.visible = false;
+
       })
       .catch(error => {
         if(this.userinput.nickname === ''){
           alert('닉네임 <- ' + error.response.data.nickname[0])
         }
-        else alert("입력하신 그룹 이름은 이미 존재합니다.")
+        else alert("음... 알 수 없네요.. 무슨일이죠?")
         console.log(error.response)});
     },
     getUserInfo(){
@@ -147,7 +163,7 @@ export default {
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  // console.log(response);
+                  console.log(response);
                   this.user = response.data;
                   // console.log('user.pk:',pk);
                   // console.log('data:',this.user);
@@ -166,5 +182,6 @@ export default {
   width: 128px
   height: 128px
   overflow: hidden
+  border-radius: 50%
 
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     .page-wrapper
       .container.grouplist
         .columns.grouplist-wrapper
@@ -69,9 +69,6 @@ export default {
     };
   },
   watch: {
-    $route() {
-      this.getMyGroupList();
-    },
   },
   methods: {
     openModal(){
@@ -85,6 +82,7 @@ export default {
       )
       .then(response => {
         this.group_list = response.data.results;
+        console.log('group',this.group_list);
 
       })
       .catch(error => {
@@ -127,7 +125,7 @@ export default {
   min-height: 100px
   max-height: 135px
   overflow: hidden
-  // background: #eee
+  background: #eee
 
 .grouplist-wrapper
   flex-wrap: wrap

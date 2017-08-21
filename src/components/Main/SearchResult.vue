@@ -1,5 +1,5 @@
 <template lang="pug">  
-  div
+  div(v-cloak)
     main-header
     my-search
     main-footer

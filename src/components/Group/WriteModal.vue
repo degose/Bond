@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal(v-if="visible" class="is-active")
+  .modal(v-if="visible" class="is-active" v-cloak)
     .modal-background(@click="closeModal")
     .modal-card
       header.modal-card-head
@@ -16,15 +16,15 @@
         //-       | 파일을 선택해주세요.
         //-     span.file-name(v-else)
         //-       | {{ file_name }}
-        //- .card-content
-        //-   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
-        //-     img(:src="uploadImg", alt='Image')
+        .card-content(v-if="file_name.length > 0")
+          figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
+            img(:src="uploadImg", alt='Image')
 
       form(id="uploadFile" name="uploadFile" method="POST" enctype="multipart/form-data" @submit.prevent="")
         footer.card-footer
           a.file.card-footer-item
             label.file-label
-              input.file-input(type='file', name='resume' ref="file_img_input" )
+              input.file-input(type='file', name='resume' ref="file_img_input" @change="previewFile" )
               span
                 i.fa.fa-picture-o
           a.file.card-footer-item
@@ -38,7 +38,6 @@
               span
                 i.fa.fa-folder-open-o
       footer.modal-card-foot
-        //- button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-3(:aria-label="close_message" @click="closeModal") 취소
 
@@ -64,7 +63,7 @@ export default {
   data() {
     return {
       visible: this.is_visible,
-      // uploadImg,
+      uploadImg: '',
       write: {
         // 텍스트 내용
         content:'',
@@ -88,49 +87,70 @@ export default {
           return true;
       }
     },
-    // previewFile(e) {
-    //   let _this = this;
-    //   let file = e.target.files[0];
-    //   this.group.profile_img = file;
-    //   let reader = new FileReader();
-    //   if(this.checkImage(file)){
-    //     this.file = file;
-    //     reader.readAsDataURL(file);
-    //     this.file_name = file.name;
-    //     reader.onload = data => {
-    //       this.uploadImg = data.srcElement.result;
-    //       // this.group.proflie_img = data.srcElement.result;
-    //       // _this.file_url = reader.result;
-    //     }
-    //   } else { alert('이미지 파일만 선택 가능합니다.')}
-    //   console.log('file:',file);
-    // },
+    previewFile(e) {
+      let _this = this;
+      let file = e.target.files[0];
+      this.write.image = file;
+      let reader = new FileReader();
+      if(this.checkImage(file)){
+        this.file = file;
+        reader.readAsDataURL(file);
+        this.file_name = file.name;
+        reader.onload = data => {
+          this.uploadImg = data.srcElement.result;
+          this.write.image = data.srcElement.result;
+          _this.file_url = reader.result;
+        }
+      } else { alert('이미지 파일만 선택 가능합니다.')}
+      console.log('file:',file);
+    },
     writeTextSubmit(){
       // 토큰 값으로 유저가 누구인지 인증
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
       let formData = new FormData();
+      let user_pk = window.localStorage.getItem('pk');
+      let user_img = window.localStorage.getItem('user_img');
+      let user_nickname = window.localStorage.getItem('user_nickname');
 
       formData.append('content', this.write.content);
+      // let img_file = this.$refs.file_img_input.files[0];
+      
+      if(!!this.$refs.file_img_input.files[0] ){
+        formData.append('image', this.$refs.file_img_input.files[0]);
+      }
       // formData.append('image', this.$refs.file_img_input.files[0]);
       formData.append('group', pk);
       
-      // let write = {
-      //   content: this.write.content,
-      //   image: '',
-      //   group: pk
-      // }
       this.$http.post(this.$store.state.api_write, formData,
         { 
           headers: {
             'Authorization' : `Token ${user_token}`,
             'Content-Type': 'multipart/form-data'
           }
-        }
-      )
+        })
                 .then(response => {
                   let data = response.data;
-                  // this.$parent.post_data.unshift({
+                  console.log('data::',data);
+                  this.$parent.post_data.unshift({
+                    author: {
+                      // email: author.email,
+                      nickname: user_nickname,
+                      // pk: author.pk,
+                      profile_img: user_img,
+                      // username: author.nickname
+                    },
+                    comment_count: 0,
+                    is_like: false,
+                    like_count: 0,
+                    pk: data.pk,
+                    image: data.image,
+                    group: data.group,
+                    video: data.video,
+                    content: data.content,
+                    created_date: data.created_date,
+                  });
+                  // this.$emit('add-post-data', {
                   //   author: {},
                   //   comment_count: 0,
                   //   is_like: false,
@@ -140,16 +160,6 @@ export default {
                   //   video: data.video,
                   //   content: data.content
                   // });
-                  bus.$emit('add-post-data', {
-                    author: {},
-                    comment_count: 0,
-                    is_like: false,
-                    pk: data.pk,
-                    image: data.image,
-                    group: data.group,
-                    video: data.video,
-                    content: data.content
-                  });
                 })
                 .catch(error => console.log(error.response));
                 this.visible = false;

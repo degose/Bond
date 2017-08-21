@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal(v-if="visible" class="is-active")
+  .modal(v-if="visible" class="is-active" v-cloak)
     .modal-background(@click="closeModal")
     .modal-card
       header.modal-card-head
@@ -81,9 +81,9 @@ export default {
     // $route(newVal, oldVal) {
     //   newVal.query.group_list !== oldVal.query.group_list && this.getMyGroupList();
     // },
-    $route(newVal, oldVal) {
-      newVal.query.group_list !== oldVal.query.group_list && this.getMyGroupList();
-    },
+    // $route(newVal, oldVal) {
+    //   newVal.query.group_list !== oldVal.query.group_list && this.getMyGroupList();
+    // },
     // createGroup()
   },
   methods: {
@@ -119,8 +119,12 @@ export default {
 
       formData.append('name', this.group.name);
       formData.append('description', this.group.description);
-      formData.append('profile_img', this.$refs.file_input.files[0]);
-
+      if( !!this.$refs.file_input.files[0] ){
+        formData.append('profile_img', this.$refs.file_input.files[0]);
+      }
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0]+ ', ' + pair[1]); 
+      // }
       this.$http.post(
         this.$store.state.api_grouplist, 
         formData,
@@ -136,9 +140,20 @@ export default {
         let name = data.name;
         let description = data.description;
         let profile_img = data.profile_img;
+        this.$parent.group_list.unshift({
+          description: description,
+          group_type: 'PUBLIC',
+          name: name,
+          num_of_members: 1,
+          owner:{},
+          // pk: '',
+          profile_img: profile_img,
+          tags: [],
+        });
         // console.log(profile_img);
         this.visible = false;
         // getMyGroupList();
+        console.log('부모', this.$parent);
       })
       .catch(error => {
         if(this.group.name === ''){
@@ -158,7 +173,7 @@ export default {
   width: 100%
   height: 320px
   overflow: hidden
-  background: url('http://bulma.io/images/placeholders/640x320.png')
+  background: url('../../assets/no-group.png')
   // background-position: center
 
 .group-name-input

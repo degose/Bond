@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.all-wrapper
+  div.all-wrapper(v-cloak)
     main-header
     my-group
     main-footer
