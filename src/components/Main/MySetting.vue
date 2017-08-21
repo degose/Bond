@@ -146,7 +146,6 @@ export default {
         //   profile_img: profile_img,
         //   username: '',
         // });
-        console.log(profile_img);
         this.visible = false;
 
       })
@@ -155,7 +154,7 @@ export default {
           alert('닉네임 <- ' + error.response.data.nickname[0])
         }
         else alert("음... 알 수 없네요.. 무슨일이죠?")
-        console.log(error.response)});
+        console.error(error.response)});
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
@@ -163,7 +162,6 @@ export default {
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  // console.log(response);
                   this.user = response.data;
                   // console.log('user.pk:',pk);
                   // console.log('data:',this.user);

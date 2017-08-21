@@ -66,21 +66,23 @@ export default {
       let path = null;
       let search = null;
       let user_token = window.localStorage.getItem('token');
-      if ( this.page_num.trim() === '' ) {
+      if ( this.page_num.trim() === '') {
         search = window.localStorage.getItem('searchKeyword');
         path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
       }
-      else {
+      // else if(){
+        
+      // }
+      else{
         path = this.pagination[direction];
         search = this.page_num.trim();
       }
       this.$http
-          .get(path,{ headers: {'Authorization' : `Token ${user_token}`}})
+          .get(path, { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
             console.log(response)
             let data = response.data;
             this.group_list = data.results;
-            // console.log(response.data.results.length)
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
             for(let i=0;i <response.data.results.length;i++){
