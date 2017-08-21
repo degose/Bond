@@ -131,7 +131,7 @@ export default {
     jointgroup(){
         let pk = window.localStorage.getItem('this_group')
         let user_token = window.localStorage.getItem('token')
-        this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/', {group: pk},
+        this.$http.post('https://api.thekym.com/member/membership/', {group: pk},
                   { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
                     console.log(response)
@@ -153,7 +153,7 @@ export default {
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
+      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -165,7 +165,7 @@ export default {
     fetchPostData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
+      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   // this.post_data = response.data.results;
@@ -187,7 +187,7 @@ export default {
       // let user_token = window.localStorage.getItem('token');
       // let pk = window.localStorage.getItem('this_group');
       // // let ppk = this.post.pk;
-      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
+      // this.$http.get('https://api.thekym.com/group=' + `${pk}` + '/post=' + `${ppk}`,
       //  { headers: {'Authorization' : `Token ${user_token}`} })
       //           .then(response=> {
       //             this.comment_data = response.data.results;
@@ -215,7 +215,7 @@ export default {
       console.log('pk:',pk);
       console.log('token:',user_token);
       // /api/post/<pk>/post-like-toggle
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle/',
+      this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   // this.like_or_not = response.like_or_not;

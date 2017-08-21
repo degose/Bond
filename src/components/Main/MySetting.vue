@@ -119,7 +119,7 @@ export default {
       // console.log('profile_img:',this.$refs.file_input.files[0])
 
       this.$http.patch(
-        'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/', 
+        'https://api.thekym.com/member/' + `${pk}` + '/', 
         formData,
         { 
           headers: {
@@ -159,7 +159,7 @@ export default {
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('pk');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/',
+      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
