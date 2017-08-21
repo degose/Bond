@@ -112,7 +112,8 @@ export default {
     fetch(){
       let search = this.search.trim();
       window.localStorage.setItem('searchKeyword',search)
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
+      //해당 search를 포함하는 group를 확인한 후 해당 그룹 페이지로 이동하거나 alert창을 올려준다. 
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`)
                 .then(response => {
                   if(response.data.count != 0)
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});

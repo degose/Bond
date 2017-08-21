@@ -66,7 +66,7 @@ export default {
       let path = null;
       let search = null;
       let user_token = window.localStorage.getItem('token');
-      if ( this.page_num.trim() === '' || (this.page_num.trim() !== '' && search !== null)) {
+      if ( this.page_num.trim() === '') {
         search = window.localStorage.getItem('searchKeyword');
         path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
       }
@@ -75,7 +75,7 @@ export default {
       //   path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
       // }
       else{
-        path = this.pagination[direction];
+        path = this.pagination[direction]; 
         search = this.page_num.trim();
       }
       this.$http
