@@ -17,7 +17,7 @@
                   |  · 
                   | {{this.group_list.length}}
             .card-content(v-for = 'group in group_list')
-              a.columns.is-mobile.group-small-list-group(@click="goGroup")
+              a.columns.is-mobile.group-small-list-group(@click="goGroup(group.pk)")
                 article.media.group-small-list
                   figure.media-left
                     p.image.is-32x32

@@ -14,8 +14,8 @@
                     p.title.is-4 {{ group_data.name }}
                     div
                       span 멤버 {{ group_data.num_of_members }}
-                      |  · 
-                      a(aria-label="open leave group modal" @click.prevent="deletegroup") 
+                      | &nbsp; ·&nbsp; 
+                      a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal") 
                         span.icon.is-small
                           i.fa.fa-cog(aria-hidden='true')
                         | 그룹 삭제
@@ -207,8 +207,8 @@
          
           
         write-modal(close_message="close lightbox" ref='write_modal')
-        leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
-        //- delete-post-modal(close_message="close lightbox" ref='delete_post_modal')
+        //- leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
+        delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
 
         
 </template>
@@ -216,9 +216,9 @@
 <script>
 // import {bus} from './bus'
 import WriteModal from './WriteModal';
-import LeaveGroupModal from './LeaveGroupModal';
+// import LeaveGroupModal from './LeaveGroupModal';
 import PostTemplate from './PostTemplate';
-// import DeletePostModal from './DeletePostModal';
+import DeleteGroupModal from './DeleteGroupModal';
 
 export default {
   created(){
@@ -240,12 +240,10 @@ export default {
       showcomment: false,
       // like: false,
       // like_or_not: '',
-      write: {
-        // 텍스트 내용
-        content:'',
-        // 그룹 pk값..임의로 정해둠
-        group: 29
-      },
+      // write: {
+      //   // 텍스트 내용
+      //   content:'',
+      // },
       group_data:[],
       post_data:[],
       comment_data:[],
@@ -260,9 +258,9 @@ export default {
   },
   components: {
     WriteModal,
-    LeaveGroupModal,
+    // LeaveGroupModal,
     PostTemplate,
-    // DeletePostModal
+    DeleteGroupModal
   },
   methods: {
     addPostData(o){
@@ -284,6 +282,9 @@ export default {
     },
     openLeaveGroupModal(){
       this.$refs.leave_group_modal.visible = true;
+    },
+    openDeleteGroupModal(){
+      this.$refs.delete_group_modal.visible = true;
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
@@ -360,41 +361,6 @@ export default {
     //      this.fetchPostData('prev');
     //   }
     // },    
-    deletegroup(){
-      let pk = window.localStorage.getItem('this_group');
-      console.log(pk)
-      let user_token = window.localStorage.getItem('token');
-      console.log(user_token)
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}` + '/',
-                { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response => {
-                  // console.log(response)
-                  this.$router.push({ path: '/MainPage'});
-                })
-                .catch(error =>{
-                  console.error(error.response)
-                  if(error.response.status === 401)
-                    alert(error.response.data.detail)
-                })
-    },
-    deletemembership(){
-          let pk = window.localStorage.getItem('this_group');
-          console.log(pk)
-          let user_token = window.localStorage.getItem('token');
-          console.log(user_token)
-          this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/',
-                  {group: pk},
-                  { headers: {'Authorization' : `Token ${user_token}`}})
-                  .then(response => {
-                    console.log(response)
-                    // this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
-                  })
-                  .catch(error =>{
-                    console.error(error.response)
-                    if(error.response.status === 401)
-                    alert(error.response.data.detail)
-                  })
-    },
     writeCommentSubmit(pk){
       let user_token = window.localStorage.getItem('token');
       let user_img = window.localStorage.getItem('user_img');

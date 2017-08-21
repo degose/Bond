@@ -121,16 +121,9 @@ export default {
       showcomment: false,
       like: false,
       like_or_not: '',
-      write: {
-        // 텍스트 내용
-        content:'',
-        // 그룹 pk값..임의로 정해둠
-        group: 29
-      },
       group_data:[],
       post_data:[],
       comment_data:[],
-      // target: ''
       pk:'',
     }
   },
