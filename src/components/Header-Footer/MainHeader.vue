@@ -71,7 +71,7 @@ export default {
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
-                  console.log(this.user);
+                  // console.log(this.user);
                   // console.log(this.user.profile_img);
                   window.localStorage.setItem('user_img', this.user.profile_img);
                   window.localStorage.setItem('user_email', this.user.email);
@@ -114,7 +114,7 @@ export default {
       window.localStorage.setItem('searchKeyword',search)
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
                 .then(response => {
-                  console.log(response)
+                  // console.log(response)
                   if(response.data.count != 0)
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
                   else

@@ -163,7 +163,7 @@ export default {
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  console.log(response);
+                  // console.log(response);
                   this.user = response.data;
                   // console.log('user.pk:',pk);
                   // console.log('data:',this.user);
