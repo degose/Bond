@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.all-wrapper
+    div.all-wrapper(v-cloak)
       main-header
       .container
         //- 가입한 그룹의 feed
@@ -26,6 +26,13 @@
 
           //- feed 영역
           .column.is-9
+            //- div.feed-box(v-show="post_data.length <= 0")
+              .card
+                .card-content
+                  .content
+                    | 그룹에 재미있는 이야기를 써보세요.
+
+
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card(v-for = "data in data_list")
@@ -67,11 +74,18 @@ import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
 
 export default {
-  name: 'MyWriteFeed',
   components: {
     MainHeader,
     MakingGroupModal,
     MainFooter
+  },
+  created(){
+    this.fetchGroupData();
+    this.fetchPostData();
+    // this.deletePost();
+  },
+  watch: {
+    deletePost(){}
   },
   data() {
     return {
@@ -88,17 +102,60 @@ export default {
     this.getMyGroupList();
   },
   methods: {
+    addPostData(o){
+      console.log(this.post_data);
+      this.post_data.unshift(o);
+      console.log(this.post_data);
+    },
     openModal(){
       this.$refs.my_modal.visible = true;
     },
-    openDropdownPost() {
-      this.dropdownpost = !this.dropdownpost;
+    deletePost(pk, i){
+      // console.log('pkstpk::',pk);
+      // console.log('i', this.post_data[i]);
+      // let post_num = this.post_data[i];
+      // post_num.splice(0,1);
+      // this.post_data.post[i].splice(i, 1);
+      console.log('i',this.post_data);
+      // console.log('i',post_num);
+      let user_token = window.localStorage.getItem('token');
+      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  // post_num.splice(0,1);
+                  // console.log('i',this.post_data);
+                  // console.log('i',post_num);
+                  this.post_data.post[i].splice(i, 1);
+                })
+                .catch(error => console.log(error.response));
     },
-    openDropdownComment() {
-      this.dropdowncomment = !this.dropdowncomment;
+    fetchGroupData(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  this.group_data = response.data;
+                  console.log('this.group_datalist:',this.group_data);
+                  // console.log('response:',response);
+                })
+                .catch(error => console.log(error.response));
     },
-    showComment() {
-      this.showcomment = !this.showcomment;
+    fetchPostData(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
+       { headers: {'Authorization' : `Token ${user_token}`} })
+                .then(response=> {
+                  // let group_count = response.data.count;
+                  // this.group_count = group_count;
+                  console.log('ddd',response);
+                  let data = response.data;
+                  data.results.forEach(item => {
+                    this.post_data.push(item);
+                  });
+                })
+                .catch(error => console.log(error.response));
     },
     addLike() {
       this.like = !this.like;
@@ -176,6 +233,8 @@ body
     color: $bond
   &:active
     color: $bond
+.card
+  margin-bottom: 20px
 
 
 
