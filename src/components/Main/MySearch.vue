@@ -4,8 +4,8 @@
       .columns
         .column.is-10.is-offset-1
           .box.fetched-data
-            article.media.fetched-data-item(v-for = "group in group_list")
-              a(@click.prevent ="goGroup(group.pk, $event)")
+            article.media.fetched-data-item(v-for = "(group,i) in group_list")
+              a(@click.prevent ="goGroup(group.pk, i)")
                 .media-left
                   figure.image.is-64x64
                     img(:src='group.profile_img', alt='Image')
@@ -26,8 +26,9 @@
       .columns
         .column
           nav.pagination.is-centered
-            a.pagination-previous(@click="prevPage()") 이전 페이지
-            a.pagination-next(@click="nextPage()") 다음 페이지 
+            button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+            button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
+
             //- ul.pagination-list
             //-   li
             //-     a.pagination-link 1
@@ -53,8 +54,9 @@ export default {
       page_num: '',
       pagination:{
         next: '', 
-        prev: ''
-      }
+        prev: '',
+      },
+      is_member: []
     }
   },
   created(){
@@ -64,6 +66,7 @@ export default {
     fetched(direction){
       let path = null;
       let search = null;
+      let user_token = window.localStorage.getItem('token');
       if ( this.page_num.trim() === '' ) {
         search = window.localStorage.getItem('searchKeyword');
         path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
@@ -73,43 +76,36 @@ export default {
         search = this.page_num;
       }
       this.$http
-          .get(path)
+          .get(path,{ headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
+            console.log(response)
             let data = response.data;
             this.group_list = data.results;
+            // console.log(response.data.results.length)
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
+            for(let i=0;i <response.data.results.length;i++){
+              this.is_member.push(data.results[i].is_member)
+            }
             this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
           })
           .catch(error => console.error(error.message));
-    // fetched(direction){
-    //   let path = null;
-    //   let search = null;
-    //   if ( this.page_num.trim() === '' ) {
-    //     search = window.localStorage.getItem('searchKeyword');
-    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
-    //   } else {
-    //     path = this.pagination[direction];
-    //     search = this.page_num;
-    //   }
-    //   this.$http
-    //       .get(path)
-    //       .then(response => {
-    //         let data = response.data;
-    //         this.group_list = data.results;
-    //         this.pagination.next = data.next;
-    //         this.pagination.prev = data.previous;
-    //         this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-    //       })
-    //       .catch(error => console.error(error.message));
     },
     nextPage(){
       let api_path = this.pagination.next;
+      if (api_path !== null) {
       let first = api_path.indexOf('?page=');
       let last = api_path.indexOf('&');
       let page_path = api_path.slice(first, last);
       this.page_num = page_path[page_path.length - 1];
       this.fetched('next');
+      // console.log('작동된다')
+      }
+      else {
+        // alert("마지막페이지.")
+        // console.log("마지막이다.")
+      }
+
       // let path = this.$route.path;
       // let query = {
       //   search: page_num
@@ -120,21 +116,35 @@ export default {
     },
     prevPage(){
       let api_path = this.pagination.prev;
-      let first = api_path.indexOf('?page=');
       let last = api_path.indexOf('&');
+      let first = api_path.indexOf('?page=');
+
+      if(this.page_num >= 3){
       let page_path = api_path.slice(first, last);
       this.page_num = page_path[page_path.length - 1];
-      this.fetched('prev');
+      this.fetched('prev');}
+      else{
+         let path = this.pagination.prev
+         this.fetched('prev');
+      }
     },
-    goGroup(pk, e){
-      this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+    goGroup(pk, i){
       window.localStorage.setItem('this_group',pk);
+      if(this.is_member[i] === true){
+        console.log("pk값이 있다")
+        console.log(this.is_member[i])
+        this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      }
+      else{
+        console.log("pk값이 없다")
+        this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+      }
       console.log(pk);
     },
   },
   // watch: {
   //   $route(newVal, oldVal) {
-  //     newVal.query.search !== oldVal.query.search;
+  //     newVal.query.search !== oldVal.query.search && this.fetched();
   //   },
   // }
 }
@@ -146,7 +156,8 @@ export default {
 .all-wrapper
   background: #eee
   // height: 100vh
-
+.pagination-btn
+  color: $bond
 body
   // background: #eee
 </style>
