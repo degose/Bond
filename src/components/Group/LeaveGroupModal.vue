@@ -10,7 +10,7 @@
               p 
               strong 회원님, 정말 그룹을 탈퇴하시겠습니까?
       footer.modal-card-foot
-        button.button.is-primary(@click="closeModal") 확인
+        button.button.is-primary(@click="deleteMembership") 확인
         button.button(@click="closeModal") 취소
       // level-right 요소로 우측정렬 가능.. 빈 요소라도 level-left는 언제나 필수! 
 </template>
@@ -35,10 +35,29 @@ export default {
   methods: {
     closeModal(){
       this.visible = false;
-    }
+    },
+    deleteMembership(){
+      let pk = window.localStorage.getItem('this_group');
+      let user_token = window.localStorage.getItem('token');
+      console.log(pk)
+      console.log(user_token)
+      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/',
+              {group: pk},
+              { headers: {'Authorization' : `Token ${user_token}`}})
+              .then(response => {
+                console.log(response)
+                // this.$router.push({ path: '/MainPage/'});
+              })
+              .catch(error =>{
+                console.error(error.response)
+                if(error.response.status === 401){
+                // alert(error.response.data.detail)
+                }
+              })
+              this.visible = false;
+    }    
   }
 }
 </script>
 <style lang="sass" scoped>
-
 </style>

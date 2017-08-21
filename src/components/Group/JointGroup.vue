@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.all-wrapper
     main-header
     feed-menu
     main-footer
@@ -12,7 +12,6 @@ import FeedMenu from './FeedMenu';
 import JointGroupFeed from './JointGroupFeed';
 import MainFooter from '../Header-Footer/MainFooter';
 export default {
-  name: 'app',
   components: {
     MainHeader,
     FeedMenu,
@@ -27,8 +26,10 @@ export default {
 @import "~bulma"
 @import "~style"
 
+.all-wrapper
+  background: #eee
 
 body
-  background: #eee
+  // background: #eee
 
 </style>

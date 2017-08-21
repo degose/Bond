@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     //- background
     .container
       header.header
@@ -43,7 +43,6 @@
 <script>
 import Background from '../Background';
 export default {
-  name: 'SignInPage',
   components: {
     Background
   },
@@ -52,25 +51,31 @@ export default {
       signin: {
         email: '',
         password: ''
-      }
+      },
     }
   },
   methods: {
     signinSubmit(){
       this.$http.post(this.$store.state.api_signin, this.signin)
       .then(response => {
-        let token = response.data.key;
+      let token = response.data.token;
+      let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
+          window.localStorage.setItem('pk', pk);
         }
         console.log('success token:', window.localStorage.getItem('token'));
+        console.log('success pk:', window.localStorage.getItem('pk'));
         this.$router.push( {path: '/MainPage'} );
-        console.log(response);
-        console.log('성공');
       })
       .catch(error => {
+        // 이메일만 빈칸 일 때의 오류 메시지
+        if (this.signin.email === '' && this.signin.password !== ''){alert('이메일 <- ' + error.response.data.email[0]);}
+        // 패스워드만 빈칸 일 때의 오류 메시지
+        else if(this.signin.password === '' && this.signin.email !== ''){alert('비밀번호 <- ' + error.response.data.password[0]);}
+        // 틀린 정보를 시도했을 때의 오류 메시지
+        else alert(error.response.data.non_field_errors[0]);
         console.log(error.response);
-        console.log('실패');
       })
     }
   }
@@ -91,7 +96,7 @@ export default {
   margin-bottom: 0
 
 .home-box
-  background-color: hsla(0, 0%, 100%, .7)
+  background-color: hsla(0, 0%, 100%, .9)
   padding: 40px 0
 
 fieldset

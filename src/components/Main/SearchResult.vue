@@ -1,134 +1,87 @@
-<template lang="pug">
-div
-  main-header
-  .container
-    .columns
-      .column
-        .box
-          article.media
-            .media-left
-              figure.image.is-64x64
-                img(src='http://bulma.io/images/placeholders/128x128.png', alt='Image')
-            .media-content
-              .content
-                p
-                  strong 글 제목
-                  br
-                  |           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                div
-                  span.icon.is-small.user
-                    i.fa.fa-user(aria-hidden='true')
-                  small    닉네임
-                  span.icon.is-small.leader
-                    i.fa.fa-heart(aria-hidden='true')
-                  small    좋아요 수
-          .level        
-          .level        
-          .level        
-          nav.pagination.is-centered.is-small
-            a.pagination-previous Previous
-            a.pagination-next Next page
-            ul.pagination-list
-              li
-                a.pagination-link 1
-              li
-                span.pagination-ellipsis …
-              li
-                a.pagination-link 45
-              li
-                a.pagination-link.is-current 46
-              li
-                a.pagination-link 47
-              li
-                span.pagination-ellipsis …
-              li
-                a.pagination-link 86
-        
-    .columns
-      .column.is-10.is-offset-1
-        a(href="#").box
-          article.media
-            .media-left
-              figure.image.is-64x64
-                img(src='http://bulma.io/images/placeholders/128x128.png', alt='Image')
-            .media-content
-              .content
-                p
-                  strong 그룹 이름
-                  br
-                  |           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                div
-                  span.icon.is-small.member
-                    i.fa.fa-users(aria-hidden='true')
-                  small    멤버 수
-                  span.icon.is-small.leader
-                    i.fa.fa-user-circle-o(aria-hidden='true')
-                  small    대장
-        a(href="#").box
-          article.media
-            .media-left
-              figure.image.is-64x64
-                img(src='http://bulma.io/images/placeholders/128x128.png', alt='Image')
-            .media-content
-              .content
-                p
-                  strong 그룹 이름
-                  br
-                  |           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                div
-                  span.icon.is-small.member
-                    i.fa.fa-users(aria-hidden='true')
-                  small    멤버 수
-                  span.icon.is-small.leader
-                    i.fa.fa-user-circle-o(aria-hidden='true')
-                  small    대장
-
-    .columns
-      .column
-        nav.pagination.is-centered
-          a.pagination-previous Previous
-          a.pagination-next Next page
-          ul.pagination-list
-            li
-              a.pagination-link 1
-            li
-              span.pagination-ellipsis …
-            li
-              a.pagination-link 45
-            li
-              a.pagination-link.is-current 46
-            li
-              a.pagination-link 47
-            li
-              span.pagination-ellipsis …
-            li
-              a.pagination-link 86
-  main-footer
-
-
+<template lang="pug">  
+  div(v-cloak)
+    main-header
+    my-search
+    main-footer
 </template>
 
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
+import MySearch from './MySearch';
+
 export default {
-  name: 'app',
   components: {
     MainHeader,
-    MainFooter
-  }
-
+    MainFooter,
+    MySearch
+  },
+  // data(){
+  //   return{
+  //     search: '',
+  //     group_list: []
+  //   }
+  // },
+  // created(){ 
+  //   this.fetch();
+  // },
+  // mounted(){
+  //   this.fetch();
+  // },
+  // computed: {
+  //   filtered_group_list(){
+  //     let search = this.search.trim();
+  //     if(search){
+  //       this.group_list = group_list.filter(search => Object.values(search));
+  //     }
+  //   },
+  // },
+  // methods: {
+  //   fetch(){
+  //     let search = this.search.trim();
+  //     let searchkeyword = window.localStorage.getItem('searchKeyword');
+  //     this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${searchkeyword}`)
+  //               .then(response => {
+  //                 this.group_list = response.data.results;
+                  
+  //                 console.log('searchKeyword:',searchkeyword);
+  //                 console.log('response:',response);
+  //                 console.log('search:',search);
+  //                 this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+  //                 console.log('search:',search);
+  //               })
+  //               .catch(error => console.error(error.message))
+  //   },
+  //   inputSearch(event){
+  //     this.search = event.target.value;
+  //   }
+  // }
 }
+
+
 </script>
 
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-// html
-//   font-size: 100%
-//   background: #fff
+
 // body
-//   margin: 0
-.leader
-  margin-left: 8px
+//   background: #eee
+// .navbar-burger.burger
+//   padding-top: 8px
+//   padding-left: 10px
+// .navhr
+//   margin: 0 5px 30px 5px
+//   // margin: 0
+// .dropdownhr
+//   margin: 5px
+
+// .nav-fixed
+//   position: fixed
+// .nav-bg
+//   background: #fff
+// .btn-search
+//   color: $primary
+// .leader
+//   margin-left: 8px
 </style>

@@ -20,54 +20,58 @@ import FindPassword from './components/Home/FindPassword';
 import MainPage from './components/Main/MainPage';
 import MyGroup from './components/Main/MyGroup';
 import SearchResult from './components/Main/SearchResult';
+import MobileMyMenu from './components/Header-Footer/MobileMyMenu';
 
 // Set
 
-//Route Setting
+// Route Setting
 export const routes = [
-    //Feed
-    {path: '/Feed', component: Feed},
-    {path: '/MyWriteFeed', component: MyWriteFeed},
-    {path: '/MyGroupFeed', component: MyGroupFeed},
-    {path: '/NoneJointGroupFeed', component: NoneJointGroupFeed},
+    // Feed
+    { path: '/Feed', component: Feed },
+    { path: '/MyWriteFeed', component: MyWriteFeed },
+    { path: '/MyGroupFeed', component: MyGroupFeed },
+    { path: '/NoneJointGroupFeed', component: NoneJointGroupFeed },
 
     // Group
     // {path: '/JointGroup', component: JointGroup},
-    {path: '/JointGroup', component: JointGroup, children: [
-      {path: '', component: JointGroupFeed},
-      {path: '/JointGroup/GroupMemberList', component: GroupMemberList},
-    ]},
+  { path: '/JointGroup/', 
+    component: JointGroup, 
+    children: [
+      { path: '', component: JointGroupFeed },
+      { path: '/JointGroup/GroupMemberList', component: GroupMemberList }
+    ] 
+  },
     // {path: '/JointGroupFeed', component: JointGroupFeed},
     // {path: '/GroupMemberList', component: GroupMemberList},
 
-    //Home
-    {
-      path: '/', 
-      component: Home,
-      beforeEnter(to, from, next){
-        let tk = window.localStorage.getItem('token');
-        if (tk) {
-          next('/MainPage');
-        } else {
-          next();
-        }
-      },
-    },
-    {path: '/FindPassword', component: FindPassword},
-    {
-      path: '/SignInPage', 
-      component: SignInPage,
-    },
-    {path: '/SignUpPage', component: SignUpPage},
+    // Home
+  {
+    path: '/',
+    component: Home,
+    beforeEnter (to, from, next) {
+      const tk = window.localStorage.getItem('token');
+      if (tk) {
+        next('/MainPage');
+      } else {
+        next();
+      }
+    }
+  },
+    { path: '/FindPassword', component: FindPassword },
+  {
+    path: '/SignInPage',
+    component: SignInPage
+  },
+    { path: '/SignUpPage', component: SignUpPage },
 
-    //Main
-    {path: '/MainPage', component: MainPage},
-    {path: '/MyGroup', component: MyGroup},
-    {path: '/SearchResult', component: SearchResult},
+    // Main
+    { path: '/MainPage', component: MainPage },
+    { path: '/MyGroup', component: MyGroup },
+    { path: '/SearchResult/group/', component: SearchResult },
     // {path: '/InvitationModal', component: InvitationModal},
-    
-    //Set
+    { path: '/MyMenu', component: MobileMyMenu },
 
+    // Set
     // *
-    {path: '*', component: Home}
-]
+    { path: '*', component: Home }
+];

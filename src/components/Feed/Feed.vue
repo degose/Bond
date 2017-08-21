@@ -20,7 +20,6 @@ import NoneJointFeed from '../Feed/NoneJointGroupFeed';
 
 
 export default {
-  name: 'app',
   components: {
     MainHeader,
     MyGroup,
