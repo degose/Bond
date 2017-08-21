@@ -243,11 +243,6 @@ export default {
       // write: {
       //   // 텍스트 내용
       //   content:'',
-<<<<<<< HEAD
-=======
-      //   // 그룹 pk값..임의로 정해둠
-      //   group: 29
->>>>>>> ae9bca972c1dd3f049d8119c2676eb648e664248
       // },
       group_data:[],
       post_data:[],
