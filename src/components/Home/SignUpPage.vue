@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     //- background
     .container
       header.header
@@ -114,7 +114,6 @@
 import Background from '../Background';
 
 export default {
-  name: 'app',
   data(){
     return {
       signup: {

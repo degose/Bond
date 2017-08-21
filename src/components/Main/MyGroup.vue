@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     .page-wrapper
       .container.grouplist
         .columns.grouplist-wrapper
@@ -47,7 +47,6 @@ import MakingGroupModal from '../Group/MakingGroupModal';
 // let group_list_url = 'https://bond-43bc3.firebaseio.com/group.json';
 // let group_list_url = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/';
 export default {
-  name: 'MyGroup',
   components: {
     MakingGroupModal
   },

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     //- background
     .container
       header.header
@@ -60,7 +60,6 @@
 <script>
 import Background from '../Background';
 export default {
-  name: 'app',
   components: {
     Background
   },

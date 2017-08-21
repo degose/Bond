@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app
+  #app(v-cloak)
     div
       background(v-if='!!needs_to_login')
       //- Home
@@ -32,6 +32,9 @@ export default {
 body
   // height: 110vh 
 
+
+[v-cloak] 
+  display: none
 
 </style>
 

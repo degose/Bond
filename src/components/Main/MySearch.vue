@@ -1,5 +1,5 @@
 <template lang="pug">  
-  div.all-wrapper
+  div.all-wrapper(v-cloak)
     .container
       .columns
         .column.is-10.is-offset-1
@@ -28,7 +28,6 @@
           nav.pagination.is-centered
             button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
             button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
-
             //- ul.pagination-list
             //-   li
             //-     a.pagination-link 1

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal(v-if="visible" class="is-active")
+  .modal(v-if="visible" class="is-active" v-cloak)
     .modal-background(@click="closeModal")
     .modal-card
       header.modal-card-head

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     //- background
     .container
       header.header
@@ -43,7 +43,6 @@
 <script>
 import Background from '../Background';
 export default {
-  name: 'SignInPage',
   components: {
     Background
   },
@@ -63,7 +62,7 @@ export default {
       let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
-          window.localStorage.setItem('pk', pk)
+          window.localStorage.setItem('pk', pk);
         }
         console.log('success token:', window.localStorage.getItem('token'));
         console.log('success pk:', window.localStorage.getItem('pk'));
