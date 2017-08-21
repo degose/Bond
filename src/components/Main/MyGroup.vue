@@ -64,12 +64,6 @@ export default {
       uploadGroupImg: '',
       group_list: [],
       group_pk: '',
-<<<<<<< HEAD
-      group: {}
-    };
-  },
-  watch: {
-=======
       group: {},
       page_num: '',
       pagination:{
@@ -79,7 +73,6 @@ export default {
       },
       my_group_pk:[]
     }
->>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
   },
   methods: {
     openModal(){
@@ -100,11 +93,6 @@ export default {
         {headers: { 'Authorization' : `Token ${user_token}` }}
       )
       .then(response => {
-<<<<<<< HEAD
-        this.group_list = response.data.results;
-        console.log('group',this.group_list);
-
-=======
         let data = response.data;
         this.group_list = data.results;
         this.pagination.next = data.next;
@@ -113,7 +101,6 @@ export default {
         this.pagination.all = Math.ceil(data.count / 11)
         this.$router.push({ path: '/MainPage/', query: { page: `${page_num}` }});
         console.log(response)
->>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
       })
       .catch(error => {
         console.log(error.message);
@@ -184,12 +171,7 @@ export default {
   min-height: 100px
   max-height: 135px
   overflow: hidden
-<<<<<<< HEAD
-  background: #eee
-
-=======
   // background: #eee
->>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
 .grouplist-wrapper
   flex-wrap: wrap
 </style>

@@ -28,10 +28,6 @@
           nav.pagination.is-centered
             button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
             button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
-<<<<<<< HEAD
-=======
-
->>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
             //- ul.pagination-list
             //-   li
             //-     a.pagination-link 1
@@ -57,14 +53,9 @@ export default {
       page_num: '',
       pagination:{
         next: '', 
-<<<<<<< HEAD
-        prev: ''
-      },
-=======
         prev: '',
       },
       is_member: []
->>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
     }
   },
   created(){
@@ -136,13 +127,7 @@ export default {
          this.fetched('prev');
       }
     },
-<<<<<<< HEAD
-    goGroup(pk, e){
-
-      this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
-=======
     goGroup(pk, i){
->>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
       window.localStorage.setItem('this_group',pk);
       if(this.is_member[i] === true){
         console.log("pk값이 있다")
