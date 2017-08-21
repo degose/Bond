@@ -14,8 +14,6 @@
             .card-content
               .columns.is-mobile
                 h3.title.is-5 내 그룹
-                  |  · 
-                  | {{this.group_list.length}}
             .card-content(v-for = 'group in group_list')
               a.columns.is-mobile.group-small-list-group(@click="goGroup(group.pk)")
                 article.media.group-small-list
@@ -23,6 +21,13 @@
                     p.image.is-32x32
                       img.group-img-small(:src='group.profile_img')
                 p.group-small-name {{group.name}}
+            .card-content
+              .columns.is-mobile
+                router-link(to='/MainPage')
+                    span.icon.is-small
+                      i.fa.fa-plus-circle(aira-hidden='true')
+                    |
+                    | 더보기
 
           //- feed 영역
           .column.is-9
@@ -166,7 +171,6 @@ export default {
         )
         .then(response => {
           this.group_list = response.data.results;
-          console.log(response)
         })
         .catch(error => {
           console.log(error.message);
@@ -178,7 +182,6 @@ export default {
       let path ='http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?author='+`${pk}`;
       this.$http.get(path)
                 .then(response => {
-                  console.log(response)
                   let data = response.data;
                   this.data_list = data.results;
                 })
@@ -205,7 +208,6 @@ export default {
                 .catch(error => console.log(error.response));
     },
     goGroup(pk){
-      console.log(pk)
       window.localStorage.setItem('this_group', pk);
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
