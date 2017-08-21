@@ -3,9 +3,10 @@
     .container
       .columns
         .column.is-10.is-offset-1
-          .box.fetched-data
-            article.media.fetched-data-item(v-for = "group in group_list")
-              a(@click.prevent ="goGroup(group.pk, $event)")
+          .box
+            article.media.fetched-data
+            .box.fetched-data-item(v-for = "group in group_list")
+              a(@click.prevent ="goGroup(group.pk, $event)") 
                 .media-left
                   figure.image.is-64x64
                     img(:src='group.profile_img', alt='Image')
@@ -54,7 +55,7 @@ export default {
       pagination:{
         next: '', 
         prev: ''
-      }
+      },
     }
   },
   created(){
@@ -70,7 +71,7 @@ export default {
       }
       else {
         path = this.pagination[direction];
-        search = this.page_num;
+        search = this.page_num.trim();
       }
       this.$http
           .get(path)
@@ -79,29 +80,9 @@ export default {
             this.group_list = data.results;
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
-            this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+            this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }})
           })
-          .catch(error => console.error(error.message));
-    // fetched(direction){
-    //   let path = null;
-    //   let search = null;
-    //   if ( this.page_num.trim() === '' ) {
-    //     search = window.localStorage.getItem('searchKeyword');
-    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
-    //   } else {
-    //     path = this.pagination[direction];
-    //     search = this.page_num;
-    //   }
-    //   this.$http
-    //       .get(path)
-    //       .then(response => {
-    //         let data = response.data;
-    //         this.group_list = data.results;
-    //         this.pagination.next = data.next;
-    //         this.pagination.prev = data.previous;
-    //         this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-    //       })
-    //       .catch(error => console.error(error.message));
+          .catch(error => console.error(error.response));
     },
     nextPage(){
       let api_path = this.pagination.next;
@@ -110,20 +91,13 @@ export default {
       let page_path = api_path.slice(first, last);
       this.page_num = page_path[page_path.length - 1];
       this.fetched('next');
-      // let path = this.$route.path;
-      // let query = {
-      //   search: page_num
-      // }
-      // this.$router.push({
-      //   path, query
-      // });
     },
     prevPage(){
       let api_path = this.pagination.prev;
       let first = api_path.indexOf('?page=');
       let last = api_path.indexOf('&');
       let page_path = api_path.slice(first, last);
-      this.page_num = page_path[page_path.length - 1];
+      this.page_num = page_path[page_path.length -1];
       this.fetched('prev');
     },
     goGroup(pk, e){
@@ -132,11 +106,16 @@ export default {
       console.log(pk);
     },
   },
-  // watch: {
-  //   $route(newVal, oldVal) {
-  //     newVal.query.search !== oldVal.query.search;
-  //   },
-  // }
+  watch: {
+    $route(newVal, oldVal) {
+        console.log(newVal, oldVal)
+        console.log(newVal.query, oldVal.query)
+        console.log(newVal.query.search, oldVal.query.search)
+        console.log(this)
+      if(newVal !== oldVal)
+        this.fetched()
+     }
+  }
 }
 </script>
 
@@ -145,7 +124,6 @@ export default {
 @import "~style"
 .all-wrapper
   background: #eee
-  // height: 100vh
 
 body
   // background: #eee
