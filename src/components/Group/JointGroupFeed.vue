@@ -59,9 +59,9 @@
                     | 그룹에 재미있는 이야기를 써보세요.
 
             //- div.feed-box(@add-post-data="addPostData" v-for="(post, i) in post_data")
-            div.feed-box
-              //- post-template
-              div.card-wrapper(@add-post-data="addPostData" v-for="(post, i) in post_data")
+            div.feed-box(v-for="(post, i) in post_data")
+              post-template(:a = "post")
+              //- div.card-wrapper(@add-post-data="addPostData" v-for="(post, i) in post_data")
                 .card
                   .card-content
                     article.media
@@ -224,7 +224,7 @@ export default {
   created(){
     this.fetchGroupData();
     this.fetchPostData();
-    this.fetchCommentData();
+    // this.fetchCommentData();
     // bus.$on('add-post-data')
     // this.deletePost();
   },
@@ -233,20 +233,25 @@ export default {
   },
   data() {
     return {
-      write_comment: '',
+      // write_comment: '',
       visible: false,
-      dropdownpost: false,
-      dropdowncomment: false,
-      showcomment: false,
+      // dropdownpost: false,
+      // dropdowncomment: false,
+      // showcomment: false,
       // like: false,
       // like_or_not: '',
       // write: {
       //   // 텍스트 내용
       //   content:'',
+<<<<<<< HEAD
+=======
+      //   // 그룹 pk값..임의로 정해둠
+      //   group: 29
+>>>>>>> ae9bca972c1dd3f049d8119c2676eb648e664248
       // },
       group_data:[],
       post_data:[],
-      comment_data:[],
+      // comment_data:[],
       pk:'',
       page_num: '',
       pagination:{
@@ -263,20 +268,20 @@ export default {
     DeleteGroupModal
   },
   methods: {
-    addPostData(o){
-      console.log(this.post_data);
-      this.post_data.unshift(o);
-      console.log(this.post_data);
-    },
-    deletePost(pk, i){
-      // console.log('i',this.post_data);
-      let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                })
-                .catch(error => console.log(error.response));
-    },
+    // addPostData(o){
+    //   console.log(this.post_data);
+    //   this.post_data.unshift(o);
+    //   console.log(this.post_data);
+    // },
+    // deletePost(pk, i){
+    //   // console.log('i',this.post_data);
+    //   let user_token = window.localStorage.getItem('token');
+    //   this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+    //    { headers: {'Authorization' : `Token ${user_token}`}})
+    //             .then(response=> {
+    //             })
+    //             .catch(error => console.log(error.response));
+    // },
     openWriteModal(){
       this.$refs.write_modal.visible = true;
     },
@@ -314,16 +319,17 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   // this.post_data = response.data.results;
+                  console.log('dd',response);
                   let data = response.data.results;
-                  console.log('like',data);
+                  // console.log('like',data);
                   data.forEach(item => {
                     this.post_data.push(item);
                   });
-                  console.log('postdata',data);
+                  // console.log('postdata',data);
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
                   this.$router.push({ path: '/JointGroup/', query: { page: `${page_num}` }});
-                  console.log(response)                  
+                  // console.log(response)                  
                   // console.log('this.post_data:',this.post_data);
                 })
                 // .then(write => {const datalist = Object.values(write);
@@ -361,122 +367,122 @@ export default {
     //      this.fetchPostData('prev');
     //   }
     // },    
-    writeCommentSubmit(pk){
-      let user_token = window.localStorage.getItem('token');
-      let user_img = window.localStorage.getItem('user_img');
-      let user_nickname = window.localStorage.getItem('user_nickname');
-      let comment_submit_data = {
-        post: pk,
-        content: this.write_comment
-      }
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', 
-        comment_submit_data,
-        { 
-          headers: {
-            'Authorization' : `Token ${user_token}`,
-            // 'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(function (response) {
-            let data = response.data;
-            // console.log('comment:',data);
-            // this.comment_data.unshift({
-            //   author: {
-            //     // email: author.email,
-            //     nickname: user_nickname,
-            //     // pk: author.pk,
-            //     profile_img: user_img,
-            //     // username: author.nickname
-            //   },
-            //   content: data.content,
-            //   created_date: data.created_date,
-            //   pk: data.pk,
-            //   post: data.post,
-            // })
-        }).catch(function (error) {
-        console.error(error.message);
-      });
-    },
-    fetchCommentData(post_pk){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      let ppk = post_pk;
-      console.log('postpk', ppk);
-      let post = {
-        post: ppk
-      }
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
-      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
-       { headers: {'Authorization' : `Token ${user_token}`} })
-                .then(response=> {
-                  this.comment_data = response.data.results;
-                  // console.log('this.comment_data:',this.comment_data);
-                  console.log('comment::',response);
-                })
-                .catch(error => console.log(error.response));
-    },
-    openDropdownPost(e) {
-      // this.e.target
-      // let el = this.$refs.dropdownpostref
-      // let target = e.target
-      // console.log(el);
-      // console.log(target);
-      // if(el !== target && !el.contains(target)){
-      //   this.visible = false;
-      // }
-      // this.dropdownpost = !this.dropdownpost;
-    },
-    openDropdownComment(e) {
+  //   writeCommentSubmit(pk){
+  //     let user_token = window.localStorage.getItem('token');
+  //     let user_img = window.localStorage.getItem('user_img');
+  //     let user_nickname = window.localStorage.getItem('user_nickname');
+  //     let comment_submit_data = {
+  //       post: pk,
+  //       content: this.write_comment
+  //     }
+  //     this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', 
+  //       comment_submit_data,
+  //       { 
+  //         headers: {
+  //           'Authorization' : `Token ${user_token}`,
+  //           // 'Content-Type': 'multipart/form-data'
+  //         }
+  //       })
+  //       .then(function (response) {
+  //           let data = response.data;
+  //           // console.log('comment:',data);
+  //           // this.comment_data.unshift({
+  //           //   author: {
+  //           //     // email: author.email,
+  //           //     nickname: user_nickname,
+  //           //     // pk: author.pk,
+  //           //     profile_img: user_img,
+  //           //     // username: author.nickname
+  //           //   },
+  //           //   content: data.content,
+  //           //   created_date: data.created_date,
+  //           //   pk: data.pk,
+  //           //   post: data.post,
+  //           // })
+  //       }).catch(function (error) {
+  //       console.error(error.message);
+  //     });
+  //   },
+  //   fetchCommentData(post_pk){
+  //     let user_token = window.localStorage.getItem('token');
+  //     let pk = window.localStorage.getItem('this_group');
+  //     let ppk = post_pk;
+  //     console.log('postpk', ppk);
+  //     let post = {
+  //       post: ppk
+  //     }
+  //     this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
+  //     // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
+  //      { headers: {'Authorization' : `Token ${user_token}`} })
+  //               .then(response=> {
+  //                 this.comment_data = response.data.results;
+  //                 // console.log('this.comment_data:',this.comment_data);
+  //                 console.log('comment::',response);
+  //               })
+  //               .catch(error => console.log(error.response));
+  //   },
+  //   openDropdownPost(e) {
+  //     // this.e.target
+  //     // let el = this.$refs.dropdownpostref
+  //     // let target = e.target
+  //     // console.log(el);
+  //     // console.log(target);
+  //     // if(el !== target && !el.contains(target)){
+  //     //   this.visible = false;
+  //     // }
+  //     // this.dropdownpost = !this.dropdownpost;
+  //   },
+  //   openDropdownComment(e) {
       
-      this.dropdowncomment = !this.dropdowncomment;
-    },
-    showComment(e) {
-      let el = this.$refs.togglecomment
-      let target = e.target
-      console.log(el);
-      console.log(target);
-      if(el !== target && !el.includes(target)){
-        // this.visible = false;
-      this.showcomment = !this.showcomment;
-      }
-    },
-    addLike(pk) {
-      let user_token = window.localStorage.getItem('token');
-      console.log('pk:',pk);
-      console.log('token:',user_token);
-      // /api/post/<pk>/post-like-toggle
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle/', true,
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  console.log('like.response:',response);
-                  let data = response.data;
-                  // this.post.like_count
-                })
-                .catch(error => console.log(error.response));
-      // this.like = !this.like;
-    },
-    deleteComment(pk,ppk){
-      console.log(pk);
-      console.log(ppk);
-      let post = {
-        post: ppk
-      }
-      let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/' + `${pk}` + '/',
-      { headers: {'Authorization' : `Token ${user_token}`}})
-      .then(response => {
-        this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
-        { headers: {'Authorization' : `Token ${user_token}`}})
-        .then(response=> {
-          this.comment_data = response.data.results;
-            // console.log('this.comment_data:',this.comment_data);
-            console.log('comment::',response);
-          })
-          .catch(error => console.log('get-error:',error.response));
-        console.log(response);
-        })
-      .catch(error => console.log('delete-error:',error.response));
-    },
+  //     this.dropdowncomment = !this.dropdowncomment;
+  //   },
+  //   showComment(e) {
+  //     let el = this.$refs.togglecomment
+  //     let target = e.target
+  //     console.log(el);
+  //     console.log(target);
+  //     if(el !== target && !el.includes(target)){
+  //       // this.visible = false;
+  //     this.showcomment = !this.showcomment;
+  //     }
+  //   },
+  //   addLike(pk) {
+  //     let user_token = window.localStorage.getItem('token');
+  //     console.log('pk:',pk);
+  //     console.log('token:',user_token);
+  //     // /api/post/<pk>/post-like-toggle
+  //     this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle/', true,
+  //      { headers: {'Authorization' : `Token ${user_token}`}})
+  //               .then(response=> {
+  //                 console.log('like.response:',response);
+  //                 let data = response.data;
+  //                 // this.post.like_count
+  //               })
+  //               .catch(error => console.log(error.response));
+  //     // this.like = !this.like;
+  //   },
+  //   deleteComment(pk,ppk){
+  //     console.log(pk);
+  //     console.log(ppk);
+  //     let post = {
+  //       post: ppk
+  //     }
+  //     let user_token = window.localStorage.getItem('token');
+  //     this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/' + `${pk}` + '/',
+  //     { headers: {'Authorization' : `Token ${user_token}`}})
+  //     .then(response => {
+  //       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
+  //       { headers: {'Authorization' : `Token ${user_token}`}})
+  //       .then(response=> {
+  //         this.comment_data = response.data.results;
+  //           // console.log('this.comment_data:',this.comment_data);
+  //           console.log('comment::',response);
+  //         })
+  //         .catch(error => console.log('get-error:',error.response));
+  //       console.log(response);
+  //       })
+  //     .catch(error => console.log('delete-error:',error.response));
+  //   },
   }
 }
 </script>
