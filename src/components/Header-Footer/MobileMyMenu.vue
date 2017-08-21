@@ -68,6 +68,8 @@ export default {
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
           window.localStorage.removeItem('pk', pk)
+          window.localStorage.removeItem('searchKeyword')
+          window.localStorage.removeItem('this_group')
         }
         // this.$store.commit('bg_off')
         this.$router.push( {path: "/"} );
@@ -95,7 +97,8 @@ export default {
       // }
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/', this.user,
       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response => {console.log(response.data.results);
+                .then(response => {
+                  // console.log(response.data.results);
                 // .then(response => {          
                 //   console.log(response);
                 //   console.log('userinfo.pk:',userinfo.pk);

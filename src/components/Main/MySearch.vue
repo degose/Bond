@@ -4,8 +4,8 @@
       .columns
         .column.is-10.is-offset-1
           .box.fetched-data
-            article.media.fetched-data-item(v-for = "group in group_list")
-              a(@click.prevent ="goGroup(group.pk, $event)")
+            article.media.fetched-data-item(v-for = "(group,i) in group_list")
+              a(@click.prevent ="goGroup(group.pk, i)")
                 .media-left
                   figure.image.is-64x64
                     img(:src='group.profile_img', alt='Image')
@@ -28,6 +28,10 @@
           nav.pagination.is-centered
             button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
             button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
             //- ul.pagination-list
             //-   li
             //-     a.pagination-link 1
@@ -53,8 +57,14 @@ export default {
       page_num: '',
       pagination:{
         next: '', 
+<<<<<<< HEAD
         prev: ''
       },
+=======
+        prev: '',
+      },
+      is_member: []
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
     }
   },
   created(){
@@ -64,6 +74,7 @@ export default {
     fetched(direction){
       let path = null;
       let search = null;
+      let user_token = window.localStorage.getItem('token');
       if ( this.page_num.trim() === '' ) {
         search = window.localStorage.getItem('searchKeyword');
         path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
@@ -73,12 +84,17 @@ export default {
         search = this.page_num;
       }
       this.$http
-          .get(path)
+          .get(path,{ headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
+            console.log(response)
             let data = response.data;
             this.group_list = data.results;
+            // console.log(response.data.results.length)
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
+            for(let i=0;i <response.data.results.length;i++){
+              this.is_member.push(data.results[i].is_member)
+            }
             this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
           })
           .catch(error => console.error(error.message));
@@ -120,10 +136,23 @@ export default {
          this.fetched('prev');
       }
     },
+<<<<<<< HEAD
     goGroup(pk, e){
 
       this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+=======
+    goGroup(pk, i){
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
       window.localStorage.setItem('this_group',pk);
+      if(this.is_member[i] === true){
+        console.log("pk값이 있다")
+        console.log(this.is_member[i])
+        this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+      }
+      else{
+        console.log("pk값이 없다")
+        this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+      }
       console.log(pk);
     },
   },

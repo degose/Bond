@@ -97,6 +97,7 @@
                     //- 글 (최상위)
                     .content
                       | {{ post.content }}
+<<<<<<< HEAD
 
                       
                     //- 이미지
@@ -151,6 +152,59 @@
                         i.fa.fa-angle-up(aria-hidden='true')
                         
 
+=======
+
+                      
+                    //- 이미지
+                    .content(v-if="post.image")
+                      figure.image
+                        img(:src='post.image')
+
+
+                    //- 동영상
+                    //- .content(v-if=' -1 > 0')
+                      figure
+                        video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
+                          source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
+                          track(src='', kind='captions', srclang='en', label='English captions', default='')
+
+
+
+                    //- 첨부파일
+                    //- .content(v-if=' -1 > 0')
+                      .file-box
+                        a(href='#')
+                          .columns.is-mobile
+                            .column.is-1
+                              span
+                                i.fa.fa-folder-open-o
+                            .column 
+                              span
+                                p README.md
+                            .column.is-1
+                              span
+                                i.fa.fa-arrow-down
+                  
+                  
+                  //- 좋아요, 댓글 개수
+                  footer.card-footer
+                    button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
+                      span.icon-like
+                        i.fa.fa-heart-o(v-show="!like")
+                        i.fa.fa-heart(v-show="like")
+                      | &nbsp;  
+                      | {{ post.like_count }}
+                    button(@click="showComment($event)").card-footer-item.btn-show-comment
+                      | 댓글
+                      | {{ post.comment_count }}
+                      | &nbsp; 
+                      span.icon.is-small(v-show="!showcomment")
+                        i.fa.fa-angle-down(aria-hidden='true')
+                      span.icon.is-small(v-show="showcomment")
+                        i.fa.fa-angle-up(aria-hidden='true')
+                        
+
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                 //- 댓글 영역
                 .card
                   .card-content
@@ -162,14 +216,22 @@
                             textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment" ref="comment_area")
                         .field.column.is-2.is-1-mobile
                           .control
+<<<<<<< HEAD
                             button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(post.pk)" ) 댓글 달기
+=======
+                            button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(post.pk)") 댓글 달기
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                             button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(post.pk)")
                               span.icon
                                 i.fa.fa-pencil
                     
                     //- 댓글 리스트 영역
+<<<<<<< HEAD
                     //- article.media(v-show="showcomment" v-for="comment in comment_data" ref="togglecomment")
                     article.media(v-for="comment in comment_data")
+=======
+                    article.media(@change="fetchCommentData(post.pk)" v-show="showcomment" v-for="comment in comment_data" ref="togglecomment")
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                       figure.media-left
                         p.image.is-48x48
                           img.user-img(:src='comment.author.profile_img')
@@ -182,8 +244,12 @@
                             br
                             small
                               | {{ comment.created_date }}
+<<<<<<< HEAD
                       button.delete(@click="deleteComment(comment.pk, post.pk)")
 
+=======
+                      button.delete(@click="")
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                       //- 드롭다운 버튼
                       //- .dropdown.is-right.is-active
                         .dropdown-trigger
@@ -199,10 +265,23 @@
                               li
                                 a.dropdown-item(href='#')
                                   | 댓글 삭제
+<<<<<<< HEAD
                             
         write-modal(close_message="close lightbox" ref='write_modal')
         leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-post-modal(close_message="close lightbox" ref='delete_post_modal')
+=======
+            .columns.is-mobile.pagination-wrapper
+              .column.is-offset-4.is-one-third.has-text-centered
+                button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                     
+        //- nav.pagination.is-centered
+          //- button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+         
+          
+        write-modal(close_message="close lightbox" ref='write_modal')
+        leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
+        //- delete-post-modal(close_message="close lightbox" ref='delete_post_modal')
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
 
         
 </template>
@@ -212,13 +291,17 @@
 import WriteModal from './WriteModal';
 import LeaveGroupModal from './LeaveGroupModal';
 import PostTemplate from './PostTemplate';
+<<<<<<< HEAD
 import DeletePostModal from './DeletePostModal';
+=======
+// import DeletePostModal from './DeletePostModal';
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
 
 export default {
   created(){
     this.fetchGroupData();
     this.fetchPostData();
-    // this.fetchCommentData();
+    this.fetchCommentData();
     // bus.$on('add-post-data')
     // this.deletePost();
   },
@@ -232,8 +315,13 @@ export default {
       dropdownpost: false,
       dropdowncomment: false,
       showcomment: false,
+<<<<<<< HEAD
       // like: false,
       // like_or_not: '',
+=======
+      like: false,
+      like_or_not: '',
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
       write: {
         // 텍스트 내용
         content:'',
@@ -243,15 +331,24 @@ export default {
       group_data:[],
       post_data:[],
       comment_data:[],
-      // target: ''
       pk:'',
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: '',
+        all: ''
+      },
     }
   },
   components: {
     WriteModal,
     LeaveGroupModal,
     PostTemplate,
+<<<<<<< HEAD
     DeletePostModal
+=======
+    // DeletePostModal
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
   },
   methods: {
     addPostData(o){
@@ -260,11 +357,30 @@ export default {
       console.log(this.post_data);
     },
     deletePost(pk, i){
+<<<<<<< HEAD
       // console.log('i',this.post_data);
+=======
+      this.$refs.delete_post_modal.visible = true;
+      window.localStorage.getItem('delPostPk',pk);
+      // console.log('pkstpk::',pk);
+      // console.log('i', this.post_data[i]);
+      // let post_num = this.post_data[i];
+      // post_num.splice(0,1);
+      // this.post_data.post[i].splice(i, 1);
+      console.log('i',this.post_data);
+      // console.log('i',post_num);
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
       let user_token = window.localStorage.getItem('token');
       this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
+<<<<<<< HEAD
+=======
+                  // post_num.splice(0,1);
+                  // console.log('i',this.post_data);
+                  // console.log('i',post_num);
+                  // this.post_data.post[i].splice(i, 1);
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                 })
                 .catch(error => console.log(error.response));
     },
@@ -286,10 +402,19 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
-    fetchPostData(){
+    fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
+      let path = null;
+      let page_num = 1;
+      if (this.page_num.trim() === ''){
+        path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+      }
+      else{
+        path = this.pagination[direction];
+        page_num = this.page_num;
+      }
+      this.$http.get(path,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   // this.post_data = response.data.results;
@@ -298,7 +423,15 @@ export default {
                   data.forEach(item => {
                     this.post_data.push(item);
                   });
+<<<<<<< HEAD
                   // console.log('postdata',data);
+=======
+                  console.log('postdata',data);
+                  this.pagination.next = response.data.next;
+                  this.pagination.prev = response.data.previous;
+                  this.$router.push({ path: '/JointGroup/', query: { page: `${page_num}` }});
+                  console.log(response)                  
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                   // console.log('this.post_data:',this.post_data);
                 })
                 // .then(write => {const datalist = Object.values(write);
@@ -308,6 +441,34 @@ export default {
                 // .then(data => console.log(data))
                 .catch(error => console.log(error.response));
     },
+    nextPage(){
+      // "http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=210&page=2".slice(-1) => 2
+      let api_path = this.pagination.next;
+      if (api_path !== null) {
+      // let first = api_path.indexOf('?page=');
+      // let last = api_path.indexOf('&');
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path
+      this.fetchPostData('next');
+      // console.log('작동된다')
+      }
+    },
+    // prevPage(){
+    //   let api_path = this.pagination.prev;
+    //   // let last = api_path.indexOf('&');
+    //   // let first = api_path.indexOf('?page=');
+    //   let page_path = api_path.slice(-1);
+    //   this.page_num = page_path
+
+    //   if(this.page_num >= 3){
+    //   let page_path = api_path.slice(-1);
+    //   this.page_num = page_path;
+    //   this.fetchPostData('prev');}
+    //   else{
+    //      let path = this.pagination.prev
+    //      this.fetchPostData('prev');
+    //   }
+    // },    
     deletegroup(){
       let pk = window.localStorage.getItem('this_group');
       console.log(pk)
@@ -382,10 +543,17 @@ export default {
     fetchCommentData(post_pk){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
+<<<<<<< HEAD
       let ppk = post_pk;
       console.log('postpk', ppk);
       let post = {
         post: ppk
+=======
+      // let ppk = post_pk;
+      // console.log('postpk', ppk);
+      let post = {
+        post: 43
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
       }
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
       // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
@@ -393,7 +561,11 @@ export default {
                 .then(response=> {
                   this.comment_data = response.data.results;
                   // console.log('this.comment_data:',this.comment_data);
+<<<<<<< HEAD
                   console.log('comment::',response);
+=======
+                  // console.log('comment::',response);
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
                 })
                 .catch(error => console.log(error.response));
     },
@@ -435,6 +607,7 @@ export default {
                   // this.post.like_count
                 })
                 .catch(error => console.log(error.response));
+<<<<<<< HEAD
       // this.like = !this.like;
     },
     deleteComment(pk,ppk){
@@ -458,6 +631,15 @@ export default {
         console.log(response);
         })
       .catch(error => console.log('delete-error:',error.response));
+=======
+      this.like = !this.like;
+    },
+    delData(){
+      this.$http.delete(this.$store.state.api_write, this.write)
+      .then(response => console.log(response)
+      //  { return response.json()}
+       ).catch(error => console.log(error.message));
+>>>>>>> 181963d58b95bbba5e7f239b67208cc059bbc03d
     },
   }
 }
@@ -520,6 +702,8 @@ body
   font-size: 1rem
   margin-top: 1px
 
-
-
+.pagination-btn
+  color: $bond
+.pagination-wrapper
+  padding-bottom: 20px
 </style>
