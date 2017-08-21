@@ -66,12 +66,13 @@ export default {
       let path = null;
       let search = null;
       let user_token = window.localStorage.getItem('token');
-      if ( this.page_num.trim() === '') {
+      if ( this.page_num.trim() === '' || (this.page_num.trim() !== '' && search !== null)) {
         search = window.localStorage.getItem('searchKeyword');
         path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
       }
-      // else if(){
-        
+      // else if(this.page_num.trim()=== '' && search !== null){
+      //   search = window.localStorage.getItem('searchKeyword');
+      //   path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
       // }
       else{
         path = this.pagination[direction];
