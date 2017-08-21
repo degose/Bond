@@ -101,7 +101,7 @@
                         .field.column.is-2.is-1-mobile
                           .control
                             button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(a.pk)" ) 댓글 달기
-                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(a.post.pk)")
+                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(a.pk)")
                               span.icon
                                 i.fa.fa-pencil
                     
