@@ -72,7 +72,7 @@ export default {
       }
       else {
         path = this.pagination[direction];
-        search = this.page_num;
+        search = this.page_num.trim();
       }
       this.$http
           .get(path,{ headers: {'Authorization' : `Token ${user_token}`}})

@@ -19,6 +19,7 @@
                   placeholder='그룹이나 게시글을 검색해보세요'  
                   @input="inputSearch" 
                   :value="search"
+                  @keyup.enter="fetch"
                   )
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
@@ -56,7 +57,6 @@ export default {
   data(){
     return{
       search: '',
-      group_list:[],
       user: {}
     }
   },
@@ -111,14 +111,14 @@ export default {
     },
     fetch(){
       let search = this.search.trim();
-      window.localStorage.setItem('searchKeyword', search)
-      // this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-      let searchkeyword = window.localStorage.getItem('searchKeyword');
+      window.localStorage.setItem('searchKeyword',search)
       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/'+'group/?search='+`${search}`)
                 .then(response => {
-                  this.group_list = response.data.results;
-                  console.log('results:',this.group_list);
+                  console.log(response)
+                  if(response.data.count != 0)
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+                  else
+                    alert("해당 검색어와 관련된 그룹이 없습니다.");
                 })
                 .catch(error => console.error(error.message))
     },

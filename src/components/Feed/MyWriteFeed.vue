@@ -15,19 +15,15 @@
               .columns.is-mobile
                 h3.title.is-5 내 그룹
                   |  · 
-                  //- | 5
-                  | {{ group_count }}
-            .card-content
-              a.columns.is-mobile.group-small-list-group
+                  | {{this.group_list.length}}
+            .card-content(v-for = 'group in group_list')
+              a.columns.is-mobile.group-small-list-group(@click="goGroup")
                 article.media.group-small-list
                   figure.media-left
                     p.image.is-32x32
-                      img.group-img-small(src='http://bulma.io/images/placeholders/128x128.png')
-                p.group-small-name 안녕
+                      img.group-img-small(:src='group.profile_img')
+                p.group-small-name {{group.name}}
 
-
-          
-          
           //- feed 영역
           .column.is-9
             //- div.feed-box(v-show="post_data.length <= 0")
@@ -39,81 +35,35 @@
 
             //- 컨텐츠가 들어간 글
             div.feed-box
-              .card(@add-post-data="addPostData" v-for="(post, i) in post_data")
+              .card(v-for = "data in data_list")
                 header.card-header
-                  a.card-header-title.group-name()
+                  a.card-header-title.group-name(@click.prevent ="goGroup(data.group.pk)") 
                     | &nbsp;  
                     | &nbsp;  
                     span.icon.icon-bond
                       img(src="../../assets/btn-bond-normal.svg")
                     | &nbsp;  
-                    | 해당 그룹 이름
+                    | {{data.group.name}}
                 .card-content
                   article.media
                     .media-left
                       figure.image.is-64x64.img-user
-                        img.user-img(:src='post.author.profile_img', alt='Image')
+                        img.user-img(:src='data.author.profile_img', alt='Image')
                     .media-content
-                      p.title.is-4.user-name {{ post.author.nickname }}
-                      p.subtitle.is-6 {{ post.created_date }}
-
-                    button.delete(@click="deletePost(post.pk, i)")
-
-
+                      p.title.is-4.user-name {{data.author.nickname}}
+                      p.subtitle.is-6 11:09 PM - 1 Jan 2016
+                    button.delete(@click="deletePost(data.pk)")
                   //- 글 (최상위)
+                  .content {{data.content}}
+                  //- 이미지 - 1개일 때
                   .content
-                    | {{ post.content }}
-
-                    
-                  //- 이미지
-                  .content(v-if="post.image")
                     figure.image
-                      img(:src='post.image')
+                      img(:src='data.image')
 
-
-                
-                //- 좋아요, 댓글 개수
-                //- footer.card-footer
-                  button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
-                    span.icon-like
-                      i.fa.fa-heart-o(v-show="!like")
-                      i.fa.fa-heart(v-show="like")
-                    | &nbsp;  
-                    | {{ post.like_count }}
-                  button(@click="showComment($event)").card-footer-item.btn-show-comment
-                    | 댓글
-                    | {{ post.comment_count }}
-                    | &nbsp; 
-                    span.icon.is-small(v-show="!showcomment")
-                      i.fa.fa-angle-down(aria-hidden='true')
-                    span.icon.is-small(v-show="showcomment")
-                      i.fa.fa-angle-up(aria-hidden='true')
-                      
-
-              //- .card
-                .card-content
-                  //- 댓글 리스트 영역
-                  article.media(v-show="showcomment" v-for="comment in comment_data" ref="togglecomment")
-                    figure.media-left
-                      p.image.is-48x48
-                        img.user-img(:src='comment.author.profile_img')
-                    .media-content
-                      .content
-                        p
-                          strong {{ comment.author.nickname }}
-                          br
-                          | {{ comment.content }}
-                          br
-                          small
-                            | {{ comment.created_date }}
-
-
-                    
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
                             
 
-        
 </template>
 
 <script>
@@ -137,13 +87,17 @@ export default {
   },
   data() {
     return {
-      write_comment: '',
-      visible: false,
-      group_data:[],
-      post_data:[],
-      group_count: '',
-      pk:'',
+      dropdownpost: false,
+      dropdowncomment: false,
+      showcomment: false,
+      like: false,
+      data_list: [],
+      group_list: []
     }
+  },
+  created(){
+    this.openMywrite();
+    this.getMyGroupList();
   },
   methods: {
     addPostData(o){
@@ -201,6 +155,60 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
+    addLike() {
+      this.like = !this.like;
+    },
+    getMyGroupList(){
+        let user_token = window.localStorage.getItem('token');
+        
+        this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
+          {headers: { 'Authorization' : `Token ${user_token}` }}
+        )
+        .then(response => {
+          this.group_list = response.data.results;
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.message);
+        })
+    },
+    openMywrite(){
+      let pk = window.localStorage.getItem('pk');
+      console.log(pk)
+      let path ='http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?author='+`${pk}`;
+      this.$http.get(path)
+                .then(response => {
+                  console.log(response)
+                  let data = response.data;
+                  this.data_list = data.results;
+                })
+                .catch(error => console.error(error.response))
+    },
+    deletePost(pk){
+      // this.$refs.delete_post_modal.visible = true;
+      // window.localStorage.getItem(pk);
+      console.log('pkstpk::',pk);
+      // console.log('i', this.post_data[i]);
+      // let post_num = this.post_data[i];
+      // post_num.splice(0,1);
+      // this.post_data.post[i].splice(i, 1);
+      // console.log('i',post_num);
+      let user_token = window.localStorage.getItem('token');
+      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  // post_num.splice(0,1);
+                  // console.log('i',this.post_data);
+                  // console.log('i',post_num);
+                  // this.post_data.post[i].splice(i, 1);
+                })
+                .catch(error => console.log(error.response));
+    },
+    goGroup(pk){
+      console.log(pk)
+      window.localStorage.setItem('this_group', pk);
+      this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
+    },
   } 
 }
 </script>
@@ -227,7 +235,8 @@ body
 .card
   margin-bottom: 20px
 
-
+.card
+  margin-bottom: 20px
 
 .dropdownhr
   margin: 5px
