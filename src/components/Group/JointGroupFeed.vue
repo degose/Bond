@@ -23,15 +23,6 @@
                         span.icon.is-small
                           i.fa.fa-cog(aria-hidden='true') 
                         | 그룹 탈퇴
-                        //- | 안나와
-                      //- a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal") 
-                      //-   span.icon.is-small
-                      //-     i.fa.fa-cog(aria-hidden='true')
-                      //-   | 그룹 삭제
-                      //- a(aria-label="open leave group modal" @click.prevent="deletemembership") 
-                      //-   span.icon.is-small
-                      //-     i.fa.fa-cog(aria-hidden='true')
-                      //-   | 그룹 탈퇴
                 .content {{ group_data.description }}
                   
                   
@@ -247,7 +238,7 @@ export default {
         prev: '',
         all: ''
       },
-      is_owner: null
+      is_owner: undefined
     }
   },
   components: {
@@ -273,8 +264,6 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
-                  // console.log('this.group_datalist:',this.group_data);
-                  // console.log('response:',response);
                   this.is_owner = response.data.is_owner
                 })
                 .catch(error => console.log(error.response));
