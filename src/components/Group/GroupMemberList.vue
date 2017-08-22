@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.container.page-wrapper
+  div.container.page-wrapper(v-cloak)
     .columns
       //- 그룹 정보 영역
       .column.is-3
@@ -34,13 +34,13 @@
               .card-header-title
                 | &nbsp;  
                 | &nbsp;  
-                | 그룹 이름
+                | {{group_data.name}}
                 | &nbsp; 
                 //- | &nbsp; 
                 //- | &nbsp; 
                 //- | &nbsp; 
-                button.btn-default.column.is-offset-7.is-hidden-mobile(@click="openModal") + 멤버 초대
-                button.btn-default.column.is-offset-4.is-hidden-desktop.is-hidden-tablet(@click="openModal") + 멤버 초대
+                //- button.btn-default.column.is-offset-7.is-hidden-mobile(@click="openModal") + 멤버 초대
+                //- button.btn-default.column.is-offset-4.is-hidden-desktop.is-hidden-tablet(@click="openModal") + 멤버 초대
               
             .card-content
               table.table.is-fullwidth
@@ -59,14 +59,14 @@
                     //-     span.icon
                     //-       i.fa.fa-angle-down
 
-                tbody
+                tbody(v-for='member in member_list')
                   tr
                     //- th 1
                     td
                       figure.image.is-48x48.img-user
-                        img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
+                        img.user-img(:src='member.profile_img', alt='Image')
                     td 
-                      p.namelist 만순이
+                      p.namelist {{member.nickname}}
                     
                     td
                       span.tag.is-rounded.is-primary 리더
@@ -128,6 +128,7 @@ export default {
   },
   created(){
     this.fetchGroupData();
+    this.fetchGroupMember();
     // this.fetchPostData();
     // this.fetchCommentData();
     // bus.$on('add-post-data')
@@ -137,7 +138,8 @@ export default {
     return{
       visible: false,
       group_data:[],
-      pk:''
+      pk:'',
+      member_list:[]
     }
   },  
   methods: {
@@ -157,7 +159,19 @@ export default {
                   // console.log('this.group_datalist:',this.group_data);
                   // console.log('response:',response);
                 })
-                .catch(error => console.log(error.response));
+                .catch(error => console.log(error.message));
+    },
+    fetchGroupMember(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      console.log(pk)
+      this.$http.get('https://api.thekym.com/member/?group='+ `${pk}`, 
+      { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response => {
+                  console.log(response)
+                  this.member_list = response.data.results;
+                })
+                .catch(error => console.log(error.message))
     },
     deletemembership(){
           let pk = parseInt(window.localStorage.getItem('this_group'),10);

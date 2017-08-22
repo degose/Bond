@@ -70,12 +70,13 @@ export default {
       let direction = this.direction;
       if ( this.page_num.trim() === '') {
         search = window.localStorage.getItem('searchKeyword');
-        console.log(search);
         path = 'https://api.thekym.com/group/?search='+`${search}`;
       }
       else{
-        search = this.page_num.trim();
+        // search = this.page_num.trim();
+        // console.log(search);
         path = direction ? this.pagination[direction] : '';
+        // console.log(path);
       }
       this.$http
           .get(path, { headers: {'Authorization' : `Token ${user_token}`}})
@@ -93,16 +94,18 @@ export default {
     },
     nextPage(){
       let api_path = this.pagination.next;
+      let search = window.localStorage.getItem('searchKeyword');
+      console.log(search)
       if (api_path !== null) {
         let first = api_path.indexOf('?page=');
         let last = api_path.indexOf('&');
         let page_path = api_path.slice(first, last);
         this.page_num = page_path[page_path.length - 1];
         this.direction = 'next';
-        this.$router.push({ path: '/SearchResult/group/', query: { search: `${this.page_num}` }});
+        this.$router.push({ path: '/SearchResult/group/', query: { page: `${this.page_num}`, search:`${search}`}});
         // this.fetched('next');
         // console.log('작동된다')
-      }
+      } 
       // let path = this.$route.path;
       // let query = {
       //   search: page_num
@@ -113,19 +116,16 @@ export default {
     },
     prevPage(){
       let api_path = this.pagination.prev;
-      let last = api_path.indexOf('&');
-      let first = api_path.indexOf('?page=');
+      let search = window.localStorage.getItem('searchKeyword');    
       if(this.page_num >= 3){
+        let last = api_path.indexOf('&');
+        let first = api_path.indexOf('?page=');
         let page_path = api_path.slice(first, last);
         this.page_num = page_path[page_path.length - 1];
         this.direction = 'prev';
-        this.$router.push({path: 'SearchResult/group/', query: {search: `${this.page_num}`}});
-        // this.fetched('prev');
+        this.$router.push({path: '/SearchResult/group/', query: {search: `${this.page_num}`, search:`${search}`}});
       }
-      // else{
-      //     let path = this.pagination.prev
-      //     this.fetched('prev');
-      // }
+      //this.page_num = 2일때 해결해야함
     },
     goGroup(pk, i){
       window.localStorage.setItem('this_group',pk);
@@ -142,8 +142,8 @@ export default {
     },
   },
   watch: {
-    $route(newVal, oldVal) {
-      this.fetched();
+    $route(newVal) {
+      this.fetched()
     },
   }
 }

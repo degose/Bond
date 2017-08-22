@@ -112,7 +112,7 @@ export default {
     fetch(){
       let search = this.search.trim();
       window.localStorage.setItem('searchKeyword',search)
-      this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
+      this.$http.get('https://api.thekym.com/group/?search='+`${search}`)
                 .then(response => {
                   if(response.data.count > 0){
                     this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
