@@ -12,7 +12,7 @@
                 .card-image
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper
                     img(:src="group.profile_img" alt='Image')
-                .card-content
+                .card-content.group-name
                   .media
                     .media-content.has-text-centered
                       p.title.is-4 {{ group.name }}
@@ -174,4 +174,8 @@ export default {
   // background: #eee
 .grouplist-wrapper
   flex-wrap: wrap
+.group-name
+  // text-overflow: ellipsis
+  overflow: hidden
+	
 </style>
