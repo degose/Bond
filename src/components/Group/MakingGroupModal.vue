@@ -42,7 +42,7 @@
         hr
         .field
           .control
-            input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요' maxlength=15)
+            input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요' maxlength=23)
             textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
 
       footer.modal-card-foot

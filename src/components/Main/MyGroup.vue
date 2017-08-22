@@ -12,11 +12,10 @@
                 .card-image
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper
                     img(:src="group.profile_img" alt='Image')
-                .card-content.group-name
+                .card-content
                   .media
-                    .media-content.has-text-centered
-                      p.title.is-4 {{ group.name }}
-
+                    .media-content.has-text-centered.ellipsis-wrapper
+                      p.title.is-4.ellipsis {{ (group.name) }}
               
           .column.is-3
             .card
@@ -145,7 +144,7 @@ export default {
       window.localStorage.setItem('this_group',pk);
       // this.$http.get('https://api.thekym.com/group/')
       console.log(pk);
-    }
+    },
 }}
 </script>
 
@@ -174,8 +173,11 @@ export default {
   // background: #eee
 .grouplist-wrapper
   flex-wrap: wrap
-.group-name
-  // text-overflow: ellipsis
+.ellipsis-wrapper
+  overflow: auto
+.ellipsis
+  white-space: nowrap
   overflow: hidden
+  text-overflow: ellipsis
 	
 </style>

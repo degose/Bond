@@ -15,10 +15,19 @@
                     div
                       span 멤버 {{ group_data.num_of_members }}
                       | &nbsp; ·&nbsp; 
-                      a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal") 
+                      a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal" v-if= "is_owner") 
                         span.icon.is-small
-                          i.fa.fa-cog(aria-hidden='true')
+                          i.fa.fa-cog(aria-hidden='true') 
                         | 그룹 삭제
+                      a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal" v-if= "!is_owner") 
+                        span.icon.is-small
+                          i.fa.fa-cog(aria-hidden='true') 
+                        | 그룹 탈퇴
+                        //- | 안나와
+                      //- a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal") 
+                      //-   span.icon.is-small
+                      //-     i.fa.fa-cog(aria-hidden='true')
+                      //-   | 그룹 삭제
                       //- a(aria-label="open leave group modal" @click.prevent="deletemembership") 
                       //-   span.icon.is-small
                       //-     i.fa.fa-cog(aria-hidden='true')
@@ -207,46 +216,30 @@
          
           
         write-modal(close_message="close lightbox" ref='write_modal')
-        //- leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
+        leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
 
         
 </template>
 
 <script>
-// import {bus} from './bus'
 import WriteModal from './WriteModal';
-// import LeaveGroupModal from './LeaveGroupModal';
 import PostTemplate from './PostTemplate';
 import DeleteGroupModal from './DeleteGroupModal';
+import LeaveGroupModal from './LeaveGroupModal';
 
 export default {
   created(){
     this.fetchGroupData();
     this.fetchPostData();
-    // this.fetchCommentData();
-    // bus.$on('add-post-data')
-    // this.deletePost();
   },
   watch: {
-    // deletePost(){}
   },
   data() {
     return {
-      // write_comment: '',
       visible: false,
-      // dropdownpost: false,
-      // dropdowncomment: false,
-      // showcomment: false,
-      // like: false,
-      // like_or_not: '',
-      // write: {
-      //   // 텍스트 내용
-      //   content:'',
-      // },
       group_data:[],
       post_data:[],
-      // comment_data:[],
       pk:'',
       page_num: '',
       pagination:{
@@ -254,29 +247,16 @@ export default {
         prev: '',
         all: ''
       },
+      is_owner: null
     }
   },
   components: {
     WriteModal,
-    // LeaveGroupModal,
     PostTemplate,
-    DeleteGroupModal
+    DeleteGroupModal,
+    LeaveGroupModal
   },
   methods: {
-    // addPostData(o){
-    //   console.log(this.post_data);
-    //   this.post_data.unshift(o);
-    //   console.log(this.post_data);
-    // },
-    // deletePost(pk, i){
-    //   // console.log('i',this.post_data);
-    //   let user_token = window.localStorage.getItem('token');
-    //   this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
-    //    { headers: {'Authorization' : `Token ${user_token}`}})
-    //             .then(response=> {
-    //             })
-    //             .catch(error => console.log(error.response));
-    // },
     openWriteModal(){
       this.$refs.write_modal.visible = true;
     },
@@ -295,6 +275,7 @@ export default {
                   this.group_data = response.data;
                   // console.log('this.group_datalist:',this.group_data);
                   // console.log('response:',response);
+                  this.is_owner = response.data.is_owner
                 })
                 .catch(error => console.log(error.response));
     },
@@ -314,7 +295,6 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   // this.post_data = response.data.results;
-                  console.log('dd',response);
                   let data = response.data.results;
                   // console.log('like',data);
                   data.forEach(item => {

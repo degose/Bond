@@ -16,7 +16,7 @@
                 input.input(
                   id="search" 
                   type='text' 
-                  placeholder='그룹이나 게시글을 검색해보세요'  
+                  placeholder='그룹을 검색해보세요'  
                   @input="inputSearch" 
                   :value="search"
                   @keyup.enter="fetch"
