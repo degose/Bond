@@ -68,14 +68,13 @@ export default {
       let user_token = window.localStorage.getItem('token');
       if ( this.page_num.trim() === '') {
         search = window.localStorage.getItem('searchKeyword');
-        path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
+        path = 'https://api.thekym.com/group/?search='+`${search}`;
       }
-      // else if(this.page_num.trim()=== '' && search !== null){
-      //   search = window.localStorage.getItem('searchKeyword');
-      //   path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`;
+      // else if(){
+        
       // }
       else{
-        path = this.pagination[direction]; 
+        path = this.pagination[direction];
         search = this.page_num.trim();
       }
       this.$http

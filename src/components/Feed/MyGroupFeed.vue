@@ -123,7 +123,7 @@ export default {
       console.log('i',this.post_data);
       // console.log('i',post_num);
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+      this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   // post_num.splice(0,1);
@@ -136,7 +136,7 @@ export default {
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
+      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -148,7 +148,7 @@ export default {
     fetchPostData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
+      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   // let group_count = response.data.count;
@@ -167,7 +167,7 @@ export default {
     getMyGroupList(){
           let user_token = window.localStorage.getItem('token');
           
-          this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
+          this.$http.get('https://api.thekym.com/group/my-group/', 
             {headers: { 'Authorization' : `Token ${user_token}` }}
           )
           .then(response => {
@@ -179,7 +179,7 @@ export default {
     },
     openMygroup(){
         let user_token = window.localStorage.getItem('token');
-        this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/my-group/',
+        this.$http.get('https://api.thekym.com/post/my-group/',
           {headers: {'Authorization' : `Token ${user_token}` }})
                   .then(response => {
                     let data = response.data;
@@ -197,7 +197,7 @@ export default {
       // this.post_data.post[i].splice(i, 1);
       // console.log('i',post_num);
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+      this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   // post_num.splice(0,1);

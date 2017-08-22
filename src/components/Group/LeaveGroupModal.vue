@@ -41,7 +41,7 @@ export default {
       let user_token = window.localStorage.getItem('token');
       console.log(pk)
       console.log(user_token)
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/',
+      this.$http.delete('https://api.thekym.com/member/membership/',
               {group: pk},
               { headers: {'Authorization' : `Token ${user_token}`}})
               .then(response => {

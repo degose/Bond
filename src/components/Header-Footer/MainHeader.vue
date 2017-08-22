@@ -68,7 +68,7 @@ export default {
     getUserImg(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('pk');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/' + `${pk}` + '/',
+      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
@@ -81,7 +81,7 @@ export default {
                 .catch(error => console.log(error.response));
     },
     signOut(){
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/logout/')
+      this.$http.post('https://api.thekym.com/member/logout/')
       .then(response => {
         let token = response.data.token;
         let pk = response.data.user;
@@ -112,13 +112,13 @@ export default {
     fetch(){
       let search = this.search.trim();
       window.localStorage.setItem('searchKeyword',search)
-      //해당 search를 포함하는 group를 확인한 후 해당 그룹 페이지로 이동하거나 alert창을 올려준다. 
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/?search='+`${search}`)
+      this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
-                  if(response.data.count != 0)
+                  if(response.data.count != 0){
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-                  else
+                  }else{
                     alert("해당 검색어와 관련된 그룹이 없습니다.");
+                  }
                 })
                 .catch(error => console.error(error.message))
     },

@@ -60,7 +60,7 @@
 
             //- div.feed-box(@add-post-data="addPostData" v-for="(post, i) in post_data")
             div.feed-box(v-for="(post, i) in post_data")
-              post-template(:a = "post")
+              post-template(:post = "post")
               //- div.card-wrapper(@add-post-data="addPostData" v-for="(post, i) in post_data")
                 .card
                   .card-content
@@ -271,7 +271,7 @@ export default {
     // deletePost(pk, i){
     //   // console.log('i',this.post_data);
     //   let user_token = window.localStorage.getItem('token');
-    //   this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+    //   this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
     //    { headers: {'Authorization' : `Token ${user_token}`}})
     //             .then(response=> {
     //             })
@@ -289,7 +289,7 @@ export default {
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
+      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -304,7 +304,7 @@ export default {
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){
-        path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+        path = 'https://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
       }
       else{
         path = this.pagination[direction];
@@ -335,7 +335,7 @@ export default {
                 .catch(error => console.log(error.response));
     },
     nextPage(){
-      // "http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=210&page=2".slice(-1) => 2
+      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
       let api_path = this.pagination.next;
       if (api_path !== null) {
       // let first = api_path.indexOf('?page=');
@@ -370,7 +370,7 @@ export default {
   //       post: pk,
   //       content: this.write_comment
   //     }
-  //     this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', 
+  //     this.$http.post('https://api.thekym.com/post/comment/', 
   //       comment_submit_data,
   //       { 
   //         headers: {
@@ -406,8 +406,8 @@ export default {
   //     let post = {
   //       post: ppk
   //     }
-  //     this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
-  //     // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
+  //     this.$http.get('https://api.thekym.com/post/comment/', post,
+  //     // this.$http.get('https://api.thekym.com/group=' + `${pk}` + '/post=' + `${ppk}`,
   //      { headers: {'Authorization' : `Token ${user_token}`} })
   //               .then(response=> {
   //                 this.comment_data = response.data.results;
@@ -446,7 +446,7 @@ export default {
   //     console.log('pk:',pk);
   //     console.log('token:',user_token);
   //     // /api/post/<pk>/post-like-toggle
-  //     this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle/', true,
+  //     this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/', true,
   //      { headers: {'Authorization' : `Token ${user_token}`}})
   //               .then(response=> {
   //                 console.log('like.response:',response);
@@ -463,10 +463,10 @@ export default {
   //       post: ppk
   //     }
   //     let user_token = window.localStorage.getItem('token');
-  //     this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/' + `${pk}` + '/',
+  //     this.$http.delete('https://api.thekym.com/post/comment/' + `${pk}` + '/',
   //     { headers: {'Authorization' : `Token ${user_token}`}})
   //     .then(response => {
-  //       this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
+  //       this.$http.get('https://api.thekym.com/post/comment/', post,
   //       { headers: {'Authorization' : `Token ${user_token}`}})
   //       .then(response=> {
   //         this.comment_data = response.data.results;

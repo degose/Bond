@@ -5,12 +5,12 @@
                     article.media
                       .media-left
                         figure.image.is-64x64.img-user
-                          img.user-img(:src='a.author.profile_img', alt='Image')
+                          img.user-img(:src='post.author.profile_img', alt='Image')
                       .media-content
-                        p.title.is-4.user-name {{ a.author.nickname }}
-                        p.subtitle.is-6 {{ a.created_date }}
+                        p.title.is-4.user-name {{ post.author.nickname }}
+                        p.subtitle.is-6 {{ post.created_date }}
                       //- post삭제
-                      button.delete(@click="deletePost(a.pk)")
+                      button.delete(@click="deletePost(post.pk)")
 
 
 
@@ -34,13 +34,13 @@
 
                     //- 글 (최상위)
                     .content
-                      | {{ a.content }}
+                      | {{ post.content }}
 
                       
                     //- 이미지
-                    .content(v-if="a.image")
+                    .content(v-if="post.image")
                       figure.image
-                        img(:src='a.post.image')
+                        img(:src='post.image')
 
 
                     //- 동영상
@@ -70,18 +70,18 @@
                   
                   //- 좋아요, 댓글 개수
                   footer.card-footer
-                    button(type="submit" @click="addLike(a.pk)").card-footer-item.btn-show-like
+                    button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
                       span.icon-like
-                        i.fa.fa-heart-o(v-if="!a.is_like")
+                        i.fa.fa-heart-o(v-if="!post.is_like")
                         i.fa.fa-heart(v-else)
                         //- i.fa.fa-heart-o(v-show="!like")
                         //- i.fa.fa-heart(v-show="like")
                       | &nbsp;  
-                      | {{ a.like_count }}
+                      | {{ post.like_count }}
                     //- button(@click="showComment($event)").card-footer-item.btn-show-comment
-                    button(@click="fetchCommentData(a.pk)").card-footer-item.btn-show-comment
+                    button(@click="fetchCommentData(post.pk)").card-footer-item.btn-show-comment
                       | 댓글
-                      | {{ a.comment_count }}
+                      | {{ post.comment_count }}
                       | &nbsp; 
                       span.icon.is-small(v-show="!showcomment")
                         i.fa.fa-angle-down(aria-hidden='true')
@@ -100,8 +100,8 @@
                             textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment" ref="comment_area")
                         .field.column.is-2.is-1-mobile
                           .control
-                            button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(a.pk)" ) 댓글 달기
-                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(a.pk)")
+                            button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(post.pk)" ) 댓글 달기
+                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(post.pk)")
                               span.icon
                                 i.fa.fa-pencil
                     
@@ -120,7 +120,7 @@
                             br
                             small
                               | {{ comment.created_date }}
-                      button.delete(@click="deleteComment(comment.pk, a.pk)")
+                      button.delete(@click="deleteComment(comment.pk, post.pk)")
 
                 //- .columns.is-mobile.pagination-wrapper
                 //-   .column.is-offset-4.is-one-third.has-text-centered
@@ -147,7 +147,7 @@ export default {
   watch: {
     // deletePost(){}
   },
-  props:['a'],
+  props:['post'],
   data() {
     return {
       write_comment: '',
@@ -192,7 +192,7 @@ export default {
     deletePost(pk, i){
       // console.log('i',this.post_data);
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
+      this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                 })
@@ -204,7 +204,7 @@ export default {
     //   let path = null;
     //   let page_num = 1;
     //   if (this.page_num.trim() === ''){
-    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+    //     path = 'https://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
     //   }
     //   else{
     //     path = this.pagination[direction];
@@ -234,7 +234,7 @@ export default {
     //             .catch(error => console.log(error.response));
     // },
     nextPage(){
-      // "http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=210&page=2".slice(-1) => 2
+      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
       let api_path = this.pagination.next;
       if (api_path !== null) {
       // let first = api_path.indexOf('?page=');
@@ -253,7 +253,7 @@ export default {
         post: pk,
         content: this.write_comment
       }
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', 
+      this.$http.post('https://api.thekym.com/post/comment/', 
         comment_submit_data,
         { 
           headers: {
@@ -289,8 +289,8 @@ export default {
       let post = {
         post: ppk
       }
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
-      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
+      this.$http.get('https://api.thekym.com/post/comment/', post,
+      // this.$http.get('https://api.thekym.com/group=' + `${pk}` + '/post=' + `${ppk}`,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   this.comment_data = response.data.results;
@@ -328,7 +328,7 @@ export default {
       // console.log('pk:',pk);
       // console.log('token:',user_token);
       // /api/post/<pk>/post-like-toggle
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle/', true,
+      this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/', true,
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   // console.log('like.response:',response);
@@ -345,10 +345,10 @@ export default {
         post: ppk
       }
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/' + `${pk}` + '/',
+      this.$http.delete('https://api.thekym.com/post/comment/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
       .then(response => {
-        this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
+        this.$http.get('https://api.thekym.com/post/comment/', post,
         { headers: {'Authorization' : `Token ${user_token}`}})
         .then(response=> {
           this.comment_data = response.data.results;
