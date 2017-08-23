@@ -83,6 +83,12 @@ export default {
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
+      // let userinfo = {
+      //   pk: this.user.pk,
+      //   email: this.user.email,
+      //   nickname: this.user.nickname,
+      //   username: this.user.username
+      // }
       this.$http.get('https://api.thekym.com/member/', this.user,
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {

@@ -3,7 +3,7 @@
     .modal-background(@click="closeModal")
     .modal-card
       header.modal-card-head
-        figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
+        figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper.is-hidden-mobile
           img(v-if="group.profile_img" :src="uploadGroupImg", alt='그룹 대표 사진')
       section.modal-card-body
         .file.is-centered.is-boxed.is-primary.has-name
@@ -22,7 +22,7 @@
         hr
         .field
           .control
-            input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요' maxlength=9)
+            input.input.group-name-input(type='text' v-model="group.name" placeholder='그룹 이름을 설정해주세요' maxlength=20)
             textarea.textarea(rows='3' type="text" v-model="group.description" placeholder="그룹에 소개글을 적어주세요" maxlength=40)
 
       footer.modal-card-foot
@@ -59,6 +59,11 @@ export default {
   },
   methods: {
     closeModal(){
+      this.group.name = '';
+      this.group.description = '';
+      this.$refs.file_input = null;
+      this.uploadGroupImg = '';
+      this.file_name = '';
       this.visible = false;
     },
     checkImage(file){
@@ -81,7 +86,7 @@ export default {
           _this.file_url = reader.result;
         }
       } else { alert('이미지 파일만 선택 가능합니다.')}
-      console.log('file:',file);
+      // console.log('file:',file);
     },
     createGroup(){
       let user_token = window.localStorage.getItem('token');
@@ -92,9 +97,6 @@ export default {
       if( !!this.$refs.file_input.files[0] ){
         formData.append('profile_img', this.$refs.file_input.files[0]);
       }
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0]+ ', ' + pair[1]); 
-      // }
       this.$http.post(
         this.$store.state.api_grouplist, 
         formData,
@@ -110,20 +112,38 @@ export default {
         let name = data.name;
         let description = data.description;
         let profile_img = data.profile_img;
-        this.$parent.group_list.unshift({
-          description: description,
-          group_type: 'PUBLIC',
-          name: name,
-          num_of_members: 1,
-          owner:{},
-          // pk: '',
-          profile_img: profile_img,
-          tags: [],
-        });
-        // console.log(profile_img);
+        if(this.$parent.group_list.length >= 11){
+          this.$parent.group_list.splice(10,1);
+          this.$parent.group_list.unshift({
+            description: description,
+            group_type: 'PUBLIC',
+            name: name,
+            num_of_members: 1,
+            owner:{},
+            pk: data.pk,
+            profile_img: profile_img,
+            tags: [],
+          });
+        }
+        else {
+          this.$parent.group_list.unshift({
+            description: description,
+            group_type: 'PUBLIC',
+            name: name,
+            num_of_members: 1,
+            owner:{},
+            pk: data.pk,
+            profile_img: profile_img,
+            tags: [],
+          });
+        }
+        this.group.name = '';
+        this.group.description = '';
+        this.$refs.file_input = null;
+        this.uploadGroupImg = '';
+        this.file_name = '';
+
         this.visible = false;
-        // getMyGroupList();
-        console.log('부모', this.$parent);
       })
       .catch(error => {
         if(this.group.name === ''){

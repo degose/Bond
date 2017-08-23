@@ -1,6 +1,7 @@
 let path    = require('path');
 let webpack = require('webpack');
 require('es6-promise').polyfill();
+// let objectToJson = require('object-to-json')
 
 
 module.exports = {
@@ -31,7 +32,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif|svg|ico)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'

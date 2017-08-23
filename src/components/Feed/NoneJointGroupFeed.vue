@@ -1,8 +1,8 @@
 <template lang="pug">
   //- 가입하지 않은 그룹의 feed
-  div.all-wrapper(v-cloak)
+  div.all-wrapper.page-wrapper(v-cloak)
     main-header
-    .container
+    .container.page-wrapper
       .columns
         //- 그룹 정보 영역
         .column.is-3.group-info
@@ -32,13 +32,13 @@
                   | 그룹에 재미있는 이야기를 써보세요.
 
           div.feed-box
-            div.card-wrapper(@add-post-data="addPostData" v-for="(post, i) in post_data")
+            div.card-wrapper(v-for="(post, i) in post_data")
               .card
                 .card-content
                   article.media
                     .media-left
                       figure.image.is-64x64.img-user
-                        img.user-img(:src='post.author.profile_img', alt='Image')
+                        img(:src='post.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{ post.author.nickname }}
                       p.subtitle.is-6 {{ post.created_date }}
@@ -64,23 +64,13 @@ export default {
   created(){
     this.fetchGroupData();
     this.fetchPostData();
-    this.fetchCommentData();
-  },
-  watch: {
-    deletePost(){}
   },
   data() {
     return {
       write_comment: '',
       visible: false,
-      dropdownpost: false,
-      dropdowncomment: false,
-      showcomment: false,
-      like: false,
-      like_or_not: '',
       group_data:[],
       post_data:[],
-      comment_data:[],
       pk:'',
     }
   },
@@ -93,16 +83,12 @@ export default {
                   .then(response => {
                     if(response.status === 201){
                       this.$router.push({path: '/JointGroup/'});
-                      // this.$router.push({path: '/JointGroup/', query: {group: response.data.group}});
                     }
                   })
                   .catch(error =>{
                     if(error.response.status === 400)
                       alert(error.response.data.group[0])
                   })
-    },
-    addPostData(o){
-      this.post_data.unshift(o);
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
@@ -111,8 +97,6 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
-                  // console.log('this.group_datalist:',this.group_data);
-                  // console.log('response:',response);
                 })
                 .catch(error => console.log(error.response));
     },
@@ -128,27 +112,6 @@ export default {
                   });
                 })
                 .catch(error => console.log(error.response));
-    },
-    fetchCommentData(post_pk){
-      // let user_token = window.localStorage.getItem('token');
-      // let pk = window.localStorage.getItem('this_group');
-      // // let ppk = this.post.pk;
-      // this.$http.get('https://api.thekym.com/group=' + `${pk}` + '/post=' + `${ppk}`,
-      //  { headers: {'Authorization' : `Token ${user_token}`} })
-      //           .then(response=> {
-      //             this.comment_data = response.data.results;
-      //             console.log('this.comment_data:',this.comment_data);
-      //           })
-      //           // .then(write => {const datalist = Object.values(write);
-      //           // this.datalist = datalist;
-      //           // })
-      //           // 
-      //           // .then(data => console.log(data))
-      //           .catch(error => console.log(error.response));
-    },
-    showComment(e) {
-      let el = this.$refs.togglecomment
-      let target = e.target
     },
   }
 }
@@ -167,14 +130,19 @@ export default {
 .group_profile_img
   background: url('http://bulma.io/images/placeholders/1280x960.png')
   // overflow: hidden
-.user-img
+
+.img-user
   background: #eee
+  width: 64px
+  height: 64px
+  overflow: hidden
+  border-radius: 50%
 
 body
   background: #eee
 
 .page-wrapper
-  // min-height: 87vh
+  min-height: 87vh
 
 .card-wrapper
   margin-bottom: 20px
@@ -210,7 +178,8 @@ body
 
 .all-wrapper
   background: #eee
-  height: 100vh
+  // min-height: 100vh
+
 .group-info
   // position: fixed
 </style>

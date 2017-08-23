@@ -77,10 +77,6 @@ export default {
   },
   data() {
     return {
-      dropdownpost: false,
-      dropdowncomment: false,
-      showcomment: false,
-      like: false,
       data_list: [],
       group_list: []
     }

@@ -7,7 +7,7 @@
                 img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                 img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
             .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
-              figure
+              figure.user_img_wrapper
                 img.image.is-35x35.user-img(:src='user.profile_img', alt='Image', width=35, height=35)
           .search.column
             .field.has-addons
@@ -72,7 +72,6 @@ export default {
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
-                  // console.log(this.user.profile_img);
                   window.localStorage.setItem('user_img', this.user.profile_img);
                   window.localStorage.setItem('user_email', this.user.email);
                   window.localStorage.setItem('user_nickname', this.user.nickname);
@@ -93,8 +92,6 @@ export default {
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
-        // console.log(response);
-        // console.log('성공');
       })
       .catch(error => {
         console.log(error.response);
@@ -112,7 +109,7 @@ export default {
     fetch(){
       let search = this.search.trim();
       window.localStorage.setItem('searchKeyword',search)
-      this.$http.get('https://api.thekym.com/group/?search='+`${search}`)
+      this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
                   if(response.data.count > 0){
                     this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});

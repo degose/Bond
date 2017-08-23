@@ -21,14 +21,14 @@
                 i.fa.fa-picture-o
           a.file.card-footer-item
             label.file-label
-              input.file-input(type='file', name='resume' ref="file_video_input")
+              input.file-input(type='file', name='resume' ref="file_video_input" disabled)
               span
-                i.fa.fa-play-circle-o
+                i.fa.fa-play-circle-o.disabled-ico
           a.file.card-footer-item
             label.file-label
-              input.file-input(type='file', name='resume' ref="file_file_input")
+              input.file-input(type='file', name='resume' ref="file_file_input" disabled)
               span
-                i.fa.fa-folder-open-o
+                i.fa.fa-folder-open-o.disabled-ico
       footer.modal-card-foot
         button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-3(:aria-label="close_message" @click="closeModal") 취소
@@ -68,6 +68,10 @@ export default {
   },
   methods: {
     closeModal(){
+      this.uploadImg = '';
+      this.$refs.file_img_input = '';
+      this.write.content = '';
+      this.visible = false;
       this.visible = false;
     },
     checkImage(file){
@@ -90,7 +94,7 @@ export default {
           _this.file_url = reader.result;
         }
       } else { alert('이미지 파일만 선택 가능합니다.')}
-      console.log('file:',file);
+      // console.log('file:',file);
     },
     writeTextSubmit(){
       // 토큰 값으로 유저가 누구인지 인증
@@ -117,6 +121,7 @@ export default {
         })
                 .then(response => {
                   let data = response.data;
+                  // console.log('cre_date::',data.created_date);
                   this.$parent.post_data.unshift({
                     author: {
                       // email: author.email,
@@ -137,7 +142,10 @@ export default {
                   });
                 })
                 .catch(error => console.log(error.response));
-                this.visible = false;
+      this.uploadImg = '';
+      this.$refs.file_img_input = '';
+      this.write.content = '';
+      this.visible = false;
     },
     // 한글 양방향 데이터 바인딩 메서드
     writePost(target, e){
@@ -168,6 +176,9 @@ export default {
 // span,
 // i
 //   cursur: pointer
+
+.disabled-ico
+  color: #666
 
   
 </style>
