@@ -52,8 +52,6 @@
                         i.fa.fa-angle-down(aria-hidden='true')
                       span.icon.is-small(v-show="showcomment")
                         i.fa.fa-angle-up(aria-hidden='true')
-                        
-
                 //- 댓글 영역
                 .card
                   .card-content
@@ -69,7 +67,6 @@
                             button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(post.pk)")
                               span.icon
                                 i.fa.fa-pencil
-                    
                     //- 댓글 리스트 영역
                     article.media(v-for="comment in comment_data" v-show="showcomment")
                       figure.media-left
@@ -88,7 +85,6 @@
 
 
 
-        
 </template>
 
 <script>

@@ -111,10 +111,14 @@ export default {
       window.localStorage.setItem('searchKeyword',search)
       this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
-                  if(response.data.count != 0)
-                  this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-                  else
+                  if(response.data.count > 0){
+                    this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+                    //리다이렉트 라우팅을 적용해보는 건 어떨까?
+                    //this.$router.push({path: '/MainPage', redirect: 'SearchResult/group/'})
+                    //this.$router.push({path: '/SearchResult/group/', redirection: 'SearchReult/group/ })
+                  }else{
                     alert("해당 검색어와 관련된 그룹이 없습니다.");
+                  }
                 })
                 .catch(error => console.error(error.message))
     },

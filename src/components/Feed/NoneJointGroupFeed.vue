@@ -49,12 +49,7 @@
                   .content(v-if="post.image")
                     figure.image
                       img(:src='post.image')
-
     main-footer
-                
-
-
-                
 </template>
 
 
@@ -118,7 +113,6 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
-
   }
 }
 </script>

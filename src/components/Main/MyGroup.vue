@@ -96,7 +96,7 @@ export default {
         console.log(error.message);
       })
     },
-    // "http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/?page=2".slice(73)  => "2"
+    // "https://api.thekym.com/group/my-group/?page=2".slice(73)  => "2"
     nextPage(){
       let api_path = this.pagination.next;
       if (api_path !== null) {

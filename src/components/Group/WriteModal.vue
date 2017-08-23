@@ -106,12 +106,10 @@ export default {
       let user_nickname = window.localStorage.getItem('user_nickname');
 
       formData.append('content', this.write.content);
-      // let img_file = this.$refs.file_img_input.files[0];
-      
+
       if(!!this.$refs.file_img_input.files[0] ){
         formData.append('image', this.$refs.file_img_input.files[0]);
       }
-      // formData.append('image', this.$refs.file_img_input.files[0]);
       formData.append('group', pk);
       
       this.$http.post(this.$store.state.api_write, formData,
@@ -153,12 +151,6 @@ export default {
     writePost(target, e){
       let input = e.target.value;
       this.write[target] = input;
-    },
-    // 이미지가 있나 체크해서 v-if활용해 사진 없으면 사진틀 안보이게 하고 싶음..ㅠ
-    checkImage(file){
-      if(/.*\.(gif)|(jpeg)|(jpg)|(png)$/.test(file.name.toLowerCase())){
-          return true;
-      }
     },
   }
 }
