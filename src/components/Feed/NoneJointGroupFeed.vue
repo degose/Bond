@@ -1,8 +1,8 @@
 <template lang="pug">
   //- 가입하지 않은 그룹의 feed
-  div.all-wrapper(v-cloak)
+  div.all-wrapper.page-wrapper(v-cloak)
     main-header
-    .container
+    .container.page-wrapper
       .columns
         //- 그룹 정보 영역
         .column.is-3.group-info
@@ -32,13 +32,13 @@
                   | 그룹에 재미있는 이야기를 써보세요.
 
           div.feed-box
-            div.card-wrapper(@add-post-data="addPostData" v-for="(post, i) in post_data")
+            div.card-wrapper(v-for="(post, i) in post_data")
               .card
                 .card-content
                   article.media
                     .media-left
                       figure.image.is-64x64.img-user
-                        img.user-img(:src='post.author.profile_img', alt='Image')
+                        img(:src='post.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{ post.author.nickname }}
                       p.subtitle.is-6 {{ post.created_date }}
@@ -73,21 +73,12 @@ export default {
     this.fetchGroupData();
     this.fetchPostData();
   },
-  watch: {
-    deletePost(){}
-  },
   data() {
     return {
       write_comment: '',
       visible: false,
-      dropdownpost: false,
-      dropdowncomment: false,
-      showcomment: false,
-      like: false,
-      like_or_not: '',
       group_data:[],
       post_data:[],
-      comment_data:[],
       pk:'',
       page_num: '',
       pagination:{
@@ -104,7 +95,6 @@ export default {
         this.$http.post('https://api.thekym.com/member/membership/', {group: pk},
                   { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    console.log(response)
                     if(response.status === 201){
                       this.$router.push({path: '/JointGroup/'});
                     }
@@ -113,11 +103,6 @@ export default {
                     if(error.response.status === 400)
                       alert(error.response.data.group[0])
                   })
-    },
-    addPostData(o){
-      console.log(this.post_data);
-      this.post_data.unshift(o);
-      console.log(this.post_data);
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
@@ -194,14 +179,19 @@ export default {
 .group_profile_img
   background: url('http://bulma.io/images/placeholders/1280x960.png')
   // overflow: hidden
-.user-img
+
+.img-user
   background: #eee
+  width: 64px
+  height: 64px
+  overflow: hidden
+  border-radius: 50%
 
 body
   background: #eee
 
 .page-wrapper
-  // min-height: 87vh
+  min-height: 87vh
 
 .card-wrapper
   margin-bottom: 20px

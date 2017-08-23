@@ -6,7 +6,6 @@
           
           //- 그룹 정보 영역
           .column.is-3(v-for="group in group_list")
-            //- router-link(to="/JointGroup")
             a(@click.prevent="goGroup(group.pk, $event)")
               .card
                 .card-image
@@ -15,14 +14,14 @@
                 .card-content
                   .media
                     .media-content.has-text-centered.ellipsis-wrapper
-                      p.title.is-4.ellipsis {{ (group.name) }}
+                      p.title.is-4.ellipsis {{ group.name }}
+
               
           .column.is-3
             .card
               a(@click="openModal")
                 .card-image.makegroup
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper.is-hidden-mobile
-                      //- img(src='../../assets/group-add-hoverx2-mobile.png', alt='Image').is-hidden-desktop.is-hidden-tablet
                       img(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
                       img(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
                 .card-content
@@ -43,20 +42,12 @@
 
 <script>
 import MakingGroupModal from '../Group/MakingGroupModal';
-// let group_list_url = 'https://bond-43bc3.firebaseio.com/group.json';
-// let group_list_url = 'https://api.thekym.com/group/';
 export default {
   components: {
     MakingGroupModal
   },
   created() {
     this.getMyGroupList();
-  },
-  mounted(){
-    // this.getMyGroupList();
-  },
-  updated(){
-    // this.getMyGroupList();
   },
   data () {
     return {
@@ -99,7 +90,7 @@ export default {
         // 총 페이지 수. 11은 그룹리스트 페이지네이션 기준 값..
         this.pagination.all = Math.ceil(data.count / 11)
         this.$router.push({ path: '/MainPage/', query: { page: `${page_num}` }});
-        console.log(response)
+        // console.log(response)
       })
       .catch(error => {
         console.log(error.message);
@@ -134,17 +125,10 @@ export default {
       }
     },    
     goGroup(pk, e){
-      // this.$router.push({ path: 'JointGroup', query: { plan: 'private' }});
-      // https://api.thekym.com/group/my-group/?group=1
-      // let group_pk = 'https://api.thekym.com/group/' + `${pk}`;
-      // this.$router.push('/JointGroup/?group=${}');
-      // this.$router.push({path: '/JointGroup', params: {id: pk}});
       this.$router.push({ path: '/JointGroup/'});
       // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       window.localStorage.setItem('this_group',pk);
-      // this.$http.get('https://api.thekym.com/group/')
-      console.log(pk);
-    },
+    }
 }}
 </script>
 
@@ -172,12 +156,18 @@ export default {
   overflow: hidden
   // background: #eee
 .grouplist-wrapper
+  min-height: 75vh
   flex-wrap: wrap
+
 .ellipsis-wrapper
   overflow: auto
+
 .ellipsis
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
-	
+
+.pagination
+  // position: absolute
+  // bottom: 0
 </style>

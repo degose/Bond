@@ -41,10 +41,10 @@
                         i.fa.fa-picture-o
                     a(aria-label="open write modal" @click="openWriteModal").card-footer-item
                       span.icon
-                        i.fa.fa-play-circle-o
+                        i.fa.fa-play-circle-o.disabled-ico
                     a(aria-label="open write modal" @click="openWriteModal").card-footer-item
                       span.icon
-                        i.fa.fa-folder-open-o
+                        i.fa.fa-folder-open-o.disabled-ico
                     a(aria-label="open write modal" @click="openWriteModal").card-footer-item
                       span.icon
                         i.fa.fa-pencil
@@ -61,35 +61,6 @@
             div.feed-box(v-for="(post, i) in post_data")
               post-template(:post = "post")
 
-                  .card-content
-                    //- 댓글 작성 영역
-                    article.media
-                      .media-content.columns.is-mobile
-                        .field.column.is-10.is-3-mobile
-                          .control
-                            textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment" ref="comment_area")
-                        .field.column.is-2.is-1-mobile
-                          .control
-                            button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(post.pk)" ) 댓글 달기
-                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(post.pk)")
-                              span.icon
-                                i.fa.fa-pencil
-                    
-                    //- 댓글 리스트 영역
-                    article.media(v-for="comment in comment_data")
-                      figure.media-left
-                        p.image.is-48x48
-                          img.user-img(:src='comment.author.profile_img')
-                      .media-content
-                        .content
-                          p
-                            strong {{ comment.author.nickname }}
-                            br
-                            | {{ comment.content }}
-                            br
-                            small
-                              | {{ comment.created_date }}
-                      button.delete(@click="deleteComment(comment.pk, post.pk)")
 
 
             .columns.is-mobile.pagination-wrapper
@@ -116,8 +87,6 @@ export default {
   created(){
     this.fetchGroupData();
     this.fetchPostData();
-  },
-  watch: {
   },
   data() {
     return {
@@ -277,4 +246,6 @@ body
   color: $bond
 .pagination-wrapper
   padding-bottom: 20px
+.disabled-ico
+  color: #666
 </style>

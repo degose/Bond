@@ -1,6 +1,5 @@
 <template lang="pug">
 div(v-cloak)
-  //- background
   .container
     header.header
       .columns.is-centered.is-mobile

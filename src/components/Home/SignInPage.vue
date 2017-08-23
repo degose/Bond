@@ -1,6 +1,5 @@
 <template lang="pug">
   div(v-cloak)
-    //- background
     .container
       header.header
         .columns.is-centered.is-mobile
@@ -9,7 +8,7 @@
               picture
                 img(src='../../assets/logo-01.svg', alt='큰본드', width=170, height=28)
 
-      main
+      main.is-hidden-mobile
         .columns.is-mobile.home-box-wrapper
           .box.column.is-half.is-offset-one-quarter.home-box
             h1.is-size-4.has-text-centered.title.home-heading 이메일로 로그인
@@ -30,14 +29,42 @@
                     span.icon.is-small.is-right
                       i.fa.fa-check
                 .control.column.is-half.is-offset-one-quarter
-                  //- router-link(to='/MainPage', active-class='current-page')
                   button.column.btn-fill.btn-login(type="button" @click="signinSubmit") 로그인
-                  //- router-link(to='/MainPage', active-class='current-page')
-                  //-   button.column.btn-fill.btn-login(type="submit") 로그인
+            
             .field
               .control.column.is-half.is-offset-one-quarter.has-text-centered
                 router-link(to='/FindPassword').is-link.home-link.column 비밀번호를 잊으셨나요?
                 router-link(to='/SignUpPage').is-link.home-link.column 처음이신가요? 회원가입
+      
+      main.is-hidden-tablet.is-hidden-desktop
+        .mobile-wrapper
+          .columns.is-mobile.home-box-wrapper
+            .box.column.home-box
+              h1.is-size-4.has-text-centered.title.home-heading 이메일로 로그인
+              form
+                fieldset.field
+                  .column.is-half.is-offset-one-quarter
+                    .control.has-icons-left.has-icons-right
+                      input.input(type='email', v-model="signin.email", placeholder='이메일을 입력해주세요.', aria-label="이메일 입력상자")
+                      span.icon.is-small.is-left
+                        i.fa.fa-envelope
+                      span.icon.is-small.is-right
+                        i.fa.fa-check
+                  .column.is-half.is-offset-one-quarter
+                    .control.has-icons-left.has-icons-right
+                      input.input(type='password', v-model="signin.password" placeholder='비밀번호를 입력해주세요.', aria-label="비밀번호 입력상자")
+                      span.icon.is-small.is-left
+                        i.fa.fa-lock
+                      span.icon.is-small.is-right
+                        i.fa.fa-check
+                  .control.column.is-half.is-offset-one-quarter
+                    button.column.btn-fill.btn-login(type="button" @click="signinSubmit") 로그인
+              
+              .field
+                .control.column.is-half.is-offset-one-quarter.has-text-centered
+                  router-link(to='/FindPassword').is-link.home-link.column 비밀번호를 잊으셨나요?
+                  router-link(to='/SignUpPage').is-link.home-link.column 처음이신가요? 회원가입
+                
 </template>
 
 <script>
@@ -64,8 +91,6 @@ export default {
           window.localStorage.setItem('token', token);
           window.localStorage.setItem('pk', pk);
         }
-        console.log('success token:', window.localStorage.getItem('token'));
-        console.log('success pk:', window.localStorage.getItem('pk'));
         this.$router.push( {path: '/MainPage'} );
       })
       .catch(error => {
@@ -77,6 +102,8 @@ export default {
         else alert(error.response.data.non_field_errors[0]);
         console.log(error.response);
       })
+      const loadingComponent = this.$loading.open()
+      setTimeout(() => loadingComponent.close(), 4 * 1000)
     }
   }
 }
@@ -108,5 +135,7 @@ fieldset
 .container
   min-height: 87vh
   
+.mobile-wrapper
+  padding: 0 40px
 
 </style>
