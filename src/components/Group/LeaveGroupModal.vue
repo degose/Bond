@@ -39,13 +39,12 @@ export default {
     deleteMembership(){
       let pk = window.localStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
-      // console.log(pk)
-      // console.log(user_token)
-      this.$http.delete('https://api.thekym.com/member/membership/',
+      this.$http.patch('https://api.thekym.com/member/membership/',
               {group: pk},
-              { headers: {'Authorization' : `Token ${user_token}`}})
+              { headers: {'Authorization' : `Token ${user_token}`}}
+              )
               .then(response => {
-                // console.log(response);
+                this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
               })
               .catch(error =>{
                 console.error(error.response);

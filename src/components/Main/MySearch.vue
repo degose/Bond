@@ -11,7 +11,7 @@
                     img(:src='group.profile_img', alt='Image')
                 .media-content
                   .content
-                    p
+                    p(style='white-space: pre-line')
                       strong {{group.name}}
                       br
                       |           {{group.description}}

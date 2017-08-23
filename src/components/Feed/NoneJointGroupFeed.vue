@@ -43,7 +43,7 @@
                         img(:src='post.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{ post.author.nickname }}
-                      p.subtitle.is-6 {{ post.created_date }}
+                      p.subtitle.is-6 {{ calcDate (post.created_date) }}
                           
                   .content
                     p(style='white-space: pre-line')
@@ -160,6 +160,9 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
+    calcDate(content){
+      return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
+    }
   }
 }
 </script>

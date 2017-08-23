@@ -48,7 +48,7 @@
                         img.user-img(:src='data.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{data.author.nickname}}
-                      p.subtitle.is-6 {{ data.created_date }}
+                      p.subtitle.is-6 {{ calcDate (data.created_date) }}
 
                   //- 글 (최상위)
                   .content
@@ -193,7 +193,10 @@ export default {
     goGroup(pk){
         window.localStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-    },  
+    },
+    calcDate(content){
+      return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
+    }
   } 
 }
 </script>

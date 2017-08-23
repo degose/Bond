@@ -215,7 +215,7 @@ export default {
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
     calcDate(content){
-      return content.split("T", 1)
+      return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
     }
   } 
 }
