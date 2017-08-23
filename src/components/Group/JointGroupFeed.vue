@@ -15,14 +15,14 @@
                     div
                       span 멤버 {{ group_data.num_of_members }}
                       | &nbsp; ·&nbsp; 
-                      a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal") 
+                      a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal" v-if= "is_owner") 
                         span.icon.is-small
-                          i.fa.fa-cog(aria-hidden='true')
+                          i.fa.fa-cog(aria-hidden='true') 
                         | 그룹 삭제
-                      //- a(aria-label="open leave group modal" @click.prevent="deletemembership") 
-                      //-   span.icon.is-small
-                      //-     i.fa.fa-cog(aria-hidden='true')
-                      //-   | 그룹 탈퇴
+                      a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal" v-if= "!is_owner") 
+                        span.icon.is-small
+                          i.fa.fa-cog(aria-hidden='true') 
+                        | 그룹 탈퇴
                 .content {{ group_data.description }}
                   
                   
@@ -71,7 +71,7 @@
          
           
         write-modal(close_message="close lightbox" ref='write_modal')
-        //- leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
+        leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
 
         
@@ -81,6 +81,7 @@
 import WriteModal from './WriteModal';
 import PostTemplate from './PostTemplate';
 import DeleteGroupModal from './DeleteGroupModal';
+import LeaveGroupModal from './LeaveGroupModal';
 
 export default {
   created(){
@@ -99,13 +100,14 @@ export default {
         prev: '',
         all: ''
       },
+      is_owner: undefined
     }
   },
   components: {
     WriteModal,
-    // LeaveGroupModal,
     PostTemplate,
-    DeleteGroupModal
+    DeleteGroupModal,
+    LeaveGroupModal
   },
   methods: {
     openWriteModal(){
@@ -124,6 +126,7 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
+                  this.is_owner = response.data.is_owner
                 })
                 .catch(error => console.log(error.response));
     },
@@ -153,17 +156,31 @@ export default {
                 .catch(error => console.log(error.response));
     },
     nextPage(){
-      // "http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=210&page=2".slice(-1) => 2
+      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
       let api_path = this.pagination.next;
       if (api_path !== null) {
-      // let first = api_path.indexOf('?page=');
-      // let last = api_path.indexOf('&');
       let page_path = api_path.slice(-1);
       this.page_num = page_path
       this.fetchPostData('next');
-      // console.log('작동된다')
       }
     },
+    // prevPage(){
+    //   let api_path = this.pagination.prev;
+    //   // let last = api_path.indexOf('&');
+    //   // let first = api_path.indexOf('?page=');
+    //   let page_path = api_path.slice(-1);
+    //   this.page_num = page_path
+
+    //   if(this.page_num >= 3){
+    //   let page_path = api_path.slice(-1);
+    //   this.page_num = page_path;
+    //   this.fetchPostData('prev');}
+    //   else{
+    //      let path = this.pagination.prev
+    //      this.fetchPostData('prev');
+    //   }
+    // },    
+  
   }
 }
 </script>

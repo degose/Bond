@@ -5,7 +5,7 @@
         //- 가입한 그룹의 feed
         .columns
           //- 그룹 정보 영역
-          .column.is-3
+          .column.is-3.is-hidden-mobile
             .card-content
               //- 가입하기 버튼
               .columns.is-mobile
@@ -56,7 +56,7 @@
                         img.user-img(:src='data.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{data.author.nickname}}
-                      p.subtitle.is-6 11:09 PM - 1 Jan 2016
+                      p.subtitle.is-6 {{calcDate (data.created_date)}}
                     button.delete(@click="deletePost(data.pk)")
                   //- 글 (최상위)
                   .content {{data.content}}
@@ -64,6 +64,11 @@
                   .content
                     figure.image
                       img(:src='data.image')
+              .columns
+                .column
+                  nav.pagination.is-centered
+                    button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+                    button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지                        
 
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
@@ -82,11 +87,11 @@ export default {
     MakingGroupModal,
     MainFooter
   },
-  created(){
-    this.fetchGroupData();
-    this.fetchPostData();
+  // created(){
+  //   this.fetchGroupData();
+  //   this.fetchPostData();
     // this.deletePost();
-  },
+  // },
   watch: {
     deletePost(){}
   },
@@ -97,7 +102,13 @@ export default {
       showcomment: false,
       like: false,
       data_list: [],
-      group_list: []
+      group_list: [],
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: '',
+        all: ''
+      },
     }
   },
   created(){
@@ -132,37 +143,6 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
-    fetchGroupData(){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  this.group_data = response.data;
-                  console.log('this.group_datalist:',this.group_data);
-                  // console.log('response:',response);
-                })
-                .catch(error => console.log(error.response));
-    },
-    fetchPostData(){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
-       { headers: {'Authorization' : `Token ${user_token}`} })
-                .then(response=> {
-                  // let group_count = response.data.count;
-                  // this.group_count = group_count;
-                  console.log('ddd',response);
-                  let data = response.data;
-                  data.results.forEach(item => {
-                    this.post_data.push(item);
-                  });
-                })
-                .catch(error => console.log(error.response));
-    },
-    addLike() {
-      this.like = !this.like;
-    },
     getMyGroupList(){
         let user_token = window.localStorage.getItem('token');
         
@@ -176,16 +156,47 @@ export default {
           console.log(error.message);
         })
     },
-    openMywrite(){
+    openMywrite(direction){
       let pk = window.localStorage.getItem('pk');
-      console.log(pk)
-      let path ='https://api.thekym.com/post/?author='+`${pk}`;
+      let path = null;
+      let page_num = 1;
+      if (this.page_num.trim() === ''){
+        path = 'https://api.thekym.com/post/?author='+`${pk}` + '&page=' +`${page_num}`
+      }
+      else{
+        path = this.pagination[direction];
+        page_num = this.page_num;
+      }
       this.$http.get(path)
                 .then(response => {
                   let data = response.data;
                   this.data_list = data.results;
+                  
+                  this.pagination.next = response.data.next;
+                  this.pagination.prev = response.data.previous;
+                  this.$router.push({ path: '/MyWriteFeed', query: { page: `${page_num}` }});
+
                 })
                 .catch(error => console.error(error.response))
+    },
+    nextPage(){
+      let api_path = this.pagination.next;
+      if (api_path !== null) {
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path
+      this.openMywrite('next');
+      }
+    },
+    prevPage(){
+      let api_path = this.pagination.prev;
+      if(this.page_num >= 3){
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path;
+      this.openMywrite('prev');}
+      else{
+         let path = this.pagination.prev
+         this.openMywrite('prev');
+      }
     },
     deletePost(pk){
       // this.$refs.delete_post_modal.visible = true;
@@ -211,6 +222,9 @@ export default {
       window.localStorage.setItem('this_group', pk);
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
+    calcDate(content){
+      return content.split("T", 1)
+    }
   } 
 }
 </script>
@@ -265,5 +279,7 @@ body
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
+.pagination-btn
+  color: $bond
 
 </style>

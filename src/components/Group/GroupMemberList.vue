@@ -13,11 +13,6 @@
                 p.title.is-4 {{ group_data.name }}
                 div
                   span 멤버 {{ group_data.num_of_members }}
-                  | &nbsp; ·&nbsp;
-                  a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal") 
-                    span.icon.is-small
-                      i.fa.fa-cog(aria-hidden='true')
-                    | 그룹 탈퇴
             .content {{ group_data.description }}
 
       .column.is-9
@@ -34,8 +29,8 @@
               table.table.is-fullwidth
                 caption.a11y-hidden 그룹멤버
                 thead
-                  tr
-                    th 멤버
+                    //- tr
+                    th
                     th
                     
 
@@ -50,22 +45,23 @@
                       p.namelist {{member.nickname}}
                     
                     td
-                      span.tag.is-rounded.is-primary 리더
+                      span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
+          .columns
+            .column
+              nav.pagination.is-centered
+                button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+                button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
           invitation-modal(
             ref="my_modal"
             close_message="close lightbox"
           )
-          leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
 </template>
 
 <script>
 import InvitationModal from './InvitationModal'
-import LeaveGroupModal from './LeaveGroupModal'
-
 export default {
   components:{
     InvitationModal,
-    LeaveGroupModal
   },
   created(){
     this.fetchGroupData();
@@ -76,7 +72,14 @@ export default {
       visible: false,
       group_data:[],
       pk:'',
-      member_list:[]
+      member_list:[],
+      is_owner:[],
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: '',
+        all: ''
+      },
     }
   },  
   methods: {
@@ -87,25 +90,57 @@ export default {
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
       this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
+       { headers: {'Authorization' : `Token ${user_token}`}}
+       )
                 .then(response=> {
                   this.group_data = response.data;
-                  // console.log('this.group_datalist:',this.group_data);
-                  // console.log('response:',response);
+                  this.is_owner.push(response.data.owner)
                 })
-                .catch(error => console.log(error.message));
+                // .catch(error => console.log(error.message));
     },
-    fetchGroupMember(){
+    fetchGroupMember(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      console.log(pk)
-      this.$http.get('https://api.thekym.com/member/?group='+ `${pk}`, 
+      let path = null;
+      let page_num = 1;
+      if (this.page_num.trim() === ''){
+        path = 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`
+      }
+      else{
+        path = this.pagination[direction];
+        page_num = this.page_num;
+      }
+      this.$http.get(path, 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  console.log(response)
                   this.member_list = response.data.results;
+                  this.pagination.next = response.data.next;
+                  this.pagination.prev = response.data.previous;
+                  // this.member_list.reverse()
+                  // pk값 순서로 정렬되는중
+                  // http://api.thekym.com/member/?group=200&page=2"
+
                 })
-                .catch(error => console.log(error.message))
+                // .catch(error => console.log(error.message))
+    },
+    nextPage(){
+      let api_path = this.pagination.next;
+      if (api_path !== null) {
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path
+      this.fetchGroupMember('next');
+      }
+    },
+    prevPage(){
+      let api_path = this.pagination.prev;
+      if(this.page_num >= 3){
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path;
+      this.fetchGroupMember('prev');}
+      else{
+         let path = this.pagination.prev
+         this.fetchGroupMember('prev');
+      }
     },
   }
 }
@@ -114,7 +149,6 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .group_profile-wrapper
   width: auto
   height: auto
@@ -123,20 +157,21 @@ export default {
   overflow: hidden
 .group_profile_img
   background: url('http://bulma.io/images/placeholders/1280x960.png')
-  // overflow: hidden
-
 body
   background: #eee
-
 .page-wrapper
   min-height: 87vh
-
 .user-img
   background: #eee
-
 .namelist,
   padding-top: 13px
 .tag.is-rounded
   margin-top: 13px
-
+.card-header-title
+  font-size: 25px
+  padding-left: 0
+.pagination.is-centered
+  padding-top: 15px
+.pagination-btn
+  color: $bond
 </style>

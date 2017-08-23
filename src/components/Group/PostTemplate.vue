@@ -84,7 +84,6 @@
                       button.delete(@click="deleteComment(comment.pk, post.pk)")
 
 
-
 </template>
 
 <script>

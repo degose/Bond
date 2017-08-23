@@ -16,7 +16,7 @@
                 input.input(
                   id="search" 
                   type='text' 
-                  placeholder='그룹이나 게시글을 검색해보세요'  
+                  placeholder='그룹을 검색해보세요'  
                   @input="inputSearch" 
                   :value="search"
                   @keyup.enter="fetch"
@@ -88,7 +88,10 @@ export default {
           window.localStorage.removeItem('token', token);
           window.localStorage.removeItem('pk', pk)
           window.localStorage.removeItem('searchKeyword')
-          window.localStorage.removeItem('this_group')
+          window.localStorage.removeItem('user_email')
+          window.localStorage.removeItem('user_img')
+          window.localStorage.removeItem('user_nickname')
+          window.localStorage.removeItem('user_username')
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
@@ -111,11 +114,8 @@ export default {
       window.localStorage.setItem('searchKeyword',search)
       this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
-                  if(response.data.count > 0){
-                    this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
-                    //리다이렉트 라우팅을 적용해보는 건 어떨까?
-                    //this.$router.push({path: '/MainPage', redirect: 'SearchResult/group/'})
-                    //this.$router.push({path: '/SearchResult/group/', redirection: 'SearchReult/group/ })
+                  if(response.data.count != 0){
+                  this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
                   }else{
                     alert("해당 검색어와 관련된 그룹이 없습니다.");
                   }
@@ -133,12 +133,8 @@ export default {
 
 .user-img
   background: #eee
-  // overflow: hidden
-  // width: 35px
-  // height: 35px
 
 body
-  // background: #eee
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px

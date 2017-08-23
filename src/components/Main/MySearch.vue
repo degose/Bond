@@ -19,6 +19,8 @@
                       span.icon.is-small.member
                         i.fa.fa-users(aria-hidden='true')
                       small    {{group.num_of_members}}
+                      | &nbsp; 
+                      | &nbsp; 
                       span.icon.is-small.leader
                         i.fa.fa-user-circle-o(aria-hidden='true')
                       small    {{group.owner.nickname}}
@@ -108,15 +110,11 @@ export default {
     goGroup(pk, i){
       window.localStorage.setItem('this_group',pk);
       if(this.is_member[i] === true){
-        console.log("pk값이 있다")
-        console.log(this.is_member[i])
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       }
       else{
-        console.log("pk값이 없다")
         this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
       }
-      console.log(pk);
     },
   },
   watch: {
@@ -132,9 +130,7 @@ export default {
 @import "~style"
 .all-wrapper
   background: #eee
-  // height: 100vh
 .pagination-btn
   color: $bond
-body
-  // background: #eee
+
 </style>

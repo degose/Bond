@@ -49,6 +49,10 @@
                   .content(v-if="post.image")
                     figure.image
                       img(:src='post.image')
+
+            .columns.is-mobile.pagination-wrapper
+              .column.is-offset-4.is-one-third.has-text-centered
+                button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                   
     main-footer
 </template>
 
@@ -72,6 +76,12 @@ export default {
       group_data:[],
       post_data:[],
       pk:'',
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: '',
+        all: ''
+      },
     }
   },
   methods: {
@@ -100,16 +110,50 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
-    fetchPostData(){
+    fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
+      let path = null;
+      let page_num = 1;
+      if (this.page_num.trim() === ''){
+        path = 'https://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+      }
+      else{
+        path = this.pagination[direction];
+        page_num = this.page_num;
+      }
+      this.$http.get(path,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   let data = response.data.results;
                   data.forEach(item => {
                     this.post_data.push(item);
                   });
+                  this.pagination.next = response.data.next;
+                  this.pagination.prev = response.data.previous;
+                  this.$router.push({ path: '/NoneJointGroupFeed', query: { page: `${page_num}` }});
+                })
+                .catch(error => console.log(error.response));
+    },
+    nextPage(){
+      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
+      let api_path = this.pagination.next;
+      if (api_path !== null) {
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path
+      this.fetchPostData('next');
+      // console.log('작동된다')
+      }
+    },
+
+    addLike(pk) {
+      let user_token = window.localStorage.getItem('token');
+      console.log('pk:',pk);
+      console.log('token:',user_token);
+      this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/',
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  console.log('like.response:',response);
                 })
                 .catch(error => console.log(error.response));
     },
@@ -178,8 +222,9 @@ body
 
 .all-wrapper
   background: #eee
-  // min-height: 100vh
-
+  height: 100vh
+.pagination-btn
+  color: $bond
 .group-info
   // position: fixed
 </style>
