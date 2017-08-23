@@ -8,14 +8,6 @@
       section.modal-card-body
         .card-content
           textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content')
-        //- .card-content
-        //-   .file.file-cta.is-fullwidth
-        //-     span.file-icon
-        //-       i.fa.fa-upload
-        //-     span.file-name(v-if="file_name.length == 0")
-        //-       | 파일을 선택해주세요.
-        //-     span.file-name(v-else)
-        //-       | {{ file_name }}
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
             img(:src="uploadImg", alt='Image')
@@ -45,7 +37,6 @@
 </template>
 
 <script>
-// import {bus} from './bus'
 export default {
   props: {
     close_message: {
@@ -56,9 +47,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  created(){
-    // bus.$emit('add-post-data')
   },
   data() {
     return {
@@ -114,12 +102,10 @@ export default {
       let user_nickname = window.localStorage.getItem('user_nickname');
 
       formData.append('content', this.write.content);
-      // let img_file = this.$refs.file_img_input.files[0];
-      
+
       if(!!this.$refs.file_img_input.files[0] ){
         formData.append('image', this.$refs.file_img_input.files[0]);
       }
-      // formData.append('image', this.$refs.file_img_input.files[0]);
       formData.append('group', pk);
       
       this.$http.post(this.$store.state.api_write, formData,
@@ -131,7 +117,6 @@ export default {
         })
                 .then(response => {
                   let data = response.data;
-                  console.log('data::',data);
                   this.$parent.post_data.unshift({
                     author: {
                       // email: author.email,
@@ -150,16 +135,6 @@ export default {
                     content: data.content,
                     created_date: data.created_date,
                   });
-                  // this.$emit('add-post-data', {
-                  //   author: {},
-                  //   comment_count: 0,
-                  //   is_like: false,
-                  //   pk: data.pk,
-                  //   image: data.image,
-                  //   group: data.group,
-                  //   video: data.video,
-                  //   content: data.content
-                  // });
                 })
                 .catch(error => console.log(error.response));
                 this.visible = false;
@@ -168,12 +143,6 @@ export default {
     writePost(target, e){
       let input = e.target.value;
       this.write[target] = input;
-    },
-    // 이미지가 있나 체크해서 v-if활용해 사진 없으면 사진틀 안보이게 하고 싶음..ㅠ
-    checkImage(file){
-      if(/.*\.(gif)|(jpeg)|(jpg)|(png)$/.test(file.name.toLowerCase())){
-          return true;
-      }
     },
   }
 }

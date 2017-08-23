@@ -28,21 +28,6 @@
           nav.pagination.is-centered
             button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
             button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
-            //- ul.pagination-list
-            //-   li
-            //-     a.pagination-link 1
-            //-   li
-            //-     span.pagination-ellipsis …
-            //-   li
-            //-     a.pagination-link 45
-            //-   li
-            //-     a.pagination-link.is-current 46
-            //-   li
-            //-     a.pagination-link 47
-            //-   li
-            //-     span.pagination-ellipsis …
-            //-   li
-            //-     a.pagination-link 86
 </template>
 
 <script>
@@ -69,8 +54,7 @@ export default {
       let search = window.localStorage.getItem('searchKeyword');
       let user_token = window.localStorage.getItem('token');
       let direction = this.direction;
-      let newsearch = this.newsearch
-      console.log(this.page_num)
+      let newsearch = this.newsearch;
       if ( this.page_num.trim() === '' || `${newsearch}` !== `${search}`) {
         path = 'https://api.thekym.com/group/?search='+`${search}`;
         this.newsearch = `${search}`;
@@ -81,7 +65,6 @@ export default {
       this.$http
           .get(path, { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
-            console.log(response);
             let data = response.data;
             this.group_list = data.results;
             this.pagination.next = data.next;
@@ -103,17 +86,7 @@ export default {
         this.page_num = page_path[page_path.length - 1];
         this.direction = 'next';
         this.$router.push({ path: '/SearchResult/group/', query: { page: `${this.page_num}`}});
-        //
-        // this.fetched('next');
-        // console.log('작동된다')
       } 
-      // let path = this.$route.path;
-      // let query = {
-      //   search: page_num
-      // }
-      // this.$router.push({
-      //   path, query
-      // });
     },
     prevPage(){
       let api_path = this.pagination.prev;
@@ -148,8 +121,6 @@ export default {
   },
   watch: {
     $route(newVal, oldVal) {
-      console.log(oldVal)
-      console.log(newVal)
       this.fetched()
     },
   }

@@ -14,17 +14,11 @@
                 div
                   span 멤버 {{ group_data.num_of_members }}
                   | &nbsp; ·&nbsp;
-                  //- a(aria-label="open leave group modal" @click.prevent="deletegroup") 
-                  //-   span.icon.is-small
-                  //-     i.fa.fa-cog(aria-hidden='true')
-                  //-   | 그룹 삭제
                   a(aria-label="open leave group modal" @click.prevent="openLeaveGroupModal") 
                     span.icon.is-small
                       i.fa.fa-cog(aria-hidden='true')
                     | 그룹 탈퇴
             .content {{ group_data.description }}
-
-
 
       .column.is-9
 
@@ -36,17 +30,8 @@
                 | &nbsp;  
                 | {{group_data.name}}
                 | &nbsp; 
-                //- | &nbsp; 
-                //- | &nbsp; 
-                //- | &nbsp; 
-                //- button.btn-default.column.is-offset-7.is-hidden-mobile(@click="openModal") + 멤버 초대
-                //- button.btn-default.column.is-offset-4.is-hidden-desktop.is-hidden-tablet(@click="openModal") + 멤버 초대
-              
             .card-content
               table.table.is-fullwidth
-                //- col(width="20%")
-                //- col(width="20%")
-                //- col(width="60%")
                 caption.a11y-hidden 그룹멤버
                 thead
                   tr
@@ -55,13 +40,9 @@
                     
 
                     th 
-                    //-   a
-                    //-     span.icon
-                    //-       i.fa.fa-angle-down
-
+                   
                 tbody(v-for='member in member_list')
                   tr
-                    //- th 1
                     td
                       figure.image.is-48x48.img-user
                         img.user-img(:src='member.profile_img', alt='Image')
@@ -70,46 +51,6 @@
                     
                     td
                       span.tag.is-rounded.is-primary 리더
-                  //- tr
-                  //-   //- th 1
-                  //-   td
-                  //-     figure.image.is-48x48.img-user
-                  //-       img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-                  //-   td 
-                  //-     p.namelist 만순이
-                    
-                  //-   td
-                  //-     span.tag.is-rounded.is-primary 리더
-                  //- tr
-                  //-   //- th 1
-                  //-   td
-                  //-     figure.image.is-48x48.img-user
-                  //-       img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-                  //-   td 
-                  //-     p.namelist 만순이
-                    
-                  //-   td
-                  //-     span.tag.is-rounded.is-primary 리더
-                  //- tr
-                  //-   //- th 1
-                  //-   td
-                  //-     figure.image.is-48x48.img-user
-                  //-       img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-                  //-   td 
-                  //-     p.namelist 만순이
-                    
-                  //-   td
-                  //-     span.tag.is-rounded.is-primary 리더
-                  //- tr
-                  //-   //- th 1
-                  //-   td
-                  //-     figure.image.is-48x48.img-user
-                  //-       img.user-img(src='http://bulma.io/images/placeholders/96x96.png', alt='Image')
-                  //-   td 
-                  //-     p.namelist 만순이
-                    
-                  //-   td
-                  //-     span.tag.is-rounded.is-primary 리더
           invitation-modal(
             ref="my_modal"
             close_message="close lightbox"
@@ -129,10 +70,6 @@ export default {
   created(){
     this.fetchGroupData();
     this.fetchGroupMember();
-    // this.fetchPostData();
-    // this.fetchCommentData();
-    // bus.$on('add-post-data')
-    // this.deletePost();
   },
   data() {
     return{
@@ -143,9 +80,6 @@ export default {
     }
   },  
   methods: {
-    openModal(){
-      this.$refs.my_modal.visible = true;
-    },
     openLeaveGroupModal(){
       this.$refs.leave_group_modal.visible = true;
     },
@@ -172,24 +106,6 @@ export default {
                   this.member_list = response.data.results;
                 })
                 .catch(error => console.log(error.message))
-    },
-    deletemembership(){
-          let pk = parseInt(window.localStorage.getItem('this_group'),10);
-          console.log(pk)
-          let user_token = window.localStorage.getItem('token');
-          console.log(user_token)
-          this.$http.delete('https://api.thekym.com/member/membership/',{group:pk},
-                  { headers: {'Authorization' : `Token ${user_token}`}},
-                  )
-                  .then(response => {
-                    console.log(response)
-                    // this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
-                  })
-                  .catch(error =>{
-                    console.error(error.response)
-                    if(error.response.status === 401)
-                    alert(error.response.data.detail)
-                  })
     },
   }
 }

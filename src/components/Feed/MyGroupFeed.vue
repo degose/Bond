@@ -30,13 +30,6 @@
                     | 더보기
           //- feed 영역
           .column.is-9
-            //- div.feed-box(v-show="post_data.length <= 0")
-              .card
-                .card-content
-                  .content
-                    | 그룹에 재미있는 이야기를 써보세요.
-
-
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card(v-for = "data in data_list")
@@ -56,7 +49,6 @@
                     .media-content
                       p.title.is-4.user-name {{data.author.nickname}}
                       p.subtitle.is-6 11:09 PM - 1 Jan 2016
-                    button.delete(@click="deletePost(post.pk)")
 
                   //- 글 (최상위)
                   .content {{data.content}}
@@ -83,14 +75,6 @@ export default {
     MakingGroupModal,
     MainFooter
   },
-  created(){
-    this.fetchGroupData();
-    this.fetchPostData();
-    // this.deletePost();
-  },
-  watch: {
-    deletePost(){}
-  },
   data() {
     return {
       dropdownpost: false,
@@ -102,37 +86,12 @@ export default {
     }
   },
   created(){
+    this.fetchGroupData();
+    this.fetchPostData();
     this.openMygroup();
     this.getMyGroupList();
   },
   methods: {
-    addPostData(o){
-      console.log(this.post_data);
-      this.post_data.unshift(o);
-      console.log(this.post_data);
-    },
-    openModal(){
-      this.$refs.my_modal.visible = true;
-    },
-    deletePost(pk, i){
-      // console.log('pkstpk::',pk);
-      // console.log('i', this.post_data[i]);
-      // let post_num = this.post_data[i];
-      // post_num.splice(0,1);
-      // this.post_data.post[i].splice(i, 1);
-      console.log('i',this.post_data);
-      // console.log('i',post_num);
-      let user_token = window.localStorage.getItem('token');
-      this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  // post_num.splice(0,1);
-                  // console.log('i',this.post_data);
-                  // console.log('i',post_num);
-                  this.post_data.post[i].splice(i, 1);
-                })
-                .catch(error => console.log(error.response));
-    },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
@@ -161,8 +120,15 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
-    addLike() {
-      this.like = !this.like;
+    openMygroup(){
+        let user_token = window.localStorage.getItem('token');
+        this.$http.get('https://api.thekym.com/post/my-group/',
+          {headers: {'Authorization' : `Token ${user_token}` }})
+                  .then(response => {
+                    let data = response.data;
+                    this.data_list = data.results;
+                  })
+                  .catch(error => console.error(error.response))
     },
     getMyGroupList(){
           let user_token = window.localStorage.getItem('token');
@@ -177,35 +143,8 @@ export default {
             console.log(error.message);
           })
     },
-    openMygroup(){
-        let user_token = window.localStorage.getItem('token');
-        this.$http.get('https://api.thekym.com/post/my-group/',
-          {headers: {'Authorization' : `Token ${user_token}` }})
-                  .then(response => {
-                    let data = response.data;
-                    this.data_list = data.results;
-                  })
-                  .catch(error => console.error(error.response))
-    },
-    deletePost(pk, i){
-      // this.$refs.delete_post_modal.visible = true;
-      window.localStorage.getItem(pk);
-      // console.log('pkstpk::',pk);
-      // console.log('i', this.post_data[i]);
-      // let post_num = this.post_data[i];
-      // post_num.splice(0,1);
-      // this.post_data.post[i].splice(i, 1);
-      // console.log('i',post_num);
-      let user_token = window.localStorage.getItem('token');
-      this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  // post_num.splice(0,1);
-                  // console.log('i',this.post_data);
-                  // console.log('i',post_num);
-                  // this.post_data.post[i].splice(i, 1);
-                })
-                .catch(error => console.log(error.response));
+    openModal(){
+      this.$refs.my_modal.visible = true;
     },
     goGroup(pk){
         window.localStorage.setItem('this_group', pk);
@@ -215,7 +154,6 @@ export default {
 }
 </script>
 
-
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
@@ -224,7 +162,6 @@ export default {
   background: #eee
 body
   // background: #eee
-
 .icon-more
   font-size: 1.5rem
   color: $grey
@@ -236,8 +173,6 @@ body
     color: $bond
 .card
   margin-bottom: 20px
-
-
 
 .dropdownhr
   margin: 5px
