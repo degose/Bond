@@ -23,7 +23,9 @@
                         span.icon.is-small
                           i.fa.fa-cog(aria-hidden='true') 
                         | 그룹 탈퇴
-                .content {{ group_data.description }}
+                .content
+                  p(style='white-space: pre-line')
+                    | {{ group_data.description }}
                   
                   
           //- feed 영역

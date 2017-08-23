@@ -16,7 +16,9 @@
                   p.title.is-4 {{ group_data.name }}
                   div
                     span 멤버 {{ group_data.num_of_members }}
-              .content {{ group_data.description }}
+              .content
+                p(style='white-space: pre-line')
+                  | {{ group_data.description }}
 
               //- 가입하기 버튼
               .columns.is-mobile
@@ -44,7 +46,8 @@
                       p.subtitle.is-6 {{ post.created_date }}
                           
                   .content
-                    | {{ post.content }}
+                    p(style='white-space: pre-line')
+                      | {{ post.content }}
 
                   .content(v-if="post.image")
                     figure.image

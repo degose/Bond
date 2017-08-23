@@ -13,7 +13,9 @@
                 p.title.is-4 {{ group_data.name }}
                 div
                   span 멤버 {{ group_data.num_of_members }}
-            .content {{ group_data.description }}
+            .content
+              p(style='white-space: pre-line')
+                | {{ group_data.description }}
 
       .column.is-9
 

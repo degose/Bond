@@ -17,7 +17,8 @@
 
                     //- 글 (최상위)
                     .content
-                      | {{ post.content }}
+                      p(style='white-space: pre-line') 
+                        | {{ post.content }}
 
                       
                     //- 이미지
@@ -77,7 +78,8 @@
                           p
                             strong {{ comment.author.nickname }}
                             br
-                            | {{ comment.content }}
+                            p(style='white-space: pre-line')
+                              | {{ comment.content }}
                             br
                             small
                               | {{ comment.created_date }}

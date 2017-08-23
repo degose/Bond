@@ -59,7 +59,9 @@
                       p.subtitle.is-6 {{calcDate (data.created_date)}}
                     button.delete(@click="deletePost(data.pk)")
                   //- 글 (최상위)
-                  .content {{data.content}}
+                  .content
+                    p(style='white-space: pre-line')
+                      | {{data.content}}
                   //- 이미지 - 1개일 때
                   .content
                     figure.image
@@ -87,11 +89,6 @@ export default {
     MakingGroupModal,
     MainFooter
   },
-  // created(){
-  //   this.fetchGroupData();
-  //   this.fetchPostData();
-    // this.deletePost();
-  // },
   watch: {
     deletePost(){}
   },
@@ -125,11 +122,6 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     deletePost(pk, i){
-      // console.log('pkstpk::',pk);
-      // console.log('i', this.post_data[i]);
-      // let post_num = this.post_data[i];
-      // post_num.splice(0,1);
-      // this.post_data.post[i].splice(i, 1);
       console.log('i',this.post_data);
       // console.log('i',post_num);
       let user_token = window.localStorage.getItem('token');
