@@ -59,8 +59,12 @@
                       p.namelist {{member.nickname}}
                     
                     td
-                      span.tag.is-rounded.is-primary(v-if="is_owner[0].email === member.email") 그룹장
-
+                      span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
+          .columns
+            .column
+              nav.pagination.is-centered
+                button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+                button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
           invitation-modal(
             ref="my_modal"
             close_message="close lightbox"
@@ -84,6 +88,12 @@ export default {
       pk:'',
       member_list:[],
       is_owner:[],
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: '',
+        all: ''
+      },
     }
   },  
   methods: {
@@ -105,18 +115,49 @@ export default {
                 })
                 // .catch(error => console.log(error.message));
     },
-    fetchGroupMember(){
+    fetchGroupMember(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      console.log(pk)
-      this.$http.get('https://api.thekym.com/member/?group='+ `${pk}`, 
+      let path = null;
+      let page_num = 1;
+      if (this.page_num.trim() === ''){
+        path = 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`
+      }
+      else{
+        path = this.pagination[direction];
+        page_num = this.page_num;
+      }
+      this.$http.get(path, 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.member_list = response.data.results;
+                  this.pagination.next = response.data.next;
+                  this.pagination.prev = response.data.previous;
                   // this.member_list.reverse()
                   // pk값 순서로 정렬되는중
+                  // http://api.thekym.com/member/?group=200&page=2"
+
                 })
                 // .catch(error => console.log(error.message))
+    },
+    nextPage(){
+      let api_path = this.pagination.next;
+      if (api_path !== null) {
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path
+      this.fetchGroupMember('next');
+      }
+    },
+    prevPage(){
+      let api_path = this.pagination.prev;
+      if(this.page_num >= 3){
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path;
+      this.fetchGroupMember('prev');}
+      else{
+         let path = this.pagination.prev
+         this.fetchGroupMember('prev');
+      }
     },
   }
 }
@@ -146,4 +187,8 @@ body
 .card-header-title
   font-size: 25px
   padding-left: 0
+.pagination.is-centered
+  padding-top: 15px
+.pagination-btn
+  color: $bond
 </style>

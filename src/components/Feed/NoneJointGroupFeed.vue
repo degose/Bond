@@ -50,42 +50,9 @@
                     figure.image
                       img(:src='post.image')
 
-                
-                //- 좋아요, 댓글 개수
-                //- footer.card-footer
-                //-   button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
-                //-     span.icon-like
-                //-       i.fa.fa-heart-o(v-show="!like")
-                //-       i.fa.fa-heart(v-show="like")
-                //-     | &nbsp;  
-                //-     | {{ post.like_count }}
-                //-   button(@click="showComment($event)").card-footer-item.btn-show-comment
-                //-     | 댓글
-                //-     | {{ post.comment_count }}
-                //-     | &nbsp; 
-                //-     span.icon.is-small(v-show="!showcomment")
-                //-       i.fa.fa-angle-down(aria-hidden='true')
-                //-     span.icon.is-small(v-show="showcomment")
-                //-       i.fa.fa-angle-up(aria-hidden='true')
-                      
-
-              //- 댓글 영역
-              //- .card(v-if="comment")
-              //-   .card-content
-              //-     //- 댓글 리스트 영역
-              //-     article.media(v-show="showcomment" v-for="comment in comment_data" ref="togglecomment")
-              //-       figure.media-left
-              //-         p.image.is-48x48
-              //-           img.user-img(:src='comment.author.profile_img')
-              //-       .media-content
-              //-         .content
-              //-           p
-              //-             strong {{ comment.author.nickname }}
-              //-             br
-              //-             | {{ comment.content }}
-              //-             br
-              //-             small
-              //-               | {{ comment.created_date }}
+            .columns.is-mobile.pagination-wrapper
+              .column.is-offset-4.is-one-third.has-text-centered
+                button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                   
     main-footer
                 
 
@@ -105,9 +72,6 @@ export default {
   created(){
     this.fetchGroupData();
     this.fetchPostData();
-    this.fetchCommentData();
-    // bus.$on('add-post-data')
-    // this.deletePost();
   },
   watch: {
     deletePost(){}
@@ -125,6 +89,12 @@ export default {
       post_data:[],
       comment_data:[],
       pk:'',
+      page_num: '',
+      pagination:{
+        next: '', 
+        prev: '',
+        all: ''
+      },
     }
   },
   methods: {
@@ -157,74 +127,55 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
-                  // console.log('this.group_datalist:',this.group_data);
-                  // console.log('response:',response);
                 })
                 .catch(error => console.log(error.response));
     },
-    fetchPostData(){
+    fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
+      let path = null;
+      let page_num = 1;
+      if (this.page_num.trim() === ''){
+        path = 'https://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+      }
+      else{
+        path = this.pagination[direction];
+        page_num = this.page_num;
+      }
+      this.$http.get(path,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
-                  // this.post_data = response.data.results;
                   let data = response.data.results;
                   data.forEach(item => {
                     this.post_data.push(item);
                   });
-                  console.log(data);
-                  // console.log('this.post_data:',this.post_data);
+                  this.pagination.next = response.data.next;
+                  this.pagination.prev = response.data.previous;
+                  this.$router.push({ path: '/NoneJointGroupFeed', query: { page: `${page_num}` }});
                 })
-                // .then(write => {const datalist = Object.values(write);
-                // this.datalist = datalist;
-                // })
-                // 
-                // .then(data => console.log(data))
                 .catch(error => console.log(error.response));
     },
-    fetchCommentData(post_pk){
-      // let user_token = window.localStorage.getItem('token');
-      // let pk = window.localStorage.getItem('this_group');
-      // // let ppk = this.post.pk;
-      // this.$http.get('https://api.thekym.com/group=' + `${pk}` + '/post=' + `${ppk}`,
-      //  { headers: {'Authorization' : `Token ${user_token}`} })
-      //           .then(response=> {
-      //             this.comment_data = response.data.results;
-      //             console.log('this.comment_data:',this.comment_data);
-      //           })
-      //           // .then(write => {const datalist = Object.values(write);
-      //           // this.datalist = datalist;
-      //           // })
-      //           // 
-      //           // .then(data => console.log(data))
-      //           .catch(error => console.log(error.response));
+    nextPage(){
+      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
+      let api_path = this.pagination.next;
+      if (api_path !== null) {
+      let page_path = api_path.slice(-1);
+      this.page_num = page_path
+      this.fetchPostData('next');
+      // console.log('작동된다')
+      }
     },
-    showComment(e) {
-      let el = this.$refs.togglecomment
-      let target = e.target
-      // console.log(el);
-      // console.log(target);
-      // if(el !== target && !el.includes(target)){
-      //   // this.visible = false;
-      // this.showcomment = !this.showcomment;
-      // }
-    },
+
     addLike(pk) {
       let user_token = window.localStorage.getItem('token');
       console.log('pk:',pk);
       console.log('token:',user_token);
-      // /api/post/<pk>/post-like-toggle
       this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
-                  // this.like_or_not = response.like_or_not;
-                  // console.log('this.group_datalist:',this.group_data);
-                  // this.like_or_not = response.data;
                   console.log('like.response:',response);
                 })
                 .catch(error => console.log(error.response));
-      // this.like = !this.like;
     },
 
   }
@@ -288,6 +239,8 @@ body
 .all-wrapper
   background: #eee
   height: 100vh
+.pagination-btn
+  color: $bond
 .group-info
   // position: fixed
 </style>

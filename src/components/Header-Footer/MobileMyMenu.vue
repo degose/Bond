@@ -70,6 +70,10 @@ export default {
           window.localStorage.removeItem('pk', pk)
           window.localStorage.removeItem('searchKeyword')
           window.localStorage.removeItem('this_group')
+          window.localStorage.removeItem('user_email')
+          window.localStorage.removeItem('user_img')
+          window.localStorage.removeItem('user_nickname')
+          window.localStorage.removeItem('user_username')
         }
         // this.$store.commit('bg_off')
         this.$router.push( {path: "/"} );
