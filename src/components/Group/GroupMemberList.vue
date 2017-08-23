@@ -150,7 +150,7 @@ export default {
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
+      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -160,11 +160,11 @@ export default {
                 .catch(error => console.log(error.response));
     },
     deletemembership(){
-          let pk = parseInt(window.localStorage.getItem('this_group'),10);
+          let pk = window.localStorage.getItem('this_group');
           console.log(pk)
           let user_token = window.localStorage.getItem('token');
           console.log(user_token)
-          this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/',{group:pk},
+          this.$http.get('https://api.thekym.com/member/membership/',{group:pk},
                   { headers: {'Authorization' : `Token ${user_token}`}},
                   )
                   .then(response => {

@@ -56,7 +56,6 @@
                     .media-content
                       p.title.is-4.user-name {{data.author.nickname}}
                       p.subtitle.is-6 11:09 PM - 1 Jan 2016
-                    button.delete(@click="deletePost(post.pk)")
 
                   //- 글 (최상위)
                   .content {{data.content}}
@@ -83,20 +82,8 @@ export default {
     MakingGroupModal,
     MainFooter
   },
-  created(){
-    this.fetchGroupData();
-    this.fetchPostData();
-    // this.deletePost();
-  },
-  watch: {
-    deletePost(){}
-  },
   data() {
     return {
-      dropdownpost: false,
-      dropdowncomment: false,
-      showcomment: false,
-      like: false,
       data_list: [],
       group_list: []
     }
@@ -106,68 +93,13 @@ export default {
     this.getMyGroupList();
   },
   methods: {
-    addPostData(o){
-      console.log(this.post_data);
-      this.post_data.unshift(o);
-      console.log(this.post_data);
-    },
     openModal(){
       this.$refs.my_modal.visible = true;
-    },
-    deletePost(pk, i){
-      // console.log('pkstpk::',pk);
-      // console.log('i', this.post_data[i]);
-      // let post_num = this.post_data[i];
-      // post_num.splice(0,1);
-      // this.post_data.post[i].splice(i, 1);
-      console.log('i',this.post_data);
-      // console.log('i',post_num);
-      let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  // post_num.splice(0,1);
-                  // console.log('i',this.post_data);
-                  // console.log('i',post_num);
-                  this.post_data.post[i].splice(i, 1);
-                })
-                .catch(error => console.log(error.response));
-    },
-    fetchGroupData(){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  this.group_data = response.data;
-                  console.log('this.group_datalist:',this.group_data);
-                  // console.log('response:',response);
-                })
-                .catch(error => console.log(error.response));
-    },
-    fetchPostData(){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}`,
-       { headers: {'Authorization' : `Token ${user_token}`} })
-                .then(response=> {
-                  // let group_count = response.data.count;
-                  // this.group_count = group_count;
-                  console.log('ddd',response);
-                  let data = response.data;
-                  data.results.forEach(item => {
-                    this.post_data.push(item);
-                  });
-                })
-                .catch(error => console.log(error.response));
-    },
-    addLike() {
-      this.like = !this.like;
     },
     getMyGroupList(){
           let user_token = window.localStorage.getItem('token');
           
-          this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/my-group/', 
+          this.$http.get('https://api.thekym.com/group/my-group/', 
             {headers: { 'Authorization' : `Token ${user_token}` }}
           )
           .then(response => {
@@ -179,33 +111,13 @@ export default {
     },
     openMygroup(){
         let user_token = window.localStorage.getItem('token');
-        this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/my-group/',
+        this.$http.get('https://api.thekym.com/post/my-group/',
           {headers: {'Authorization' : `Token ${user_token}` }})
                   .then(response => {
                     let data = response.data;
                     this.data_list = data.results;
                   })
                   .catch(error => console.error(error.response))
-    },
-    deletePost(pk, i){
-      // this.$refs.delete_post_modal.visible = true;
-      window.localStorage.getItem(pk);
-      // console.log('pkstpk::',pk);
-      // console.log('i', this.post_data[i]);
-      // let post_num = this.post_data[i];
-      // post_num.splice(0,1);
-      // this.post_data.post[i].splice(i, 1);
-      // console.log('i',post_num);
-      let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  // post_num.splice(0,1);
-                  // console.log('i',this.post_data);
-                  // console.log('i',post_num);
-                  // this.post_data.post[i].splice(i, 1);
-                })
-                .catch(error => console.log(error.response));
     },
     goGroup(pk){
         window.localStorage.setItem('this_group', pk);

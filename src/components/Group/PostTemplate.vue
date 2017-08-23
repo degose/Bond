@@ -1,87 +1,52 @@
 <template lang="pug">
               div()
-                .card()
+                .card
                   .card-content
                     article.media
                       .media-left
                         figure.image.is-64x64.img-user
-                          img.user-img(:src='a.author.profile_img', alt='Image')
+                          img.img-user-profile(:src='post.author.profile_img', alt='Image')
                       .media-content
-                        p.title.is-4.user-name {{ a.author.nickname }}
-                        p.subtitle.is-6 {{ a.created_date }}
+                        p.title.is-4.user-name {{ post.author.nickname }}
+                        p.subtitle.is-6 {{ post.created_date }}
                       //- post삭제
-                      button.delete(@click="deletePost(a.pk)")
+                      button.delete(@click="deletePost(post.pk)")
 
 
 
-                      //- 드롭다운 버튼
-                      //- .dropdown.is-right.is-active
-                        .dropdown-trigger
-                          button(aria-haspopup='true', aria-controls='dropdown-menu3' @click="openDropdownPost($event)")
-                            span.icon
-                              i.icon-more.ion-android-more-vertical(aria-hidden='true')
-
-                        //- #dropdown-menu3.dropdown-menu(role='menu' :class="post.pk")
-                        #dropdown-menu3.dropdown-menu(role='menu' v-show="dropdownpost" :class='post.pk' ref="dropdownpostref")
-                          .dropdown-content
-                            ul
-                              li
-                                a.dropdown-item(href='#')
-                                  | 글 수정
-                              li
-                                a.dropdown-item(href='#')
-                                  | 글 삭제
 
                     //- 글 (최상위)
                     .content
-                      | {{ a.content }}
+                      | {{ post.content }}
 
                       
                     //- 이미지
-                    .content(v-if="a.image")
+                    .content(v-if="post.image")
                       figure.image
-                        img(:src='a.post.image')
+                        img(:src='post.image')
 
 
-                    //- 동영상
-                    //- .content(v-if=' -1 > 0')
-                      figure
-                        video.responsive-svg(controls='', poster='http://bulma.io/images/placeholders/480x320.png', preload='none', width='640', height='360')
-                          source(src='../../assets/KakaoTalk_2017-08-02-19-43-12_Video_36.mp4', type='video/webm; codecs="vp8, vorbis"')
-                          track(src='', kind='captions', srclang='en', label='English captions', default='')
-
-
-
-                    //- 첨부파일
-                    //- .content(v-if=' -1 > 0')
-                      .file-box
-                        a(href='#')
-                          .columns.is-mobile
-                            .column.is-1
-                              span
-                                i.fa.fa-folder-open-o
-                            .column 
-                              span
-                                p README.md
-                            .column.is-1
-                              span
-                                i.fa.fa-arrow-down
                   
                   
                   //- 좋아요, 댓글 개수
                   footer.card-footer
-                    button(type="submit" @click="addLike(a.pk)").card-footer-item.btn-show-like
+                    button(type="submit" @click="addLike(post.pk)").card-footer-item.btn-show-like
                       span.icon-like
-                        i.fa.fa-heart-o(v-if="!a.is_like")
+                        i.fa.fa-heart-o(v-if="!post.is_like")
                         i.fa.fa-heart(v-else)
-                        //- i.fa.fa-heart-o(v-show="!like")
-                        //- i.fa.fa-heart(v-show="like")
                       | &nbsp;  
-                      | {{ a.like_count }}
-                    //- button(@click="showComment($event)").card-footer-item.btn-show-comment
-                    button(@click="fetchCommentData(a.pk)").card-footer-item.btn-show-comment
+                      | {{ post.like_count }}
+                    button(@click="fetchCommentData(post.pk)" v-if="comment_count <= 0").card-footer-item.btn-show-comment
                       | 댓글
-                      | {{ a.comment_count }}
+                      | {{ post.comment_count }}
+                      | &nbsp; 
+                      span.icon.is-small(v-show="!showcomment")
+                        i.fa.fa-angle-down(aria-hidden='true')
+                      span.icon.is-small(v-show="showcomment")
+                        i.fa.fa-angle-up(aria-hidden='true')
+                    button(@click="fetchCommentData(post.pk)" v-else).card-footer-item.btn-show-comment
+                      | 댓글
+                      | {{ this.comment_count }}
                       | &nbsp; 
                       span.icon.is-small(v-show="!showcomment")
                         i.fa.fa-angle-down(aria-hidden='true')
@@ -100,14 +65,13 @@
                             textarea.textarea.textarea-comment(placeholder='댓글을 달아주세요.' v-model="write_comment" ref="comment_area")
                         .field.column.is-2.is-1-mobile
                           .control
-                            button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(a.pk)" ) 댓글 달기
-                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(a.pk)")
+                            button.btn-comment.btn-default.is-hidden-mobile(type="button" @click="writeCommentSubmit(post.pk)" ) 댓글 달기
+                            button.btn-comment.btn-default.is-hidden-desktop.is-hidden-tablet(type="button" @click="writeCommentSubmit(post.pk)")
                               span.icon
                                 i.fa.fa-pencil
                     
                     //- 댓글 리스트 영역
-                    //- article.media(v-show="showcomment" v-for="comment in comment_data" ref="togglecomment")
-                    article.media(v-for="comment in comment_data")
+                    article.media(v-for="comment in comment_data" v-show="showcomment")
                       figure.media-left
                         p.image.is-48x48
                           img.user-img(:src='comment.author.profile_img')
@@ -120,55 +84,29 @@
                             br
                             small
                               | {{ comment.created_date }}
-                      button.delete(@click="deleteComment(comment.pk, a.pk)")
+                      button.delete(@click="deleteComment(comment.pk, post.pk)")
 
-                //- .columns.is-mobile.pagination-wrapper
-                //-   .column.is-offset-4.is-one-third.has-text-centered
-                //-     button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기  
+
 
         
 </template>
 
 <script>
-// import {bus} from './bus'
-// import WriteModal from './WriteModal';
-// import LeaveGroupModal from './LeaveGroupModal';
-// import PostTemplate from './PostTemplate';
-// import DeletePostModal from './DeletePostModal';
-
 export default {
   created(){
-    // this.fetchGroupData();
-    // this.fetchPostData();
-    // this.fetchCommentData();
-    // bus.$on('add-post-data')
-    // this.deletePost();
   },
   watch: {
-    // deletePost(){}
   },
-  props:['a'],
+  props:['post'],
   data() {
     return {
       write_comment: '',
       visible: false,
-      // dropdownpost: false,
-      // dropdowncomment: false,
       showcomment: false,
-      // like: false,
-      // like_or_not: '',
-      // write: {
-      //   // 텍스트 내용
-      //   content:'',
-      //   // 그룹 pk값..임의로 정해둠
-      //   group: 29
-      // },
       author: {},
-      // group_data:[],
       post_data:[],
+      comment_count: null,
       comment_data:[],
-      // target: ''
-      pk:'',
       page_num: '',
       pagination:{
         next: '', 
@@ -178,71 +116,34 @@ export default {
     }
   },
   components: {
-    // WriteModal,
-    // LeaveGroupModal,
-    // PostTemplate,
-    // DeletePostModal
   },
   methods: {
-    // addPostData(o){
-    //   console.log(this.post_data);
-    //   this.post_data.unshift(o);
-    //   console.log(this.post_data);
-    // },
-    deletePost(pk, i){
-      // console.log('i',this.post_data);
+    deletePost(pk){
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/',
-       { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                })
-                .catch(error => console.log(error.response));
-    },
-    // fetchPostData(direction){
-    //   let user_token = window.localStorage.getItem('token');
-    //   let pk = window.localStorage.getItem('this_group');
-    //   let path = null;
-    //   let page_num = 1;
-    //   if (this.page_num.trim() === ''){
-    //     path = 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=' + `${pk}` + '&page=' +`${page_num}`
-    //   }
-    //   else{
-    //     path = this.pagination[direction];
-    //     page_num = this.page_num;
-    //   }
-    //   this.$http.get(path,
-    //    { headers: {'Authorization' : `Token ${user_token}`} })
-    //             .then(response=> {
-    //               // this.post_data = response.data.results;
-    //               let data = response.data.results;
-    //               console.log('data',data);
-    //               data.forEach(item => {
-    //                 this.post_data.push(item);
-    //               });
-    //               console.log('profile_img',data[0].author.profile_img);
-    //               this.pagination.next = response.data.next;
-    //               this.pagination.prev = response.data.previous;
-    //               this.$router.push({ path: '/JointGroup/', query: { page: `${page_num}` }});
-    //               // console.log(response)                  
-    //               // console.log('this.post_data:',this.post_data);
-    //             })
-    //             // .then(write => {const datalist = Object.values(write);
-    //             // this.datalist = datalist;
-    //             // })
-    //             // 
-    //             // .then(data => console.log(data))
-    //             .catch(error => console.log(error.response));
-    // },
-    nextPage(){
-      // "http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/?group=210&page=2".slice(-1) => 2
-      let api_path = this.pagination.next;
-      if (api_path !== null) {
-      // let first = api_path.indexOf('?page=');
-      // let last = api_path.indexOf('&');
-      let page_path = api_path.slice(-1);
-      this.page_num = page_path
-      this.fetchPostData('next');
-      // console.log('작동된다')
+      let user_nickname = window.localStorage.getItem('user_nickname');
+      let confirmPostDelete = confirm(`${user_nickname}` + '님, 정말 이 글을 삭제하시겠습니까?');
+      if ( confirmPostDelete === true ){
+        this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
+          { headers: {'Authorization' : `Token ${user_token}`}})
+          .then(response=> {
+            let group_pk = window.localStorage.getItem('this_group');
+            this.$http.get('https://api.thekym.com/post/?group=' + `${group_pk}`,
+              { headers: {'Authorization' : `Token ${user_token}`} })
+              .then(response=> {
+                let data = response.data.results;
+                let post_data = []
+                data.forEach(item => {
+                  post_data.push(item);
+                });
+                this.$parent.post_data = post_data;
+              })
+          })
+          .catch(error => {
+            if (error.response.status === 403){
+              alert('작성자만 요청할 수 있는 작업입니다.');
+            }
+            console.log(error.response);
+          });
       }
     },
     writeCommentSubmit(pk){
@@ -253,112 +154,75 @@ export default {
         post: pk,
         content: this.write_comment
       }
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', 
+      this.$http.post('https://api.thekym.com/post/comment/', 
         comment_submit_data,
-        { 
-          headers: {
-            'Authorization' : `Token ${user_token}`,
-            // 'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(function (response) {
-            let data = response.data;
-            // console.log('comment:',data);
-            // this.comment_data.unshift({
-            //   author: {
-            //     // email: author.email,
-            //     nickname: user_nickname,
-            //     // pk: author.pk,
-            //     profile_img: user_img,
-            //     // username: author.nickname
-            //   },
-            //   content: data.content,
-            //   created_date: data.created_date,
-            //   pk: data.pk,
-            //   post: data.post,
-            // })
+        { headers: {'Authorization' : `Token ${user_token}`,}})
+        .then(response => {
+          this.fetchCommentData(pk);
+          this.showcomment = !this.showcomment;
         }).catch(function (error) {
         console.error(error.message);
       });
+      this.write_comment = '';
     },
     fetchCommentData(post_pk){
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
-      let ppk = post_pk;
-      console.log('postpk', ppk);
-      let post = {
-        post: ppk
-      }
-      this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
-      // this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group=' + `${pk}` + '/post=' + `${ppk}`,
+      this.$http.get('https://api.thekym.com/post/comment/?post=' + `${post_pk}`,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
+                  this.comment_count = response.data.count;
                   this.comment_data = response.data.results;
-                  // console.log('this.comment_data:',this.comment_data);
-                  console.log('comment::',response);
+                  this.showcomment = !this.showcomment;
                 })
                 .catch(error => console.log(error.response));
-    },
-    // openDropdownPost(e) {
-    //   // this.e.target
-    //   // let el = this.$refs.dropdownpostref
-    //   // let target = e.target
-    //   // console.log(el);
-    //   // console.log(target);
-    //   // if(el !== target && !el.contains(target)){
-    //   //   this.visible = false;
-    //   // }
-    //   // this.dropdownpost = !this.dropdownpost;
-    // },
-    // openDropdownComment(e) {
-    //   this.dropdowncomment = !this.dropdowncomment;
-    // },
-    showComment(e) {
-      let el = this.$refs.togglecomment
-      let target = e.target
-      console.log(el);
-      console.log(target);
-      if(el !== target && !el.includes(target)){
-        // this.visible = false;
-      this.showcomment = !this.showcomment;
-      }
     },
     addLike(pk) {
       let user_token = window.localStorage.getItem('token');
-      // console.log('pk:',pk);
-      // console.log('token:',user_token);
-      // /api/post/<pk>/post-like-toggle
-      this.$http.post('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/' + `${pk}`+ '/post-like-toggle/', true,
+      this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/', true,
        { headers: {'Authorization' : `Token ${user_token}`}})
-                .then(response=> {
-                  // console.log('like.response:',response);
-                  let data = response.data;
-                  // this.post.like_count
-                })
-                .catch(error => console.log(error.response));
-      // this.like = !this.like;
+          .then(response=> {
+            let data = response.data;
+            let user_token = window.localStorage.getItem('token');
+            let group_pk = window.localStorage.getItem('this_group');
+            this.$http.get('https://api.thekym.com/post/?group=' + `${group_pk}`,
+              { headers: {'Authorization' : `Token ${user_token}`} })
+              .then(response=> {
+                let data = response.data.results;
+                let post_data = []
+                data.forEach(item => {
+                  post_data.push(item);
+                });
+                this.$parent.post_data = post_data;
+              })
+          })
+          .catch(error => console.log(error.response));
     },
     deleteComment(pk,ppk){
-      // console.log(pk);
-      // console.log(ppk);
       let post = {
         post: ppk
       }
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/' + `${pk}` + '/',
-      { headers: {'Authorization' : `Token ${user_token}`}})
-      .then(response => {
-        this.$http.get('http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/comment/', post,
-        { headers: {'Authorization' : `Token ${user_token}`}})
-        .then(response=> {
-          this.comment_data = response.data.results;
-            // console.log('this.comment_data:',this.comment_data);
-            console.log('comment::',response);
-          })
-          .catch(error => console.log('get-error:',error.response));
-        console.log(response);
-        })
-      .catch(error => console.log('delete-error:',error.response));
+      let user_nickname = window.localStorage.getItem('user_nickname');
+      let confirmCommentDelete = confirm(`${user_nickname}` + '님, 정말 이 댓글을 삭제하시겠습니까?');
+      if ( confirmCommentDelete === true ){
+        this.$http.delete('https://api.thekym.com/post/comment/' + `${pk}` + '/',
+          { headers: {'Authorization' : `Token ${user_token}`}})
+          .then(response => {
+            this.$http.get('https://api.thekym.com/post/comment/?post=' + `${ppk}`,
+            { headers: {'Authorization' : `Token ${user_token}`}})
+            .then(response=> {
+              this.comment_count = response.data.count;
+              this.comment_data = response.data.results;
+            })
+            })
+          .catch(error => {
+            if (error.response.status === 403){
+              alert('작성자만 요청할 수 있는 작업입니다.');
+            }
+            console.log('delete-error:',error.response);
+          });
+      }
     },
   }
 }
@@ -379,6 +243,18 @@ export default {
 .group_profile_img
   background: url('http://bulma.io/images/placeholders/1280x960.png')
   // overflow: hidden
+
+.img-user
+  background: #eee
+  width: 64px
+  height: 64px
+  overflow: hidden
+  border-radius: 50%
+
+.img-user-profile
+  height: 100%
+  width: 100%
+
 .user-img
   background: #eee
 

@@ -14,10 +14,10 @@ export const store = new Vuex.Store({
   // api
   // Domain: bond.ap-northeast-2.elasticbeanstalk.com
   // 백엔드 api 나온 것들
-    api_signup: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/',
-    api_signin: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/login/',
-    api_grouplist: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/',
-    api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
+    api_signup: 'https://api.thekym.com/member/',
+    api_signin: 'https://api.thekym.com/member/login/',
+    api_grouplist: 'https://api.thekym.com/group/',
+    api_write: 'https://api.thekym.com/post/',
     // api_write: 'http://bond.ap-northeast-2.elasticbeanstalk.com/api/post/',
     // console.log('%c——————————————————————————————————————————————————','color: #00737d');
     video_visible: true

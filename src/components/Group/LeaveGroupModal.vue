@@ -39,20 +39,16 @@ export default {
     deleteMembership(){
       let pk = window.localStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
-      console.log(pk)
-      console.log(user_token)
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/member/membership/',
+      // console.log(pk)
+      // console.log(user_token)
+      this.$http.delete('https://api.thekym.com/member/membership/',
               {group: pk},
               { headers: {'Authorization' : `Token ${user_token}`}})
               .then(response => {
-                console.log(response)
-                // this.$router.push({ path: '/MainPage/'});
+                // console.log(response);
               })
               .catch(error =>{
-                console.error(error.response)
-                if(error.response.status === 401){
-                // alert(error.response.data.detail)
-                }
+                console.error(error.response);
               })
               this.visible = false;
     }    

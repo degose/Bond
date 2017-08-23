@@ -8,14 +8,6 @@
       section.modal-card-body
         .card-content
           textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content')
-        //- .card-content
-        //-   .file.file-cta.is-fullwidth
-        //-     span.file-icon
-        //-       i.fa.fa-upload
-        //-     span.file-name(v-if="file_name.length == 0")
-        //-       | 파일을 선택해주세요.
-        //-     span.file-name(v-else)
-        //-       | {{ file_name }}
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
             img(:src="uploadImg", alt='Image')
@@ -29,14 +21,14 @@
                 i.fa.fa-picture-o
           a.file.card-footer-item
             label.file-label
-              input.file-input(type='file', name='resume' ref="file_video_input")
+              input.file-input(type='file', name='resume' ref="file_video_input" disabled)
               span
-                i.fa.fa-play-circle-o
+                i.fa.fa-play-circle-o.disabled-ico
           a.file.card-footer-item
             label.file-label
-              input.file-input(type='file', name='resume' ref="file_file_input")
+              input.file-input(type='file', name='resume' ref="file_file_input" disabled)
               span
-                i.fa.fa-folder-open-o
+                i.fa.fa-folder-open-o.disabled-ico
       footer.modal-card-foot
         button.button.is-primary.is-3(type="button" @click="writeTextSubmit") 글쓰기
         button.button.is-3(:aria-label="close_message" @click="closeModal") 취소
@@ -45,7 +37,6 @@
 </template>
 
 <script>
-// import {bus} from './bus'
 export default {
   props: {
     close_message: {
@@ -56,9 +47,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  created(){
-    // bus.$emit('add-post-data')
   },
   data() {
     return {
@@ -80,6 +68,10 @@ export default {
   },
   methods: {
     closeModal(){
+      this.uploadImg = '';
+      this.$refs.file_img_input = '';
+      this.write.content = '';
+      this.visible = false;
       this.visible = false;
     },
     checkImage(file){
@@ -102,7 +94,7 @@ export default {
           _this.file_url = reader.result;
         }
       } else { alert('이미지 파일만 선택 가능합니다.')}
-      console.log('file:',file);
+      // console.log('file:',file);
     },
     writeTextSubmit(){
       // 토큰 값으로 유저가 누구인지 인증
@@ -131,7 +123,7 @@ export default {
         })
                 .then(response => {
                   let data = response.data;
-                  console.log('data::',data);
+                  // console.log('cre_date::',data.created_date);
                   this.$parent.post_data.unshift({
                     author: {
                       // email: author.email,
@@ -150,19 +142,12 @@ export default {
                     content: data.content,
                     created_date: data.created_date,
                   });
-                  // this.$emit('add-post-data', {
-                  //   author: {},
-                  //   comment_count: 0,
-                  //   is_like: false,
-                  //   pk: data.pk,
-                  //   image: data.image,
-                  //   group: data.group,
-                  //   video: data.video,
-                  //   content: data.content
-                  // });
                 })
                 .catch(error => console.log(error.response));
-                this.visible = false;
+      this.uploadImg = '';
+      this.$refs.file_img_input = '';
+      this.write.content = '';
+      this.visible = false;
     },
     // 한글 양방향 데이터 바인딩 메서드
     writePost(target, e){
@@ -199,6 +184,9 @@ export default {
 // span,
 // i
 //   cursur: pointer
+
+.disabled-ico
+  color: #666
 
   
 </style>

@@ -38,10 +38,10 @@ export default {
     },
     closeDeleteModal(){
             let pk = window.localStorage.getItem('this_group');
-      console.log(pk)
+      // console.log(pk)
       let user_token = window.localStorage.getItem('token');
-      console.log(user_token)
-      this.$http.delete('http://bond.ap-northeast-2.elasticbeanstalk.com/api/group/' + `${pk}` + '/',
+      // console.log(user_token)
+      this.$http.delete('https://api.thekym.com/group/' + `${pk}` + '/',
                 { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   // console.log(response)
