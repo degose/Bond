@@ -1,3 +1,4 @@
+import 'es6-promise/auto'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 // import VueResource from 'vue-resource';
@@ -62,7 +63,6 @@ Vue.prototype.$http = axios;
 const router = new VueRouter({
   mode: 'history',
   routes,
-  bus
 });
 
 //전역 내비게이션 가드

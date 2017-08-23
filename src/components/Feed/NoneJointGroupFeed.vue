@@ -107,7 +107,6 @@ export default {
                     console.log(response)
                     if(response.status === 201){
                       this.$router.push({path: '/JointGroup/'});
-                      // this.$router.push({path: '/JointGroup/', query: {group: response.data.group}});
                     }
                   })
                   .catch(error =>{
