@@ -30,13 +30,6 @@
                     | 더보기
           //- feed 영역
           .column.is-9
-            //- div.feed-box(v-show="post_data.length <= 0")
-              .card
-                .card-content
-                  .content
-                    | 그룹에 재미있는 이야기를 써보세요.
-
-
             //- 컨텐츠가 들어간 글
             div.feed-box
               .card(v-for = "data in data_list")
@@ -99,12 +92,44 @@ export default {
     }
   },
   created(){
+    this.fetchGroupData();
+    this.fetchPostData();
     this.openMygroup();
     this.getMyGroupList();
   },
   methods: {
-    openModal(){
-      this.$refs.my_modal.visible = true;
+    fetchGroupData(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
+       { headers: {'Authorization' : `Token ${user_token}`}})
+                .then(response=> {
+                  this.group_data = response.data;
+                })
+                .catch(error => console.log(error.response));
+    },
+    fetchPostData(){
+      let user_token = window.localStorage.getItem('token');
+      let pk = window.localStorage.getItem('this_group');
+      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
+       { headers: {'Authorization' : `Token ${user_token}`} })
+                .then(response=> {
+                  let data = response.data;
+                  data.results.forEach(item => {
+                    this.post_data.push(item);
+                  });
+                })
+                .catch(error => console.log(error.response));
+    },
+    openMygroup(){
+        let user_token = window.localStorage.getItem('token');
+        this.$http.get('https://api.thekym.com/post/my-group/',
+          {headers: {'Authorization' : `Token ${user_token}` }})
+                  .then(response => {
+                    let data = response.data;
+                    this.data_list = data.results;
+                  })
+                  .catch(error => console.error(error.response))
     },
     getMyGroupList(){
           let user_token = window.localStorage.getItem('token');
@@ -141,6 +166,9 @@ export default {
                   })
                   .catch(error => console.error(error.response))
     },
+    openModal(){
+      this.$refs.my_modal.visible = true;
+    },
     nextPage(){
       let api_path = this.pagination.next;
       if (api_path !== null) {
@@ -168,16 +196,12 @@ export default {
 }
 </script>
 
-
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
 
 .all-wrapper
   background: #eee
-body
-  // background: #eee
-
 .icon-more
   font-size: 1.5rem
   color: $grey

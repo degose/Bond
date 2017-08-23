@@ -54,10 +54,6 @@
               .column.is-offset-4.is-one-third.has-text-centered
                 button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                   
     main-footer
-                
-
-
-                
 </template>
 
 
@@ -161,7 +157,6 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
-
   }
 }
 </script>

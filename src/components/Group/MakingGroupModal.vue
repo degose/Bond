@@ -5,7 +5,6 @@
       header.modal-card-head
         figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper.is-hidden-mobile
           img(v-if="group.profile_img" :src="uploadGroupImg", alt='그룹 대표 사진')
-            
       section.modal-card-body
         .file.is-centered.is-boxed.is-primary.has-name
           form(id="uploadImg" name="uploadImg" method="POST" enctype="multipart/form-data" @submit.prevent="")
@@ -90,7 +89,6 @@ export default {
       // console.log('file:',file);
     },
     createGroup(){
-
       let user_token = window.localStorage.getItem('token');
       let formData = new FormData();
 

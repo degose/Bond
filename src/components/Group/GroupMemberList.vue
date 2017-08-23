@@ -13,10 +13,7 @@
                 p.title.is-4 {{ group_data.name }}
                 div
                   span 멤버 {{ group_data.num_of_members }}
-
             .content {{ group_data.description }}
-
-
 
       .column.is-9
 
@@ -28,17 +25,8 @@
                 | &nbsp;  
                 | {{group_data.name}}
                 | &nbsp; 
-                //- | &nbsp; 
-                //- | &nbsp; 
-                //- | &nbsp; 
-                //- button.btn-default.column.is-offset-7.is-hidden-mobile(@click="openModal") + 멤버 초대
-                //- button.btn-default.column.is-offset-4.is-hidden-desktop.is-hidden-tablet(@click="openModal") + 멤버 초대
-              
             .card-content
               table.table.is-fullwidth
-                //- col(width="20%")
-                //- col(width="20%")
-                //- col(width="60%")
                 caption.a11y-hidden 그룹멤버
                 thead
                     //- tr
@@ -47,11 +35,9 @@
                     
 
                     th 
-
-
+                   
                 tbody(v-for='member in member_list')
                   tr
-                    //- th 1
                     td
                       figure.image.is-48x48.img-user
                         img.user-img(:src='member.profile_img', alt='Image')
@@ -97,9 +83,6 @@ export default {
     }
   },  
   methods: {
-    openModal(){
-      this.$refs.my_modal.visible = true;
-    },
     openLeaveGroupModal(){
       this.$refs.leave_group_modal.visible = true;
     },

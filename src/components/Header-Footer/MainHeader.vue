@@ -133,12 +133,8 @@ export default {
 
 .user-img
   background: #eee
-  // overflow: hidden
-  // width: 35px
-  // height: 35px
 
 body
-  // background: #eee
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px

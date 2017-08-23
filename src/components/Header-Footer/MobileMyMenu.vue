@@ -60,7 +60,7 @@ export default {
     
   },
   methods: {
-      signOut(){
+    signOut(){
       this.$http.post('https://api.thekym.com/member/logout/')
       .then(response => {
         let token = response.data.token;
@@ -75,11 +75,8 @@ export default {
           window.localStorage.removeItem('user_nickname')
           window.localStorage.removeItem('user_username')
         }
-        // this.$store.commit('bg_off')
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
-        // console.log(response);
-        // console.log('성공');
       })
       .catch(error => {
         console.log(error.response);
@@ -87,9 +84,6 @@ export default {
     },
     closeModal(){
       this.visible = false;
-    },
-    openMySetting() {
-      this.$refs.my_setting.visible = true;
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
@@ -102,13 +96,7 @@ export default {
       this.$http.get('https://api.thekym.com/member/', this.user,
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  // console.log(response.data.results);
-                // .then(response => {          
-                //   console.log(response);
-                //   console.log('userinfo.pk:',userinfo.pk);
-                //   console.log('userinfo.email:',userinfo.email);
-                //   console.log('userinfo.nickname:',userinfo.nickname)
-                //   console.log('userinfo.username:',userinfo.username)})
+          
                 })
                 .catch(error => console.log(error.response));
                 this.$refs.my_setting.visible = true;
