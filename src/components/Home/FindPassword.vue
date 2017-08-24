@@ -3,6 +3,11 @@
     //- background
     .container
       header.header
+      transition(
+            appear
+            enter-active-class="animated rubberBand"
+            :duration="2000"
+          )
         .columns.is-centered.is-mobile
           .column.is-half.is-narrow.has-text-centered.logo
             router-link(to="/")

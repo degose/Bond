@@ -67,12 +67,14 @@ export default {
       this.$http
           .get(path, { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
+            console.log(response)
             let data = response.data;
             this.group_list = data.results;
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
-            for(let i=0;i <response.data.results.length;i++){
-              this.is_member.push(data.results[i].is_member)
+            this.is_member = [];
+            for(let i=0; i <response.data.results.length; i++){
+              this.is_member.push(data.results[i].is_member);
             }
           })
           .catch(error => console.error(error));
