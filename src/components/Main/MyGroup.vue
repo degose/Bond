@@ -69,6 +69,8 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     getMyGroupList(direction){
+      const loadingComponent = this.$loading.open()
+      setTimeout(() => loadingComponent.close(), 1 * 1000)
       let user_token = window.localStorage.getItem('token');
       let path = null;
       let page_num = 1;
@@ -156,7 +158,7 @@ export default {
   overflow: hidden
   // background: #eee
 .grouplist-wrapper
-  min-height: 75vh
+  min-height: 80vh
   flex-wrap: wrap
 
 .ellipsis-wrapper

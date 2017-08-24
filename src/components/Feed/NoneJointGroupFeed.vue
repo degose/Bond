@@ -1,6 +1,6 @@
 <template lang="pug">
   //- 가입하지 않은 그룹의 feed
-  div.all-wrapper.page-wrapper(v-cloak)
+  div.all-wrapper(v-cloak)
     main-header
     .container.page-wrapper
       .columns
@@ -39,8 +39,8 @@
                 .card-content
                   article.media
                     .media-left
-                      figure.image.is-64x64.img-user
-                        img(:src='post.author.profile_img', alt='Image')
+                      figure.image.is-64x64.is-1by1.img-user
+                        img.img-user-profile(:src='post.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{ post.author.nickname }}
                       p.subtitle.is-6 {{ calcDate (post.created_date) }}
@@ -170,6 +170,7 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
 .group_profile-wrapper
   width: auto
   height: auto
@@ -188,11 +189,17 @@ export default {
   overflow: hidden
   border-radius: 50%
 
-body
+.img-user-profile
+  height: 100%
+  width: 100%
+
+
+.all-wrapper
   background: #eee
 
 .page-wrapper
   min-height: 87vh
+  // background: #eee
 
 .card-wrapper
   margin-bottom: 20px
@@ -226,9 +233,6 @@ body
   font-size: 1rem
   margin-top: 1px
 
-.all-wrapper
-  background: #eee
-  height: 100vh
 .pagination-btn
   color: $bond
 .group-info

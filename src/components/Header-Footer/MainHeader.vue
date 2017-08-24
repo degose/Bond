@@ -12,8 +12,8 @@
                   img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                   img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
               .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
-                figure.user_img_wrapper
-                  img.image.is-35x35.user-img(:src='user.profile_img', alt='Image', width=35, height=35)
+                figure.is-35x35.is-1by1.figure-image.user-header-wrapper
+                  img.user-header(:src='user.profile_img', alt='Image', width=35, height=35)
           .search.column
             .field.has-addons
               .control.has-icons-left.is-expanded
@@ -35,8 +35,8 @@
             .navbar-end
               .navbar-item.has-dropdown.is-hoverable.is-right
                 a.navbar-link
-                  figure
-                    img.image.is-35x35.user-img(:src='user.profile_img', alt='Image')
+                  figure.is-35x35.is-1by1.figure-image.user-header-wrapper
+                    img.user-header(:src='user.profile_img', alt='Image')
                 .navbar-dropdown
                   a.navbar-item(@click="openMySetting")
                     | 내 정보
@@ -115,6 +115,8 @@ export default {
     this.search = event.target.value;
     },
     fetch(){
+      // const loadingComponent = this.$loading.open()
+      // setTimeout(() => loadingComponent.close(), 1 * 1000)
       let search = this.search.trim();
       window.localStorage.setItem('searchKeyword',search)
       this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
@@ -126,6 +128,7 @@ export default {
                   }
                 })
                 .catch(error => console.error(error.message))
+      this.search = '';
     },
   }
 }
@@ -136,10 +139,26 @@ export default {
 @import "~style"
 
 
-.user-img
+.user-header-wrapper
   background: #eee
+  width: 35px
+  height: 35px
+  overflow: hidden
+  border-radius: 50%
+  // display: block
+  // position: relative
 
-body
+.user-header
+  width: 100%
+  min-height: 100%
+  // position: absolute
+  // top: 0 
+  // bottom: 0
+  // right: 0
+  // left: 0
+
+
+
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px

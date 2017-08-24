@@ -12,42 +12,53 @@
               .media-content
                 p.title.is-4 {{ group_data.name }}
                 div
-                  span 멤버 {{ group_data.num_of_members }}
-            .content
-              p(style='white-space: pre-line')
-                | {{ group_data.description }}
+                  strong 멤버 
+                  //- | &nbsp;
+                  | ·
+                  | &nbsp;
+                  span {{ group_data.num_of_members }}
+                  //- | &nbsp;
+                  //- | &nbsp;
+                div
+                  strong 그룹장 
+                  //- | &nbsp;
+                  | ·
+                  | &nbsp;
+                  span {{ group_data.owner.nickname }}
+            .content {{ group_data.description }}
 
       .column.is-9
 
         .feed-box
-          .card
-            header.card-header
-              .card-header-title
-                | &nbsp;  
-                | &nbsp;  
-                | {{group_data.name}}
-                | &nbsp; 
-            .card-content
-              table.table.is-fullwidth
-                caption.a11y-hidden 그룹멤버
-                thead
-                    //- tr
-                    th
-                    th
-                    
+          .card-wrapper
+            .card
+              header.card-header
+                .card-header-title
+                  | &nbsp;  
+                  | &nbsp;  
+                  | {{group_data.name}}
+                  | &nbsp; 
+              .card-content
+                table.table.is-fullwidth
+                  caption.a11y-hidden 그룹멤버
+                  thead
+                      //- tr
+                      th
+                      th
+                      
 
-                    th 
-                   
-                tbody(v-for='member in member_list')
-                  tr
-                    td
-                      figure.image.is-48x48.img-user
-                        img.user-img(:src='member.profile_img', alt='Image')
-                    td 
-                      p.namelist {{member.nickname}}
+                      th 
                     
-                    td
-                      span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
+                  tbody(v-for='member in member_list')
+                    tr
+                      td
+                        figure.image.is-48x48.img-user-48
+                          img.img-user-profile(:src='member.profile_img', alt='Image')
+                      td 
+                        p.namelist {{member.nickname}}
+                      
+                      td
+                        span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
           .columns
             .column
               nav.pagination.is-centered
@@ -95,6 +106,7 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}}
        )
                 .then(response=> {
+                  // console.log('data',response.data)
                   this.group_data = response.data;
                   this.is_owner.push(response.data.owner)
                 })
@@ -151,6 +163,7 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
 .group_profile-wrapper
   width: auto
   height: auto
@@ -163,8 +176,18 @@ body
   background: #eee
 .page-wrapper
   min-height: 87vh
-.user-img
+
+.img-user-48
   background: #eee
+  width: 48px
+  height: 48px
+  overflow: hidden
+  border-radius: 50%
+
+.img-user-profile
+  min-height: 100%
+  width: 100%
+
 .namelist,
   padding-top: 13px
 .tag.is-rounded
@@ -176,4 +199,6 @@ body
   padding-top: 15px
 .pagination-btn
   color: $bond
+.card-wrapper
+  min-height: 80vh
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">  
-  div(v-cloak)
+  div.all-wrapper(v-cloak)
     main-header
     my-search
     main-footer
@@ -24,5 +24,8 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
+.all-wrapper
+  background: #eee
 
 </style>
