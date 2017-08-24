@@ -82,7 +82,7 @@
                               | {{ comment.content }}
                             br
                             small
-                              | {{ comment.created_date }}
+                              | {{ calcDate (comment.created_date) }}
                       button.delete(@click="deleteComment(comment.pk, post.pk)")
 
 
