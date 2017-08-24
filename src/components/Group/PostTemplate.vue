@@ -8,7 +8,7 @@
                           img.img-user-profile(:src='post.author.profile_img', alt='Image')
                       .media-content
                         p.title.is-4.user-name {{ post.author.nickname }}
-                        p.subtitle.is-6 {{ post.created_date }}
+                        p.subtitle.is-6 {{ calcDate (post.created_date) }}
                       //- post삭제
                       button.delete(@click="deletePost(post.pk)")
 
@@ -17,7 +17,8 @@
 
                     //- 글 (최상위)
                     .content
-                      | {{ post.content }}
+                      p(style='white-space: pre-line') 
+                        | {{ post.content }}
 
                       
                     //- 이미지
@@ -77,10 +78,11 @@
                           p
                             strong {{ comment.author.nickname }}
                             br
-                            | {{ comment.content }}
+                            p(style='white-space: pre-line')
+                              | {{ comment.content }}
                             br
                             small
-                              | {{ comment.created_date }}
+                              | {{ calcDate (comment.created_date) }}
                       button.delete(@click="deleteComment(comment.pk, post.pk)")
 
 
@@ -217,6 +219,9 @@ export default {
           });
       }
     },
+    calcDate(content){
+      return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
+    }
   }
 }
 </script>

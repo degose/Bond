@@ -12,8 +12,8 @@
                   img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                   img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
               .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
-                figure.user_img_wrapper
-                  img.image.is-35x35.user-img(:src='user.profile_img', alt='Image', width=35, height=35)
+                figure.is-35x35.is-1by1.figure-image.user-header-wrapper
+                  img.user-header(:src='user.profile_img', alt='Image', width=35, height=35)
           .search.column
             .field.has-addons
               .control.has-icons-left.is-expanded

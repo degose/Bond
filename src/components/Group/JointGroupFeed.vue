@@ -23,8 +23,9 @@
                     //-   | ·
                     //-   | &nbsp;
                     //-   span {{ group_data.owner.nickname }}
-                .content 
-                  p {{ group_data.description }}
+                .content
+                  p(style='white-space: pre-line')
+                    | {{ group_data.description }}
                   a(aria-label="open delete group modal" @click.prevent="openDeleteGroupModal" v-if= "is_owner") 
                     span.icon.is-small
                       i.fa.fa-cog(aria-hidden='true') 

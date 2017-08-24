@@ -37,14 +37,11 @@ export default {
       this.visible = false;
     },
     closeDeleteModal(){
-            let pk = window.localStorage.getItem('this_group');
-      // console.log(pk)
+      let pk = window.localStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
-      // console.log(user_token)
       this.$http.delete('https://api.thekym.com/group/' + `${pk}` + '/',
                 { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  // console.log(response)
                   this.$router.push({ path: '/MainPage'});
                 })
                 .catch(error =>{
