@@ -1,35 +1,36 @@
 <template lang="pug">  
-  div.all-wrapper(v-cloak)
-    .container
-      .columns
-        .column.is-10.is-offset-1
-          .box.fetched-data
-            article.media.fetched-data-item(v-for = "(group,i) in group_list")
-              a(@click.prevent ="goGroup(group.pk, i)")
-                .media-left
-                  figure.image.is-64x64
-                    img(:src='group.profile_img', alt='Image')
-                .media-content
-                  .content
-                    p
-                      strong {{group.name}}
-                      br
-                      |           {{group.description}}
-                    div
-                      span.icon.is-small.member
-                        i.fa.fa-users(aria-hidden='true')
-                      small    {{group.num_of_members}}
-                      | &nbsp; 
-                      | &nbsp; 
-                      span.icon.is-small.leader
-                        i.fa.fa-user-circle-o(aria-hidden='true')
-                      small    {{group.owner.nickname}}
+  div(v-cloak)
+    .page-wrapper
+      .container
+        .columns.is-container-height
+          .column.is-10.is-offset-1
+            .box.fetched-data
+              article.media.fetched-data-item(v-for = "(group,i) in group_list")
+                a(@click.prevent ="goGroup(group.pk, i)")
+                  .media-left
+                    figure.image.is-64x64
+                      img(:src='group.profile_img', alt='Image')
+                  .media-content
+                    .content
+                      p
+                        strong {{group.name}}
+                        br
+                        |           {{group.description}}
+                      div
+                        span.icon.is-small.member
+                          i.fa.fa-users(aria-hidden='true')
+                        small    {{group.num_of_members}}
+                        | &nbsp; 
+                        | &nbsp; 
+                        span.icon.is-small.leader
+                          i.fa.fa-user-circle-o(aria-hidden='true')
+                        small    {{group.owner.nickname}}
 
-      .columns
-        .column
-          nav.pagination.is-centered
-            button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-            button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
+        .columns
+          .column
+            nav.pagination.is-centered
+              button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+              button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지 
 </template>
 
 <script>
@@ -52,6 +53,9 @@ export default {
   },
   methods: {
     fetched(){
+      const loadingComponent = this.$loading.open()
+      setTimeout(() => loadingComponent.close(), 1 * 1000)
+      
       let path = null;
       let search = window.localStorage.getItem('searchKeyword');
       let user_token = window.localStorage.getItem('token');
@@ -67,7 +71,6 @@ export default {
       this.$http
           .get(path, { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
-            console.log(response)
             let data = response.data;
             this.group_list = data.results;
             this.pagination.next = data.next;
@@ -130,9 +133,16 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
 .all-wrapper
   background: #eee
+.page-wrapper
+  min-height: 87vh
+
 .pagination-btn
   color: $bond
+
+.is-container-height
+  min-height: 80vh
 
 </style>

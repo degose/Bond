@@ -107,8 +107,8 @@ export default {
         else alert(error.response.data.non_field_errors[0]);
         console.log(error.response);
       })
-      const loadingComponent = this.$loading.open()
-      setTimeout(() => loadingComponent.close(), 4 * 1000)
+      // const loadingComponent = this.$loading.open()
+      // setTimeout(() => loadingComponent.close(), 4 * 1000)
     }
   }
 }
