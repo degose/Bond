@@ -57,7 +57,9 @@
                         p.subtitle.is-6 {{ calcDate (data.created_date) }}
 
                     //- 글 (최상위)
-                    .content {{data.content}}
+                    .content
+                      p(style='white-space: pre-line')
+                        | {{data.content}}
                     //- 이미지 - 1개일 때
                     .content
                       figure.image
