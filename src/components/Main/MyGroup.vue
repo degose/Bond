@@ -104,7 +104,7 @@ export default {
       if (api_path !== null) {
       // let first = api_path.indexOf('?page=');
       // let last = api_path.indexOf('&');
-      let page_path = api_path.slice(36);
+      let page_path = api_path.slice(-1);
       this.page_num = page_path
       this.getMyGroupList('next');
       // console.log('작동된다')
@@ -114,11 +114,11 @@ export default {
       let api_path = this.pagination.prev;
       // let last = api_path.indexOf('&');
       // let first = api_path.indexOf('?page=');
-      let page_path = api_path.slice(36);
+      let page_path = api_path.slice(-1);
       this.page_num = page_path
 
       if(this.page_num >= 3){
-      let page_path = api_path.slice(36);
+      let page_path = api_path.slice(-1);
       this.page_num = page_path;
       this.getMyGroupList('prev');}
       else{
