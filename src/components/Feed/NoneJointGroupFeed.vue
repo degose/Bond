@@ -16,7 +16,9 @@
                   p.title.is-4 {{ group_data.name }}
                   div
                     span 멤버 {{ group_data.num_of_members }}
-              .content {{ group_data.description }}
+              .content
+                p(style='white-space: pre-line')
+                  | {{ group_data.description }}
 
               //- 가입하기 버튼
               .columns.is-mobile
@@ -41,10 +43,11 @@
                         img.img-user-profile(:src='post.author.profile_img', alt='Image')
                     .media-content
                       p.title.is-4.user-name {{ post.author.nickname }}
-                      p.subtitle.is-6 {{ post.created_date }}
+                      p.subtitle.is-6 {{ calcDate (post.created_date) }}
                           
                   .content
-                    | {{ post.content }}
+                    p(style='white-space: pre-line')
+                      | {{ post.content }}
 
                   .content(v-if="post.image")
                     figure.image
@@ -157,6 +160,9 @@ export default {
                 })
                 .catch(error => console.log(error.response));
     },
+    calcDate(content){
+      return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
+    }
   }
 }
 </script>

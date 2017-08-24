@@ -36,7 +36,6 @@
                   .card-content
                     .content
                       | 그룹에 재미있는 이야기를 써보세요.
-
               div.feed-box
                 .card(v-for = "data in data_list")
                   header.card-header
@@ -50,24 +49,25 @@
                   .card-content
                     article.media
                       .media-left
-                        figure.image.is-64x64.img-user-64.is-1by1
-                          img.img-user-profile(:src='data.author.profile_img', alt='Image')
+                        figure.image.is-64x64.img-user
+                          img.user-img(:src='data.author.profile_img', alt='Image')
                       .media-content
                         p.title.is-4.user-name {{data.author.nickname}}
-                        p.subtitle.is-6 {{ data.created_date }}
+                        p.subtitle.is-6 {{ calcDate (data.created_date) }}
 
                     //- 글 (최상위)
-                    .content {{data.content}}
+                    .content
+                      p(style='white-space: pre-line')
+                        | {{data.content}}
                     //- 이미지 - 1개일 때
                     .content
                       figure.image
                         img(:src='data.image')
-            .columns
-              .column
-                nav.pagination.is-centered
-                  button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-                  button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
-
+                .columns
+                  .column
+                    nav.pagination.is-centered
+                      button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+                      button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
                             
@@ -198,7 +198,10 @@ export default {
     goGroup(pk){
         window.localStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-    },  
+    },
+    calcDate(content){
+      return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
+    }
   } 
 }
 </script>
