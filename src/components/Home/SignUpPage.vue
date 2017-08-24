@@ -2,6 +2,11 @@
   div(v-cloak)
     .container
       header.header
+      transition(
+            appear
+            enter-active-class="animated rubberBand"
+            :duration="2000"
+          )
         .columns.is-centered.is-mobile
           .column.is-half.is-narrow.has-text-centered.logo
             router-link(to='/')
@@ -18,7 +23,7 @@
             .column.is-half.is-offset-one-quarter.nickname
               .control
                 input.input(type='text', v-model="signup.nickname" placeholder='닉네임을 설정해주세요.')
-              p.help.is-dark 해당 닉네임은 사용가능합니다.
+              //- p.help.is-dark 해당 닉네임은 사용가능합니다.
             .column.is-half.is-offset-one-quarter
               .control.has-icons-left.has-icons-right
                 input.input(type='text', v-model="signup.username" placeholder='이름을 입력해주세요.')
@@ -69,7 +74,7 @@
               .column.is-half.is-offset-one-quarter.nickname
                 .control
                   input.input(type='text', v-model="signup.nickname" placeholder='닉네임을 설정해주세요.')
-                p.help.is-dark 해당 닉네임은 사용가능합니다.
+                p.help.is-dark 
               .column.is-half.is-offset-one-quarter
                 .control.has-icons-left.has-icons-right
                   input.input(type='text', v-model="signup.username" placeholder='이름을 입력해주세요.')
@@ -129,12 +134,13 @@ export default {
     signupSubmit(){
       this.$http.post(this.$store.state.api_signup, this.signup)
                 .then(response => {
-                  // console.log(response);
+                  console.log(response);
                   this.$router.push( {path: '/SignInPage'} );
                   })
                 .catch(error => {
-                  console.log(error.message);
-                  console.log('실패');
+                  let data = error.response.data
+                  console.log(error.response);
+
                   });
     }
   }
