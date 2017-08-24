@@ -59,7 +59,6 @@ export default {
       pagination:{
         next: '', 
         prev: '',
-        all: ''
       },
       my_group_pk:[]
     }
@@ -90,9 +89,8 @@ export default {
         this.pagination.next = data.next;
         this.pagination.prev = data.previous;
         // 총 페이지 수. 11은 그룹리스트 페이지네이션 기준 값..
-        this.pagination.all = Math.ceil(data.count / 11)
         this.$router.push({ path: '/MainPage/', query: { page: `${page_num}` }});
-        // console.log(response)
+        console.log(response)
       })
       .catch(error => {
         console.log(error.message);
@@ -104,7 +102,7 @@ export default {
       if (api_path !== null) {
       // let first = api_path.indexOf('?page=');
       // let last = api_path.indexOf('&');
-      let page_path = api_path.slice(36);
+      let page_path = api_path.slice(-1);
       this.page_num = page_path
       this.getMyGroupList('next');
       // console.log('작동된다')
@@ -114,11 +112,11 @@ export default {
       let api_path = this.pagination.prev;
       // let last = api_path.indexOf('&');
       // let first = api_path.indexOf('?page=');
-      let page_path = api_path.slice(36);
+      let page_path = api_path.slice(-1);
       this.page_num = page_path
 
       if(this.page_num >= 3){
-      let page_path = api_path.slice(36);
+      let page_path = api_path.slice(-1);
       this.page_num = page_path;
       this.getMyGroupList('prev');}
       else{
