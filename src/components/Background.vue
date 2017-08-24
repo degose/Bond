@@ -26,6 +26,7 @@ export default {
   overflow: hidden
   position: absolute
   z-index: -1
+  
 
 video 
   object-fit: cover

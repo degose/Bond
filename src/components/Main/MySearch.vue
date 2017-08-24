@@ -67,6 +67,7 @@ export default {
       this.$http
           .get(path, { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
+            console.log(response)
             let data = response.data;
             this.group_list = data.results;
             this.pagination.next = data.next;
