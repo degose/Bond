@@ -52,8 +52,8 @@
                   .card-content
                     article.media
                       .media-left
-                        figure.image.is-64x64.img-user
-                          img.user-img(:src='data.author.profile_img', alt='Image')
+                        figure.image.is-64x64.img-user-64.is-1by1
+                          img.img-user-profile(:src='data.author.profile_img', alt='Image')
                       .media-content
                         p.title.is-4.user-name {{data.author.nickname}}
                         p.subtitle.is-6 {{calcDate (data.created_date)}}
@@ -82,7 +82,6 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
-
 export default {
   components: {
     MainHeader,
@@ -119,6 +118,7 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     deletePost(pk){
+      let user_pk = window.localStorage.getItem('pk');
       let user_token = window.localStorage.getItem('token');
       let user_nickname = window.localStorage.getItem('user_nickname');
       let confirmPostDelete = confirm(`${user_nickname}` + '님, 정말 이 글을 삭제하시겠습니까?');
@@ -127,7 +127,7 @@ export default {
           { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response=> {
             let group_pk = window.localStorage.getItem('this_group');
-            this.$http.get('https://api.thekym.com/post/?group=' + `${group_pk}`,
+            this.$http.get('https://api.thekym.com/post/?author=' + `${user_pk}`,
               { headers: {'Authorization' : `Token ${user_token}`} })
               .then(response=> {
                 let data = response.data.results;
@@ -178,7 +178,6 @@ export default {
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
                   this.$router.push({ path: '/MyWriteFeed', query: { page: `${page_num}` }});
-
                 })
                 .catch(error => console.error(error.response))
     },
@@ -216,12 +215,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .all-wrapper
   background: #eee
 body
   // background: #eee
-
 .icon-more
   font-size: 1.5rem
   color: $grey
@@ -233,10 +230,8 @@ body
     color: $bond
 .card
   margin-bottom: 20px
-
 .feed-box-wrapper
   min-height: 80vh
-
 .dropdownhr
   margin: 5px
 .group-img-small-wrapper
@@ -244,42 +239,34 @@ body
   height: 32px
   overflow: hidden
   border-radius: 10%
-
 .group-img-small
   width: 100%
   min-height: 100%
-
 .group-small-list-group
   line-height: 38px
 .group-small-list
   margin-bottom: 8px
 .group-small-name
   margin-top: -4px
-
 .group-name
   color: $primary
-
 .img-user-64
   background: #eee
   width: 64px
   height: 64px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   width: 100%
   height: 100%
-
 .btn-show-comment,
 .btn-show-like
   font-size: 1rem
   color: $primary
-
 .fa-heart,
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
 .pagination-btn
   color: $bond
-
 </style>

@@ -36,6 +36,7 @@
                   .card-content
                     .content
                       | 그룹에 재미있는 이야기를 써보세요.
+
               div.feed-box
                 .card(v-for = "data in data_list")
                   header.card-header
@@ -49,8 +50,8 @@
                   .card-content
                     article.media
                       .media-left
-                        figure.image.is-64x64.img-user
-                          img.user-img(:src='data.author.profile_img', alt='Image')
+                        figure.image.is-64x64.img-user-64.is-1by1
+                          img.img-user-profile(:src='data.author.profile_img', alt='Image')
                       .media-content
                         p.title.is-4.user-name {{data.author.nickname}}
                         p.subtitle.is-6 {{ calcDate (data.created_date) }}
@@ -63,11 +64,12 @@
                     .content
                       figure.image
                         img(:src='data.image')
-                .columns
-                  .column
-                    nav.pagination.is-centered
-                      button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-                      button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
+            .columns
+              .column
+                nav.pagination.is-centered
+                  button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+                  button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
+
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
                             
@@ -79,7 +81,6 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
-
 export default {
   components: {
     MainHeader,
@@ -201,7 +202,7 @@ export default {
     },
     calcDate(content){
       return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
-    }
+    }  
   } 
 }
 </script>
@@ -209,7 +210,6 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .all-wrapper
   background: #eee
   // min-height: 87vh
@@ -224,10 +224,8 @@ export default {
     color: $bond
 .card
   margin-bottom: 20px
-
 .feed-box-wrapper
   min-height: 80vh
-
 .dropdownhr
   margin: 5px
 .group-img-small-wrapper
@@ -235,42 +233,34 @@ export default {
   height: 32px
   overflow: hidden
   border-radius: 10%
-
 .group-img-small
   width: 100%
   min-height: 100%
-
 .group-small-list-group
   line-height: 38px
 .group-small-list
   margin-bottom: 8px
 .group-small-name
   margin-top: -4px
-
 .group-name
   color: $primary
-
 .img-user-64
   background: #eee
   width: 64px
   height: 64px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   width: 100%
   height: 100%
-
 .btn-show-comment,
 .btn-show-like
   font-size: 1rem
   color: $primary
-
 .fa-heart,
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
-
 .pagination-btn
   color: $bond
 </style>
