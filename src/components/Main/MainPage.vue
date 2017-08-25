@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.all-wrapper
+  div.all-wrapper(v-cloak)
     main-header
     my-group
     main-footer
@@ -10,7 +10,6 @@ import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 import MyGroup from '../Main//MyGroup';
 export default {
-  name: 'MainPage',
   components: {
     MainHeader,
     MyGroup,

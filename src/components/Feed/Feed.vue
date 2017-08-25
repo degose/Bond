@@ -1,8 +1,6 @@
 <template lang="pug">
   .wrapper
     main-header
-    //- router-view
-    //- my-group-feed
     none-joint-feed
     
     
@@ -20,7 +18,6 @@ import NoneJointFeed from '../Feed/NoneJointGroupFeed';
 
 
 export default {
-  name: 'app',
   components: {
     MainHeader,
     MyGroup,

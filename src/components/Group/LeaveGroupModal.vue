@@ -10,7 +10,7 @@
               p 
               strong 회원님, 정말 그룹을 탈퇴하시겠습니까?
       footer.modal-card-foot
-        button.button.is-primary(@click="closeModal") 확인
+        button.button.is-primary(@click="deleteMembership") 확인
         button.button(@click="closeModal") 취소
       // level-right 요소로 우측정렬 가능.. 빈 요소라도 level-left는 언제나 필수! 
 </template>
@@ -35,10 +35,24 @@ export default {
   methods: {
     closeModal(){
       this.visible = false;
-    }
+    },
+    deleteMembership(){
+      let pk = window.localStorage.getItem('this_group');
+      let user_token = window.localStorage.getItem('token');
+      this.$http.delete('https://api.thekym.com/member/membership/',
+              {group: pk},
+              { headers: {'Authorization' : `Token ${user_token}`}}
+              )
+              .then(response => {
+                this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});
+              })
+              .catch(error =>{
+                console.error(error.response);
+              })
+              this.visible = false;
+    }    
   }
 }
 </script>
 <style lang="sass" scoped>
-
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(v-cloak)
     footer.footer
       .container
         .content.has-text-centered

@@ -1,9 +1,7 @@
 <template lang="pug">
-  #app
+  #app(v-cloak)
     div
       background(v-if='!!needs_to_login')
-      //- Home
-      //- main-page
       router-view
 
 </template>
@@ -30,8 +28,12 @@ export default {
 @import "~style"
 
 body
-  // height: 110vh 
+  // margin: 0
+  // padding: 0
+  // background-image: url('./assets/basic_bg.jpg') 
+  // background-size: cover
 
+[v-cloak] 
+  display: none
 
 </style>
-

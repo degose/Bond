@@ -1,8 +1,12 @@
 <template lang="pug">
-div
-  //- background
+div(v-cloak)
   .container
     header.header
+    transition(
+            appear
+            enter-active-class="animated rubberBand"
+            :duration="2000"
+          )
       .columns.is-centered.is-mobile
         .column.is-half.is-narrow.has-text-centered.logo
           router-link(to='/')
@@ -43,7 +47,6 @@ div
 <script>
 import Background from '../Background';
 export default {
-  // name: 'app',
   components: {
     Background
   },
