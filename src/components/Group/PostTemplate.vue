@@ -301,7 +301,8 @@ body
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
-
+.card-footer-item
+  display: inline-block
 
 
 </style>
