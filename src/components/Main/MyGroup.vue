@@ -90,7 +90,6 @@ export default {
         this.pagination.prev = data.previous;
         // 총 페이지 수. 11은 그룹리스트 페이지네이션 기준 값..
         this.$router.push({ path: '/MainPage/', query: { page: `${page_num}` }});
-        console.log(response)
       })
       .catch(error => {
         console.log(error.message);

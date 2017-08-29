@@ -64,11 +64,9 @@
                     .content
                       figure.image
                         img(:src='data.image')
-            .columns
-              .column
-                nav.pagination.is-centered
-                  button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-                  button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
+            .columns.is-mobile.pagination-wrapper
+              .column.is-offset-4.is-one-third.has-text-centered
+                button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기  
 
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
@@ -101,7 +99,6 @@ export default {
   },
   created(){
     this.fetchGroupData();
-    this.fetchPostData();
     this.openMygroup();
     this.getMyGroupList();
   },
@@ -115,29 +112,6 @@ export default {
                   this.group_data = response.data;
                 })
                 .catch(error => console.log(error.response));
-    },
-    fetchPostData(){
-      let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/post/?group=' + `${pk}`,
-       { headers: {'Authorization' : `Token ${user_token}`} })
-                .then(response=> {
-                  let data = response.data;
-                  data.results.forEach(item => {
-                    this.post_data.push(item);
-                  });
-                })
-                .catch(error => console.log(error.response));
-    },
-    openMygroup(){
-        let user_token = window.localStorage.getItem('token');
-        this.$http.get('https://api.thekym.com/post/my-group/',
-          {headers: {'Authorization' : `Token ${user_token}` }})
-                  .then(response => {
-                    let data = response.data;
-                    this.data_list = data.results;
-                  })
-                  .catch(error => console.error(error.response))
     },
     getMyGroupList(){
           let user_token = window.localStorage.getItem('token');
@@ -157,7 +131,7 @@ export default {
         let path = null;
         let page_num = 1;
         if (this.page_num.trim() === ''){
-          path = 'https://api.thekym.com/post/my-group/'
+          path = 'https://api.thekym.com/post/my-group/?page='+`${page_num}`
       }
         else  {
         path = this.pagination[direction];
@@ -166,8 +140,10 @@ export default {
         this.$http.get(path,
           {headers: {'Authorization' : `Token ${user_token}` }})
                   .then(response => {
-                    let data = response.data;
-                    this.data_list = data.results;
+                    let data = response.data.results;
+                    data.forEach(item => {
+                    this.data_list.push(item);
+                    });
                     this.pagination.next = response.data.next;
                     this.pagination.prev = response.data.previous;
                     this.$router.push({ path: '/MyGroupFeed', query: { page: `${page_num}` }});
@@ -185,17 +161,17 @@ export default {
       this.openMygroup('next');
       }
     },
-    prevPage(){
-      let api_path = this.pagination.prev;
-      if(this.page_num >= 3){
-      let page_path = api_path.slice(-1);
-      this.page_num = page_path;
-      this.openMygroup('prev');}
-      else{
-         let path = this.pagination.prev
-         this.openMygroup('prev');
-      }
-    },
+    // prevPage(){
+    //   let api_path = this.pagination.prev;
+    //   if(this.page_num >= 3){
+    //   let page_path = api_path.slice(-1);
+    //   this.page_num = page_path;
+    //   this.openMygroup('prev');}
+    //   else{
+    //      let path = this.pagination.prev
+    //      this.openMygroup('prev');
+    //   }
+    // },
     goGroup(pk){
         window.localStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
@@ -263,4 +239,6 @@ export default {
   margin-top: 1px
 .pagination-btn
   color: $bond
+.pagination-wrapper
+  padding-bottom: 20px
 </style>

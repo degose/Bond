@@ -25,7 +25,9 @@
                   | ·
                   | &nbsp;
                   span {{ group_data.owner.nickname }}
-            .content {{ group_data.description }}
+            .content
+              p(style='white-space: pre-line')
+                | {{ group_data.description }}
 
       .column.is-9
 
