@@ -58,6 +58,7 @@
             .columns.is-mobile.pagination-wrapper
               .column.is-offset-4.is-one-third.has-text-centered
                 button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                   
+    ToTheTopBTN
     main-footer
 </template>
 
@@ -65,10 +66,13 @@
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
+
 export default {
   components: {
     MainHeader,
-    MainFooter
+    MainFooter,
+    ToTheTopBTN
   },
   created(){
     this.fetchGroupData();

@@ -69,7 +69,7 @@
             .columns.is-mobile.pagination-wrapper
               .column.is-offset-4.is-one-third.has-text-centered
                 button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기  
-
+      ToTheTopBTN
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
                             
@@ -81,11 +81,14 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
+
 export default {
   components: {
     MainHeader,
     MakingGroupModal,
-    MainFooter
+    MainFooter,
+    ToTheTopBTN
   },
   data() {
     return {
@@ -180,7 +183,8 @@ export default {
     },
     calcDate(content){
       return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
-    }  
+    },
+
   } 
 }
 </script>
@@ -249,4 +253,6 @@ export default {
 .hr.is-hidden-touch
   margin-top: 61px
   opacity: 0
+
+
 </style>

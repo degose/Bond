@@ -4,6 +4,7 @@
     hr.hr.is-hidden-touch
     hr.hr.is-hidden-desktop
     my-search
+    ToTheTopBTN
     main-footer
 </template>
 
@@ -11,12 +12,14 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
 import MySearch from './MySearch';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 
 export default {
   components: {
     MainHeader,
     MainFooter,
-    MySearch
+    MySearch,
+    ToTheTopBTN
   },
 }
 
