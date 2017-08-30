@@ -82,7 +82,7 @@
                               | {{ comment.content }}
                             br
                             small
-                              | {{ calcDate (comment.created_date) }}
+                              | {{  calcDate (comment.created_date) }}
                       button.delete(@click="deleteComment(comment.pk, post.pk)")
 
 
@@ -301,7 +301,8 @@ body
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
-
+.card-footer-item
+  display: inline-block
 
 
 </style>

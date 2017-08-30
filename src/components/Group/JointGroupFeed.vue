@@ -79,7 +79,8 @@
         //- nav.pagination.is-centered
           //- button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
          
-          
+        //- to-the-top-btn
+        ToTheTopBTN 
         write-modal(close_message="close lightbox" ref='write_modal')
         leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
@@ -92,6 +93,7 @@ import WriteModal from './WriteModal';
 import PostTemplate from './PostTemplate';
 import DeleteGroupModal from './DeleteGroupModal';
 import LeaveGroupModal from './LeaveGroupModal';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 
 export default {
   created(){
@@ -117,7 +119,8 @@ export default {
     WriteModal,
     PostTemplate,
     DeleteGroupModal,
-    LeaveGroupModal
+    LeaveGroupModal,
+    ToTheTopBTN
   },
   methods: {
     openWriteModal(){

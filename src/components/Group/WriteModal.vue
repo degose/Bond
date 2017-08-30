@@ -182,5 +182,6 @@ export default {
 //   cursur: pointer
 .disabled-ico
   color: #666
+
   
 </style>

@@ -76,7 +76,7 @@ export default {
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
             this.is_member = [];
-            for(let i=0;i <response.data.results.length;i++){
+            for(let i=0;i<response.data.results.length;i++){
               this.is_member.push(data.results[i].is_member)
             }
           })
