@@ -180,5 +180,6 @@ export default {
 .disabled-ico
   color: #666
 
+
   
 </style>

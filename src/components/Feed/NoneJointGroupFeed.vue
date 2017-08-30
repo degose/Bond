@@ -2,6 +2,8 @@
   //- 가입하지 않은 그룹의 feed
   div.all-wrapper(v-cloak)
     main-header
+    hr.hr.is-hidden-touch
+    hr.hr.is-hidden-desktop
     .container.page-wrapper
       .columns
         //- 그룹 정보 영역
@@ -237,4 +239,10 @@ export default {
   color: $bond
 .group-info
   // position: fixed
+.hr.is-hidden-desktop
+  margin-top: 112px
+  opacity: 0
+.hr.is-hidden-touch
+  margin-top: 61px
+  opacity: 0
 </style>

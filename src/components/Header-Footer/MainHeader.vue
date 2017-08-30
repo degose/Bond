@@ -47,7 +47,8 @@
                   hr.dropdownhr
                   a.navbar-item(@click="signOut")
                     | 로그 아웃
-        hr.navhr.is-hidden-mobile
+        //- hr.navhr.is-hidden-mobile
+        hr.navhr
         my-setting(close_message="close lightbox" ref='my_setting')
         mobile-my-menu(close_message="close lightbox" ref='mobile_my_menu')
 </template>
@@ -151,26 +152,26 @@ export default {
 .user-header
   width: 100%
   min-height: 100%
-  // position: absolute
-  // top: 0 
-  // bottom: 0
-  // right: 0
-  // left: 0
-
-
-
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px
 .navhr
-  margin: 0 5px 30px 5px
-  // margin: 0
+  // margin: 0 5px 30px 5px
+  margin: 0
+  // padding: 0
 .dropdownhr
   margin: 5px
-.nav-fixed
-  position: fixed
+
 .nav-bg
+  position: fixed 
+  top: 0
+  width: 100%
   background: #fff
+  z-index: 10
+  // left: 0
+  // border-top: 0
+
 .btn-search
   color: $primary
+
 </style>
