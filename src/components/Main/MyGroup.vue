@@ -10,7 +10,7 @@
               .card
                 .card-image
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper
-                    img(:src="group.profile_img" alt='Image')
+                    img.img-group_list(:src="group.profile_img" alt='Image')
                 .card-content
                   .media
                     .media-content.has-text-centered.ellipsis-wrapper
@@ -22,8 +22,8 @@
               a(@click="openModal")
                 .card-image.makegroup
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper.is-hidden-mobile
-                      img(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
-                      img(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
+                      img.img-group_list(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
+                      img.img-group_list(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
                 .card-content
                   .media
                     .media-content.has-text-centered
@@ -144,16 +144,24 @@ export default {
   margin: 5px
 .grouplist-nav
   margin-top: 100px
-  // margin-bottom: 200px
-.plusgroup
-  background: yellow
+  
 .img-grouplist-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  // min-height: 135px
+  height: 150px
   overflow: hidden
   // background: #eee
+  position: relative
+
+.img-group_list
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
+
+  
 .grouplist-wrapper
   min-height: 80vh
   flex-wrap: wrap

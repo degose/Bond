@@ -178,15 +178,19 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  height: 150px
   overflow: hidden
+  // background: #eee
+  position: relative
 
 .group_profile_img
-  background: url('http://bulma.io/images/placeholders/1280x960.png')
-  // overflow: hidden
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
 
 .img-user
   background: #eee
