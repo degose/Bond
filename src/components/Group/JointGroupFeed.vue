@@ -7,7 +7,7 @@
             .card
               .card-image
                 figure.image.group_profile-wrapper.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                  img(:src='group_data.profile_img', alt='Image')
+                  img.group_profile_img(:src='group_data.profile_img', alt='Image')
               .card-content
                 article.media
                   .media-content
@@ -204,11 +204,19 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  height: 150px
   overflow: hidden
+  // background: #eee
+  position: relative
+
+.group_profile_img
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
 
 .user-img
   background: #eee
@@ -221,6 +229,7 @@ body
 
 .card-wrapper
   margin-bottom: 20px
+
 
 
 .icon-more
