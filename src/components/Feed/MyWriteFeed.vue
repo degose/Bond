@@ -1,6 +1,8 @@
 <template lang="pug">
     div.all-wrapper(v-cloak)
       main-header
+      hr.hr.is-hidden-touch
+      hr.hr.is-hidden-desktop
       .container
         //- 가입한 그룹의 feed
         .columns
@@ -66,12 +68,16 @@
                     .content
                       figure.image
                         img(:src='data.image')
-                .columns
-                  .column
-                    nav.pagination.is-centered
-                      button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-                      button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지                        
-
+                //- .columns
+                //-   .column
+                //-     nav.pagination.is-centered
+                //-       button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+                //-       button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지     
+            .columns.is-mobile.pagination-wrapper
+              .column.is-offset-4.is-one-third.has-text-centered
+                button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기  
+             
+      ToTheTopBTN 
       main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
                             
@@ -82,12 +88,14 @@
 import MainHeader from '../Header-Footer/MainHeader';
 import MakingGroupModal from '../Group/MakingGroupModal';
 import MainFooter from '../Header-Footer/MainFooter';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 
 export default {
   components: {
     MainHeader,
     MakingGroupModal,
-    MainFooter
+    MainFooter,
+    ToTheTopBTN
   },
   data() {
     return {
@@ -173,13 +181,13 @@ export default {
       }
       this.$http.get(path)
                 .then(response => {
-                  let data = response.data;
-                  this.data_list = data.results;
-                  
+                  let data = response.data.results;
+                  data.forEach(item => {
+                  this.data_list.push(item);
+                  });                  
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
                   this.$router.push({ path: '/MyWriteFeed', query: { page: `${page_num}` }});
-
                 })
                 .catch(error => console.error(error.response))
     },
@@ -191,17 +199,17 @@ export default {
       this.openMywrite('next');
       }
     },
-    prevPage(){
-      let api_path = this.pagination.prev;
-      if(this.page_num >= 3){
-      let page_path = api_path.slice(-1);
-      this.page_num = page_path;
-      this.openMywrite('prev');}
-      else{
-         let path = this.pagination.prev
-         this.openMywrite('prev');
-      }
-    },
+    // prevPage(){
+    //   let api_path = this.pagination.prev;
+    //   if(this.page_num >= 3){
+    //   let page_path = api_path.slice(-1);
+    //   this.page_num = page_path;
+    //   this.openMywrite('prev');}
+    //   else{
+    //      let path = this.pagination.prev
+    //      this.openMywrite('prev');
+    //   }
+    // },
     goGroup(pk){
       window.localStorage.setItem('this_group', pk);
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
@@ -217,12 +225,10 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .all-wrapper
   background: #eee
 body
   // background: #eee
-
 .icon-more
   font-size: 1.5rem
   color: $grey
@@ -234,10 +240,8 @@ body
     color: $bond
 .card
   margin-bottom: 20px
-
 .feed-box-wrapper
   min-height: 80vh
-
 .dropdownhr
   margin: 5px
 .group-img-small-wrapper
@@ -245,42 +249,42 @@ body
   height: 32px
   overflow: hidden
   border-radius: 10%
-
 .group-img-small
   width: 100%
   min-height: 100%
-
 .group-small-list-group
   line-height: 38px
 .group-small-list
   margin-bottom: 8px
 .group-small-name
   margin-top: -4px
-
 .group-name
   color: $primary
-
 .img-user-64
   background: #eee
   width: 64px
   height: 64px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   width: 100%
   height: 100%
-
 .btn-show-comment,
 .btn-show-like
   font-size: 1rem
   color: $primary
-
 .fa-heart,
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
 .pagination-btn
   color: $bond
-
+.pagination-wrapper
+  padding-bottom: 20px
+.hr.is-hidden-desktop
+  margin-top: 112px
+  opacity: 0
+.hr.is-hidden-touch
+  margin-top: 61px
+  opacity: 0
 </style>

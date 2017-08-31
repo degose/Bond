@@ -2,6 +2,8 @@
   //- 가입하지 않은 그룹의 feed
   div.all-wrapper(v-cloak)
     main-header
+    hr.hr.is-hidden-touch
+    hr.hr.is-hidden-desktop
     .container.page-wrapper
       .columns
         //- 그룹 정보 영역
@@ -56,6 +58,7 @@
             .columns.is-mobile.pagination-wrapper
               .column.is-offset-4.is-one-third.has-text-centered
                 button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                   
+    ToTheTopBTN
     main-footer
 </template>
 
@@ -63,10 +66,13 @@
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
+
 export default {
   components: {
     MainHeader,
-    MainFooter
+    MainFooter,
+    ToTheTopBTN
   },
   created(){
     this.fetchGroupData();
@@ -237,4 +243,10 @@ export default {
   color: $bond
 .group-info
   // position: fixed
+.hr.is-hidden-desktop
+  margin-top: 112px
+  opacity: 0
+.hr.is-hidden-touch
+  margin-top: 61px
+  opacity: 0
 </style>

@@ -1,6 +1,6 @@
 <template lang="pug">
   .wrapper
-    main-header
+    main-header  
     none-joint-feed
     
     
@@ -31,9 +31,8 @@ export default {
 </script>
 
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 
 </style>
