@@ -51,8 +51,17 @@
 
                       th 
                     
-                  tbody(v-for='member in member_list')
-                    tr
+                  tbody
+                    tr(v-if="this.pagination.prev === null")
+                      td
+                        figure.image.is-48x48.img-user-48
+                          img.img-user-profile(:src='is_owner[0].profile_img', alt='Image')
+                      td 
+                        p.namelist {{is_owner[0].nickname}}
+                      
+                      td
+                        span.tag.is-rounded.is-primary 그룹장
+                    tr(v-for='member in member_list')
                       td
                         figure.image.is-48x48.img-user-48
                           img.img-user-profile(:src='member.profile_img', alt='Image')
@@ -132,9 +141,7 @@ export default {
                   this.member_list = response.data.results;
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
-                  // this.member_list.reverse()
-                  // pk값 순서로 정렬되는중
-                  // http://api.thekym.com/member/?group=200&page=2"
+                  this.member_list.pop(this.is_owner)
 
                 })
                 // .catch(error => console.log(error.message))
