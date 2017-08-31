@@ -56,16 +56,15 @@
                           img.img-user-profile(:src='data.author.profile_img', alt='Image')
                       .media-content
                         p.title.is-4.user-name {{data.author.nickname}}
-                        p.subtitle.is-6 {{ calcDate (data.created_date) }}
+                        p.subtitle.is-6 {{ data.created_date }}
 
                     //- 글 (최상위)
-                    .content
-                      p(style='white-space: pre-line')
-                        | {{data.content}}
+                    .content {{data.content}}
                     //- 이미지 - 1개일 때
                     .content
                       figure.image
                         img(:src='data.image')
+
             .columns.is-mobile.pagination-wrapper
               .column.is-offset-4.is-one-third.has-text-centered
                 button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기  
@@ -184,7 +183,6 @@ export default {
     calcDate(content){
       return content.slice(0,19).split("T").toString().replace(',', ' ').slice(0,-3)
     },
-
   } 
 }
 </script>
