@@ -104,13 +104,12 @@ export default {
       let user_pk = window.localStorage.getItem('pk');
       let user_img = window.localStorage.getItem('user_img');
       let user_nickname = window.localStorage.getItem('user_nickname');
+
       formData.append('content', this.write.content);
-      // let img_file = this.$refs.file_img_input.files[0];
-      
+
       if(!!this.$refs.file_img_input.files[0] ){
         formData.append('image', this.$refs.file_img_input.files[0]);
       }
-      // formData.append('image', this.$refs.file_img_input.files[0]);
       formData.append('group', pk);
       
       this.$http.post(this.$store.state.api_write, formData,
@@ -122,7 +121,7 @@ export default {
         })
                 .then(response => {
                   let data = response.data;
-                  let data_created_date = data.created_date;
+                  // console.log('cre_date::',data.created_date);
                   this.$parent.post_data.unshift({
                     author: {
                       // email: author.email,
@@ -139,7 +138,7 @@ export default {
                     group: data.group,
                     video: data.video,
                     content: data.content,
-                    created_date: data_created_date,
+                    created_date: data.created_date,
                   });
                 })
                 .catch(error => console.log(error.response));
@@ -153,26 +152,23 @@ export default {
       let input = e.target.value;
       this.write[target] = input;
     },
-    // 이미지가 있나 체크해서 v-if활용해 사진 없으면 사진틀 안보이게 하고 싶음..ㅠ
-    checkImage(file){
-      if(/.*\.(gif)|(jpeg)|(jpg)|(png)$/.test(file.name.toLowerCase())){
-          return true;
-      }
-    },
   }
 }
 </script>
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
 .card-footer-item
   background: #fff
 .ca
   cursur: pointer
+
 .write-text-modal
   border: none
   width: 100%
   font-size: 1rem
+
 .file-cta
   // background: #fff
 // label,
@@ -180,8 +176,10 @@ export default {
 // span,
 // i
 //   cursur: pointer
+
 .disabled-ico
   color: #666
+
 
   
 </style>

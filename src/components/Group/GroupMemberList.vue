@@ -120,6 +120,7 @@ export default {
                   // console.log('data',response.data)
                   this.group_data = response.data;
                   this.is_owner.push(response.data.owner)
+                  console.log(response.data.owner)
                 })
                 // .catch(error => console.log(error.message));
     },
@@ -142,6 +143,8 @@ export default {
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
                   this.member_list.pop(this.is_owner)
+                  // this.member_list.pop(response.owner)
+                 
 
                 })
                 // .catch(error => console.log(error.message))
