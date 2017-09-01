@@ -69,7 +69,7 @@
                         p.namelist {{member.nickname}}
                       
                       td
-                        //- span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
+                        span.tag.is-rounded.is-primary(v-if="1 === 2") 그룹장
           .columns
             .column
               nav.pagination.is-centered

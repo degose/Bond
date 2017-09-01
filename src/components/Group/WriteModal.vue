@@ -7,7 +7,7 @@
 
       section.modal-card-body
         .card-content
-          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content' v-focus)
+          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content' v-focus="true")
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
             img(:src="uploadImg", alt='Image')
