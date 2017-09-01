@@ -57,18 +57,11 @@
                       .media-content
                         p.title.is-4.user-name {{data.author.nickname}}
                         p.subtitle.is-6 {{ calcDate (data.created_date) }}
-<<<<<<< HEAD
-                    //- 글 (최상위)
-                    .content
-                      p(style='white-space: pre-line')
-                      | {{data.content}}
-=======
 
                     //- 글 (최상위)
                     .content
                       p(style='white-space: pre-line')
                         | {{data.content}}
->>>>>>> 71349f83d11c9b59877dccdf51c2f30e7dff2401
                     //- 이미지 - 1개일 때
                     .content
                       figure.image

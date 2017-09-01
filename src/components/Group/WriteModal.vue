@@ -7,7 +7,7 @@
 
       section.modal-card-body
         .card-content
-          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content')
+          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content' v-focus)
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
             img(:src="uploadImg", alt='Image')
@@ -37,7 +37,16 @@
 </template>
 
 <script>
+const focus = {
+    inserted(el) {
+      el.focus()
+    },
+  }
 export default {
+  directives: { focus },
+  // mounted(){
+  //      this.$refs.inputText.focus();
+  // },
   props: {
     close_message: {
       type: String,
@@ -45,12 +54,13 @@ export default {
     },
     is_visible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       visible: this.is_visible,
+      focus: this.focus,
       uploadImg: '',
       write: {
         // 텍스트 내용
@@ -71,7 +81,6 @@ export default {
       this.uploadImg = '';
       this.$refs.file_img_input = '';
       this.write.content = '';
-      this.visible = false;
       this.visible = false;
     },
     checkImage(file){

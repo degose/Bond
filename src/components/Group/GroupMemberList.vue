@@ -24,7 +24,7 @@
                   //- | &nbsp;
                   | ·
                   | &nbsp;
-                  span {{ group_data.owner.nickname }}
+                  span {{ is_owner[0].nickname }}
             .content
               p(style='white-space: pre-line')
                 | {{ group_data.description }}
@@ -69,7 +69,7 @@
                         p.namelist {{member.nickname}}
                       
                       td
-                        span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
+                        //- span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
           .columns
             .column
               nav.pagination.is-centered
@@ -120,7 +120,6 @@ export default {
                   // console.log('data',response.data)
                   this.group_data = response.data;
                   this.is_owner.push(response.data.owner)
-                  console.log(response.data.owner)
                 })
                 // .catch(error => console.log(error.message));
     },
@@ -142,10 +141,7 @@ export default {
                   this.member_list = response.data.results;
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
-                  this.member_list.pop(this.is_owner)
-                  // this.member_list.pop(response.owner)
-                 
-
+                  // this.member_list.pop(this.is_owner)
                 })
                 // .catch(error => console.log(error.message))
     },
@@ -175,7 +171,6 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 .group_profile-wrapper
   width: auto
   height: auto
@@ -188,18 +183,15 @@ body
   background: #eee
 .page-wrapper
   min-height: 87vh
-
 .img-user-48
   background: #eee
   width: 48px
   height: 48px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   min-height: 100%
   width: 100%
-
 .namelist,
   padding-top: 13px
 .tag.is-rounded

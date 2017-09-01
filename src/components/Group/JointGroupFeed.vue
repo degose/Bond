@@ -123,6 +123,7 @@ export default {
     ToTheTopBTN
   },
   methods: {
+    
     openWriteModal(){
       this.$refs.write_modal.visible = true;
     },

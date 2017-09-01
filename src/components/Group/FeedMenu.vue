@@ -8,7 +8,7 @@ div
         .column
           .tabs.is-centered.is-medium
             ul
-              router-link(tag="li" to="/JointGroup/" autofocus active-class="is-active" exact)
+              router-link(tag="li" to="/JointGroup/?page=1" autofocus active-class="is-active" exact)
                 a
                   strong 전체글
               router-link(tag="li" to="/JointGroup/GroupMemberList" active-class="is-active")
