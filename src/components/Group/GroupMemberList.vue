@@ -24,7 +24,7 @@
                   //- | &nbsp;
                   | ·
                   | &nbsp;
-                  span {{ is_owner[0].nickname }}
+                  span {{ is_owner.nickname }}
             .content
               p(style='white-space: pre-line')
                 | {{ group_data.description }}
@@ -55,9 +55,9 @@
                     tr(v-if="this.pagination.prev === null")
                       td
                         figure.image.is-48x48.img-user-48
-                          img.img-user-profile(:src='is_owner[0].profile_img', alt='Image')
+                          img.img-user-profile(:src='is_owner.profile_img', alt='Image')
                       td 
-                        p.namelist {{is_owner[0].nickname}}
+                        p.namelist {{is_owner.nickname}}
                       
                       td
                         span.tag.is-rounded.is-primary 그룹장
@@ -69,7 +69,7 @@
                         p.namelist {{member.nickname}}
                       
                       td
-                        span.tag.is-rounded.is-primary(v-if="1 === 2") 그룹장
+                        span.tag.is-rounded.is-primary(v-if="is_owner.pk === member.pk") 그룹장
           .columns
             .column
               nav.pagination.is-centered
@@ -87,23 +87,37 @@ export default {
   components:{
     InvitationModal,
   },
+  beforeCreate(){
+    this.hash = this.$route.hash;
+  },
   created(){
     this.fetchGroupData();
     this.fetchGroupMember();
   },
+  mounted(){
+    this.fetchGroupData();
+    this.fetchGroupMember();
+  },
+  // mounted(){
+  //   let el = document.querySelector(this.$route.hash);
+  //   console.log(el);
+  //   el.scrollIntoView(true);
+  //   // console.log(scrollIntoView);
+  // },
   data() {
     return{
       visible: false,
       group_data:[],
       pk:'',
       member_list:[],
-      is_owner:[],
+      is_owner:{},
       page_num: '',
       pagination:{
         next: '', 
         prev: '',
         all: ''
       },
+      // hash: '#scrollpos',
     }
   },  
   methods: {
@@ -117,11 +131,10 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}}
        )
                 .then(response=> {
-                  // console.log('data',response.data)
                   this.group_data = response.data;
-                  this.is_owner.push(response.data.owner)
+                  this.is_owner = response.data.owner;
                 })
-                // .catch(error => console.log(error.message));
+                .catch(error => console.log(error.message));
     },
     fetchGroupMember(direction){
       let user_token = window.localStorage.getItem('token');
@@ -138,12 +151,19 @@ export default {
       this.$http.get(path, 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  this.member_list = response.data.results;
+                  let members = response.data.results;
+                  // this.member_list = members;
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
-                  // this.member_list.pop(this.is_owner)
+                  let owner = this.is_owner;
+                  for(let i = 0; i < members.length; i++){
+                    if(members[i].pk === owner.pk){
+                      members.splice(i,1); 
+                    }
+                  }
+                  this.member_list = members;
                 })
-                // .catch(error => console.log(error.message))
+                .catch(error => console.log(error.message))
     },
     nextPage(){
       let api_path = this.pagination.next;
@@ -171,27 +191,37 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
 .group_profile-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  height: 150px
   overflow: hidden
+  // background: #eee
+  position: relative
+
 .group_profile_img
-  background: url('http://bulma.io/images/placeholders/1280x960.png')
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
 body
   background: #eee
 .page-wrapper
   min-height: 87vh
+
 .img-user-48
   background: #eee
   width: 48px
   height: 48px
   overflow: hidden
   border-radius: 50%
+
 .img-user-profile
   min-height: 100%
   width: 100%
+
 .namelist,
   padding-top: 13px
 .tag.is-rounded
