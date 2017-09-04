@@ -40,7 +40,7 @@ export default {
       let pk = window.localStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
       this.$http.delete('https://api.thekym.com/member/membership/',
-              {group: pk},
+              { group: pk },
               { headers: {'Authorization' : `Token ${user_token}`}}
               )
               .then(response => {

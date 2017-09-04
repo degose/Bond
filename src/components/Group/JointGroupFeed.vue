@@ -268,4 +268,6 @@ body
   padding-bottom: 20px
 .disabled-ico
   color: #666
+.icon.is-small
+  padding-bottom: 4px
 </style>
