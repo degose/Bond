@@ -89,7 +89,6 @@ export default {
       this.write.content = '';
       this.write.img = '';
       this.file_name = '';
-      this.file_name = '';
       this.file = null;
       this.visible = false;
     },
@@ -230,15 +229,10 @@ export default {
 // input
 // span,
 // i
-//   cursur: pointer
 
 .disabled-ico
   color: #666
 
-// #thing
-//   transform: rotate(90deg)
-//   -ms-transform: rotate(90deg)
-//   -webkit-transform: rotate(90deg)
 
 
   
