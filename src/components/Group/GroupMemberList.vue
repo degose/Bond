@@ -62,10 +62,10 @@
                           | &nbsp;  
                           span.tag.is-rounded.is-dark 그룹장
                       td
-                        button(type="submit" ).card-footer-item.btn-show-like
+                        button.card-footer-item.btn-show-like
                           span.icon-like
-                            button.tag.is-rounded.is-follow() 팔로우
-                            button.tag.is-rounded.is-primary() 팔로잉                      
+                            button.tag.is-rounded.is-follow(type="submit" @click="addFollow(is_owner.pk)") 팔로우
+                            button.tag.is-rounded.is-primary(type="submit" @click="deleteFollow(is_owner.pk)") 팔로잉                      
                     tr(v-for='member in member_list')
                       td
                         figure.image.is-48x48.img-user-48
@@ -74,10 +74,10 @@
                         p.namelist {{member.nickname}}
                       
                       td
-                        button(type="submit" ).card-footer-item.btn-show-like
+                        button.card-footer-item.btn-show-like
                           span.icon-like
-                            button.tag.is-rounded.is-follow() 팔로우
-                            button.tag.is-rounded.is-primary() 팔로잉
+                            button.tag.is-rounded.is-follow(type="submit" @click="addFollow(member.pk)") 팔로우
+                            button.tag.is-rounded.is-primary(type="submit" @click="deleteFollow(member.pk)") 팔로잉
                           | &nbsp;  
                           //- | {{ post.like_count }}
           .columns
@@ -128,6 +128,31 @@ export default {
     }
   },  
   methods: {
+    addFollow(pk) {
+      console.log(pk)
+      let user_token = window.localStorage.getItem('token');
+      this.$http.post('https://api.thekym.com/member/relation/',
+       {to_user: pk},
+       {headers: {'Authorization' : `Token ${user_token}`}}
+      )
+      .then(response=> {
+        console.log(response)
+        })
+      .catch(error => console.log(error.response))
+    },
+    deleteFollow(pk) {
+      let user_token = window.localStorage.getItem('token');
+      this.$http.delete('https://api.thekym.com/member/relation/',{
+        headers: {'Authorization' : `Token ${user_token}`},
+        data:{"to_user":pk}
+       }
+      )
+      .then(response=> {
+        console.log(response)
+      }
+      )
+      .catch(error => console.log(error.response));
+    },
     openLeaveGroupModal(){
       this.$refs.leave_group_modal.visible = true;
     },
@@ -137,11 +162,11 @@ export default {
       this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}}
        )
-                .then(response=> {
-                  this.group_data = response.data;
-                  this.is_owner = response.data.owner;
-                })
-                .catch(error => console.log(error.message));
+        .then(response=> {
+          this.group_data = response.data;
+          this.is_owner = response.data.owner;
+        })
+        .catch(error => console.log(error.message));
     },
     fetchGroupMember(direction){
       let user_token = window.localStorage.getItem('token');
@@ -158,6 +183,7 @@ export default {
       this.$http.get(path, 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
+                  
                   let members = response.data.results;
                   // this.member_list = members;
                   this.pagination.next = response.data.next;
@@ -165,10 +191,12 @@ export default {
                   let owner = this.is_owner;
                   for(let i = 0; i < members.length; i++){
                     if(members[i].pk === owner.pk){
-                      members.splice(i,1); 
+                      
+                      // members.splice(i,1); 
                     }
                   }
                   this.member_list = members;
+                  console.log(this.member_list[0].is_follow)
                 })
                 .catch(error => console.log(error.message))
     },
