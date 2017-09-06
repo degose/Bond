@@ -24,6 +24,12 @@
         hr
         nav.level
           .level-item.has-text-centered
+            a.field.has-addons
+            router-link(to="/MyFollowList")
+              p 팔로잉/팔로워
+        hr
+        nav.level
+          .level-item.has-text-centered
             a.field.has-addons(@click="signOut")
               p 로그아웃
       footer.modal-card-foot
