@@ -24,7 +24,7 @@
                   //- | &nbsp;
                   | ·
                   | &nbsp;
-                  span {{ group_data.owner.nickname }}
+                  span {{ is_owner.nickname }}
             .content
               p(style='white-space: pre-line')
                 | {{ group_data.description }}
@@ -55,12 +55,17 @@
                     tr(v-if="this.pagination.prev === null")
                       td
                         figure.image.is-48x48.img-user-48
-                          img.img-user-profile(:src='is_owner[0].profile_img', alt='Image')
+                          img.img-user-profile(:src='is_owner.profile_img', alt='Image')
                       td 
-                        p.namelist {{is_owner[0].nickname}}
-                      
+                        p.namelist.owner {{is_owner.nickname}}
+                          | &nbsp;  
+                          | &nbsp;  
+                          span.tag.is-rounded.is-dark 그룹장
                       td
-                        span.tag.is-rounded.is-primary 그룹장
+                        button(type="submit" ).card-footer-item.btn-show-like
+                          span.icon-like
+                            button.tag.is-rounded.is-follow() 팔로우
+                            button.tag.is-rounded.is-primary() 팔로잉                      
                     tr(v-for='member in member_list')
                       td
                         figure.image.is-48x48.img-user-48
@@ -69,41 +74,57 @@
                         p.namelist {{member.nickname}}
                       
                       td
-                        span.tag.is-rounded.is-primary(v-if="is_owner[0].pk === member.pk") 그룹장
+                        button(type="submit" ).card-footer-item.btn-show-like
+                          span.icon-like
+                            button.tag.is-rounded.is-follow() 팔로우
+                            button.tag.is-rounded.is-primary() 팔로잉
+                          | &nbsp;  
+                          //- | {{ post.like_count }}
           .columns
             .column
               nav.pagination.is-centered
                 button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
                 button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
-          invitation-modal(
-            ref="my_modal"
-            close_message="close lightbox"
-          )
+
 </template>
 
 <script>
-import InvitationModal from './InvitationModal'
+// import InvitationModal from './InvitationModal'
 export default {
   components:{
-    InvitationModal,
+    // InvitationModal,
+  },
+  beforeCreate(){
+    this.hash = this.$route.hash;
   },
   created(){
     this.fetchGroupData();
     this.fetchGroupMember();
   },
+  mounted(){
+    this.fetchGroupData();
+    this.fetchGroupMember();
+  },
+  // mounted(){
+  //   let el = document.querySelector(this.$route.hash);
+  //   console.log(el);
+  //   el.scrollIntoView(true);
+  //   // console.log(scrollIntoView);
+  // },
   data() {
     return{
       visible: false,
       group_data:[],
       pk:'',
       member_list:[],
-      is_owner:[],
+      is_owner:{},
       page_num: '',
       pagination:{
         next: '', 
         prev: '',
         all: ''
       },
+      // hash: '#scrollpos',
     }
   },  
   methods: {
@@ -117,11 +138,10 @@ export default {
        { headers: {'Authorization' : `Token ${user_token}`}}
        )
                 .then(response=> {
-                  // console.log('data',response.data)
                   this.group_data = response.data;
-                  this.is_owner.push(response.data.owner)
+                  this.is_owner = response.data.owner;
                 })
-                // .catch(error => console.log(error.message));
+                .catch(error => console.log(error.message));
     },
     fetchGroupMember(direction){
       let user_token = window.localStorage.getItem('token');
@@ -138,13 +158,19 @@ export default {
       this.$http.get(path, 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  this.member_list = response.data.results;
+                  let members = response.data.results;
+                  // this.member_list = members;
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
-                  this.member_list.pop(this.is_owner)
-
+                  let owner = this.is_owner;
+                  for(let i = 0; i < members.length; i++){
+                    if(members[i].pk === owner.pk){
+                      members.splice(i,1); 
+                    }
+                  }
+                  this.member_list = members;
                 })
-                // .catch(error => console.log(error.message))
+                .catch(error => console.log(error.message))
     },
     nextPage(){
       let api_path = this.pagination.next;
@@ -174,13 +200,19 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  height: 150px
   overflow: hidden
+  // background: #eee
+  position: relative
+
 .group_profile_img
-  background: url('http://bulma.io/images/placeholders/1280x960.png')
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
 body
   background: #eee
 .page-wrapper
@@ -199,8 +231,8 @@ body
 
 .namelist,
   padding-top: 13px
-.tag.is-rounded
-  margin-top: 13px
+// .tag.is-rounded
+//   margin-top: 13px
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -210,4 +242,13 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
+// .namelist.owner 
+//   padding-top: 0px
+  // .fix
+  // margin-top: 0px
+.is-follow
+  background: none
+  border: 1px solid $bond
+  color: $bond
+
 </style>
