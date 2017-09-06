@@ -57,10 +57,15 @@
                         figure.image.is-48x48.img-user-48
                           img.img-user-profile(:src='is_owner.profile_img', alt='Image')
                       td 
-                        p.namelist {{is_owner.nickname}}
-                      
+                        p.namelist.owner {{is_owner.nickname}}
+                          | &nbsp;  
+                          | &nbsp;  
+                          span.tag.is-rounded.is-dark 그룹장
                       td
-                        span.tag.is-rounded.is-primary 그룹장
+                        button(type="submit" ).card-footer-item.btn-show-like
+                          span.icon-like
+                            button.tag.is-rounded.is-follow() 팔로우
+                            button.tag.is-rounded.is-primary() 팔로잉                      
                     tr(v-for='member in member_list')
                       td
                         figure.image.is-48x48.img-user-48
@@ -69,23 +74,25 @@
                         p.namelist {{member.nickname}}
                       
                       td
-                        span.tag.is-rounded.is-primary(v-if="is_owner.pk === member.pk") 그룹장
+                        button(type="submit" ).card-footer-item.btn-show-like
+                          span.icon-like
+                            button.tag.is-rounded.is-follow() 팔로우
+                            button.tag.is-rounded.is-primary() 팔로잉
+                          | &nbsp;  
+                          //- | {{ post.like_count }}
           .columns
             .column
               nav.pagination.is-centered
                 button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
                 button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
-          invitation-modal(
-            ref="my_modal"
-            close_message="close lightbox"
-          )
+
 </template>
 
 <script>
-import InvitationModal from './InvitationModal'
+// import InvitationModal from './InvitationModal'
 export default {
   components:{
-    InvitationModal,
+    // InvitationModal,
   },
   beforeCreate(){
     this.hash = this.$route.hash;
@@ -224,8 +231,8 @@ body
 
 .namelist,
   padding-top: 13px
-.tag.is-rounded
-  margin-top: 13px
+// .tag.is-rounded
+//   margin-top: 13px
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -235,4 +242,13 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
+// .namelist.owner 
+//   padding-top: 0px
+  // .fix
+  // margin-top: 0px
+.is-follow
+  background: none
+  border: 1px solid $bond
+  color: $bond
+
 </style>
