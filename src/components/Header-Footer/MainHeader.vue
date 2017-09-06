@@ -44,6 +44,8 @@
                     | 내 글 보기
                   router-link.navbar-item(to="/MyGroupFeed")
                     | 새 글 보기
+                  router-link.navbar-item(to="/MyFollowList")
+                    | 팔로잉/팔로워
                   hr.dropdownhr
                   a.navbar-item(@click="signOut")
                     | 로그 아웃

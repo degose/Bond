@@ -3,6 +3,9 @@
 import Feed from './components/Feed/Feed';
 import MyWriteFeed from './components/Feed/MyWriteFeed';
 import MyGroupFeed from './components/Feed/MyGroupFeed';
+import MyFollowList from './components/Feed/MyFollowList';
+import MyFollowerList from './components/Feed/MyFollowerList';
+import MyFollowingList from './components/Feed/MyFollowingList';
 import NoneJointGroupFeed from './components/Feed/NoneJointGroupFeed';
 
 // Group
@@ -30,6 +33,13 @@ export const routes = [
     { path: '/Feed', component: Feed },
     { path: '/MyWriteFeed', component: MyWriteFeed },
     { path: '/MyGroupFeed', component: MyGroupFeed },
+    { path: '/MyFollowList', 
+      component: MyFollowList,
+      children: [
+        { path: '', component: MyFollowingList },
+        { path: '/MyFollowList/MyFollowerList', component: MyFollowerList }
+      ]  
+    },
     { path: '/NoneJointGroupFeed', component: NoneJointGroupFeed },
 
     // Group
