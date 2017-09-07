@@ -134,7 +134,7 @@ export default {
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
@@ -145,7 +145,7 @@ export default {
     },
     fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){

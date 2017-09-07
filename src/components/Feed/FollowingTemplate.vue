@@ -27,7 +27,7 @@ export default {
       .then(response=> {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('pk');
+        let pk = window.sessionStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
         this.$http.get( 'https://api.thekym.com/member/' + `${pk}` + '/following/',
@@ -52,15 +52,15 @@ export default {
       .then(response=> {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('pk');
+        let pk = window.sessionStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
-        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/', 
+        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    let followers = response.data;
-                    this.$parent.follower_list = followers;
-                  })
+                    let followings = response.data;
+                    this.$parent.following_list = followings;
+                    })
                   .catch(error => console.log(error.message))
       }
       )
@@ -73,19 +73,16 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 body
   background: #eee
 .page-wrapper
   min-height: 115vh
-
 .img-user-48
   background: #eee
   width: 48px
   height: 48px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   min-height: 100%
   width: 100%
@@ -112,6 +109,4 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
-
 </style>
-

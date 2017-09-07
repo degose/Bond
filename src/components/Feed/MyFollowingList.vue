@@ -57,7 +57,6 @@
 import MakingGroupModal from '../Group/MakingGroupModal';
 import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 import FollowingTemplate from './FollowingTemplate';
-
 export default {
   components:{
     MakingGroupModal,
@@ -66,7 +65,7 @@ export default {
   },
   created(){
     this.getMyGroupList();
-    this.fetchFollower();
+    this.fetchFollowing();
   },
   data() {
     return{
@@ -93,57 +92,24 @@ export default {
           console.log(error.message);
         })
     },
-    fetchFollower(direction){
+    fetchFollowing(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('pk');
-      let path = null;
-      let page_num = 1;
-      // if (this.page_num.trim() === ''){
-      //   path = 'https://api.thekym.com/member/' + `${pk}` + '/follower/' + '&page=' +`${page_num}`
-      //   // path = 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`
-      // }
-      // else{
-      //   path = this.pagination[direction];
-      //   page_num = this.page_num;
-      // }
+      let pk = window.sessionStorage.getItem('pk');
       this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   let followings = response.data;
                   this.following_list = followings;
-                  // console.log('followings',followings);
-                  // this.pagination.next = response.data.next;
-                  // this.pagination.prev = response.data.previous;
                 })
                 .catch(error => console.log(error.response))
-    },
-    nextPage(){
-      let api_path = this.pagination.next;
-      if (api_path !== null) {
-      let page_path = api_path.slice(-1);
-      this.page_num = page_path
-      this.fetchGroupMember('next');
-      }
-    },
-    prevPage(){
-      let api_path = this.pagination.prev;
-      if(this.page_num >= 3){
-      let page_path = api_path.slice(-1);
-      this.page_num = page_path;
-      this.fetchGroupMember('prev');}
-      else{
-         let path = this.pagination.prev
-         this.fetchGroupMember('prev');
-      }
     },
     openModal(){
       this.$refs.my_modal.visible = true;
     },
     goGroup(pk){
-        window.localStorage.setItem('this_group', pk);
+        window.sessionStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
-
   }
 }
 </script>
@@ -151,19 +117,16 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 body
   background: #eee
 .page-wrapper
   min-height: 115vh
-
 .img-user-48
   background: #eee
   width: 48px
   height: 48px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   min-height: 100%
   width: 100%
@@ -191,5 +154,4 @@ body
 .li-hr
   // padding: 0
   margin: 10px 0
-
 </style>

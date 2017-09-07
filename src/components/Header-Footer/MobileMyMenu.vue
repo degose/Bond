@@ -73,13 +73,6 @@ export default {
         let pk = response.data.user;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
-          window.localStorage.removeItem('pk', pk)
-          window.localStorage.removeItem('searchKeyword')
-          window.localStorage.removeItem('this_group')
-          window.localStorage.removeItem('user_email')
-          window.localStorage.removeItem('user_img')
-          window.localStorage.removeItem('user_nickname')
-          window.localStorage.removeItem('user_username')
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
@@ -93,12 +86,6 @@ export default {
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
-      // let userinfo = {
-      //   pk: this.user.pk,
-      //   email: this.user.email,
-      //   nickname: this.user.nickname,
-      //   username: this.user.username
-      // }
       this.$http.get('https://api.thekym.com/member/', this.user,
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {

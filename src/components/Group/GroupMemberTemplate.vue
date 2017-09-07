@@ -1,14 +1,4 @@
 <template lang="pug">
-<<<<<<< HEAD
-    div
-      td
-        figure.image.is-48x48.img-user-48
-          img.img-user-profile(:src='member.profile_img', alt='Image')
-      td 
-        p.namelist {{member.nickname}}
-      
-      td
-=======
     article.media
       figure.media-left
         p.image.is-48x48.img-user-48
@@ -17,7 +7,6 @@
         .content
           p.namelist.name {{member.nickname}}
       .media-right
->>>>>>> 2d09ce25bee67e18234a761f9e0e1d37ec97d2c7
         button.card-footer-item.btn-show-like
           span.icon-like
             button.tag.is-rounded.is-follow(v-if="!member.is_follow" type="submit" @click="addFollow(member.pk)" ) 팔로우
@@ -55,7 +44,7 @@ export default {
       .then(response=> {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('this_group');
+        let pk = window.sessionStorage.getItem('this_group');
         let path = null;
         let page_num = this.$parent.page_num
         this.$http.get( 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`,
@@ -88,7 +77,7 @@ export default {
       .then(response=> {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('this_group');
+        let pk = window.sessionStorage.getItem('this_group');
         let path = null;
         let page_num = this.$parent.page_num
         this.$http.get('https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`, 
@@ -147,11 +136,8 @@ body
 
 .namelist,
   padding-top: 13px
-<<<<<<< HEAD
-=======
 .name
   margin-left: 20%
->>>>>>> 2d09ce25bee67e18234a761f9e0e1d37ec97d2c7
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -165,12 +151,7 @@ body
   background: none
   border: 1px solid $bond
   color: $bond
-<<<<<<< HEAD
-
-</style>
-=======
 .ta
   width: 100%
 
 </style>
->>>>>>> 2d09ce25bee67e18234a761f9e0e1d37ec97d2c7

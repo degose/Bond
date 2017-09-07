@@ -127,15 +127,15 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     deletePost(pk){
-      let user_pk = window.localStorage.getItem('pk');
+      let user_pk = window.sessionStorage.getItem('pk');
       let user_token = window.localStorage.getItem('token');
-      let user_nickname = window.localStorage.getItem('user_nickname');
+      let user_nickname = window.sessionStorage.getItem('user_nickname');
       let confirmPostDelete = confirm(`${user_nickname}` + '님, 정말 이 글을 삭제하시겠습니까?');
       if ( confirmPostDelete === true ){
         this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
           { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response=> {
-            let group_pk = window.localStorage.getItem('this_group');
+            let group_pk = window.sessionStorage.getItem('this_group');
             this.$http.get('https://api.thekym.com/post/?author=' + `${user_pk}`,
               { headers: {'Authorization' : `Token ${user_token}`} })
               .then(response=> {
@@ -169,7 +169,7 @@ export default {
         })
     },
     openMywrite(direction){
-      let pk = window.localStorage.getItem('pk');
+      let pk = window.sessionStorage.getItem('pk');
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){
@@ -211,7 +211,7 @@ export default {
     //   }
     // },
     goGroup(pk){
-      window.localStorage.setItem('this_group', pk);
+      window.sessionStorage.setItem('this_group', pk);
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
     calcDate(content){
