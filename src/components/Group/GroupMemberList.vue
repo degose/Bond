@@ -41,33 +41,29 @@
                   | {{group_data.name}}
                   | &nbsp; 
               .card-content
-                table.table.is-fullwidth
-                  caption.a11y-hidden 그룹멤버
-                  thead
-                      th
-                      th
-                      
-
-                      th 
-                    
-                  tbody
-                    tr(v-if="this.pagination.prev === null")
-                      td
-                        figure.image.is-48x48.img-user-48
+                ul
+                  li(v-if="this.pagination.prev === null")
+                    hr.li-hr
+                    article.media
+                      figure.media-left
+                        p.image.is-48x48.img-user-48
                           img.img-user-profile(:src='is_owner.profile_img', alt='Image')
-                      td 
-                        p.namelist.owner {{is_owner.nickname}}
-                          | &nbsp;  
-                          | &nbsp;  
-                          span.tag.is-rounded.is-dark 그룹장
-                      td
+                      .media-content
+                        .content   
+                          p.namelist.name {{is_owner.nickname}}
+                            | &nbsp;  
+                            | &nbsp;  
+                            span.tag.is-rounded.is-dark.owner-tag 그룹장
+                      .media-right 
                         button.card-footer-item.btn-show-like
                           span.icon-like
                             button.tag.is-rounded.is-follow(type="submit" @click="addFollow1(is_owner.pk)" v-if="!is_owner.is_follow") 팔로우
                             button.tag.is-rounded.is-primary(type="submit" @click="deleteFollow1(is_owner.pk)" v-else) 팔로잉    
-
-                    tr.is-fullwidth(v-for='member in member_list')
-                      group-member-template(:member = "member")           
+              
+                
+                  li(v-for='member in member_list')
+                    hr.li-hr       
+                    group-member-template(:member = "member")    
           .columns
             .column
               nav.pagination.is-centered
@@ -238,8 +234,13 @@ body
   min-height: 100%
   width: 100%
 
-.namelist,
+.namelist
   padding-top: 13px
+  // .owner-tag
+  //   margin-bottom: -40px
+.name
+  margin-left: 20%
+
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -253,5 +254,7 @@ body
   background: none
   border: 1px solid $bond
   color: $bond
-
+.li-hr
+  // padding: 0
+  margin: 10px 0
 </style>

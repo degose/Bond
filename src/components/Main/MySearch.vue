@@ -6,25 +6,25 @@
           .column.is-10.is-offset-1
             .box.fetched-data
               article.media.fetched-data-item(v-for = "(group,i) in group_list")
-                a(@click.prevent ="goGroup(group.pk, i)")
-                  .media-left
-                    figure.image.is-64x64
-                      img(:src='group.profile_img', alt='Image')
-                  .media-content
-                    .content
-                      p(style='white-space: pre-line')
-                        strong {{group.name}}
-                        br
-                        |           {{group.description}}
-                      div
-                        span.icon.is-small.member
-                          i.fa.fa-users(aria-hidden='true')
-                        small    {{group.num_of_members}}
-                        | &nbsp; 
-                        | &nbsp; 
-                        span.icon.is-small.leader
-                          i.fa.fa-user-circle-o(aria-hidden='true')
-                        small    {{group.owner.nickname}}
+                //- a(@click.prevent ="goGroup(group.pk, i)")
+                a(@click.prevent ="goGroup(group.pk, i)").media-left
+                  figure.image.is-64x64.group-search-img-wrapper
+                    img.group-search-img(:src='group.profile_img', alt='Image')
+                a(@click.prevent ="goGroup(group.pk, i)").media-content
+                  .content
+                    p(style='white-space: pre-line')
+                      strong {{group.name}}
+                      br
+                      |           {{group.description}}
+                    div
+                      span.icon.is-small.member
+                        i.fa.fa-users(aria-hidden='true')
+                      small    {{group.num_of_members}}
+                      | &nbsp; 
+                      | &nbsp; 
+                      span.icon.is-small.leader
+                        i.fa.fa-user-circle-o(aria-hidden='true')
+                      small    {{group.owner.nickname}}
 
         .columns
           .column
@@ -137,7 +137,16 @@ export default {
 .all-wrapper
   background: #eee
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
+
+.group-search-img-wrapper
+  width: 64px
+  height: 64px
+  overflow: hidden
+  // border-radius: 10%
+.group-search-img
+  width: 100%
+  min-height: 100%
 
 .pagination-btn
   color: $bond

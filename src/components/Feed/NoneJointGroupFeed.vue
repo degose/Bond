@@ -208,7 +208,7 @@ export default {
   background: #eee
 
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
   // background: #eee
 
 .card-wrapper

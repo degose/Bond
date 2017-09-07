@@ -225,7 +225,7 @@ body
   background: #eee
 
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 
 .card-wrapper
   margin-bottom: 20px

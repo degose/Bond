@@ -1,7 +1,8 @@
 <template lang="pug">
   #app(v-cloak)
     div
-      background(v-if='!!needs_to_login')
+      background
+      //- background(v-if='!!needs_to_login')
       router-view
 
 </template>

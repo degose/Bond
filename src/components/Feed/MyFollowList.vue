@@ -37,26 +37,6 @@ export default {
     MainFooter,
     ToTheTopBTN
   },
-  data() {
-    return {
-      // dropdownpost: false,
-      // dropdowncomment: false,
-      // showcomment: false,
-      // like: false,
-      // data_list: [],
-      // group_list: [],
-      // page_num: '',
-      // pagination:{
-      //   next: '', 
-      //   prev: '',
-      //   all: ''
-      // },
-    }
-  },
-  created(){
-  },
-  methods: {
-  } 
 }
 </script>
 

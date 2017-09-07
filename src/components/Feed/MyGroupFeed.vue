@@ -207,7 +207,7 @@ export default {
 .card
   margin-bottom: 20px
 .feed-box-wrapper
-  min-height: 80vh
+  min-height: 115vh
 .dropdownhr
   margin: 5px
 .group-img-small-wrapper

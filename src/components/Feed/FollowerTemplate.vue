@@ -1,50 +1,22 @@
 <template lang="pug">
-<<<<<<< HEAD
-    div
-      td
-        figure.image.is-48x48.img-user-48
-          img.img-user-profile(:src='member.profile_img', alt='Image')
-      td 
-        p.namelist {{member.nickname}}
-      
-      td
-=======
-    article.media
-      figure.media-left
-        p.image.is-48x48.img-user-48
-          img.img-user-profile(:src='member.profile_img', alt='Image')
-      .media-content
-        .content
-          p.namelist.name {{member.nickname}}
-      .media-right
->>>>>>> 2d09ce25bee67e18234a761f9e0e1d37ec97d2c7
-        button.card-footer-item.btn-show-like
-          span.icon-like
-            button.tag.is-rounded.is-follow(v-if="!member.is_follow" type="submit" @click="addFollow(member.pk)" ) 팔로우
-            button.tag.is-rounded.is-primary(v-else type="submit" @click="deleteFollow(member.pk)") 팔로잉
+  article.media
+    figure.media-left
+      p.image.is-48x48.img-user-48
+        img.img-user-profile(:src='follower.profile_img', alt='Image')
+    .media-content
+      .content
+        p.namelist.name {{follower.nickname}}
+    
+    .media-right
+      button(type="submit" ).card-footer-item.btn-show-like
+        span.icon-like
+          button.tag.is-rounded.is-follow() 팔로우
+          button.tag.is-rounded.is-primary() 팔로잉
 </template>
 
 <script>
 export default {
-  data() {
-    return{
-      visible: false,
-      group_data:[],
-      pk:'',
-      member_list:[],
-      is_owner:{},
-      page_num: '',
-      pagination:{
-        next: '', 
-        prev: '',
-        all: ''
-      },
-      memberFollow:[],
-      is_follow: '',
-      // hash: '#scrollpos',
-    }
-  },  
-  props: ['member'],
+  props: ['follower'],
   methods: {
     addFollow(pk) {
       let user_token = window.localStorage.getItem('token');
@@ -118,17 +90,6 @@ export default {
 @import "~bulma"
 @import "~style"
 
-.group_profile-wrapper
-  height: 150px
-  overflow: hidden
-  position: relative
-
-.group_profile_img
-  width: auto
-  min-height: 100%
-  position: absolute
-  top: 30%
-  transform: translateY(-30%) 
 body
   background: #eee
 .page-wrapper
@@ -144,14 +105,20 @@ body
 .img-user-profile
   min-height: 100%
   width: 100%
-
+.group-img-small-wrapper
+  width: 32px
+  height: 32px
+  overflow: hidden
+  border-radius: 10%
+.group-img-small
+  width: 100%
+  min-height: 100%
 .namelist,
   padding-top: 13px
-<<<<<<< HEAD
-=======
+// .tag.is-rounded
+//   margin-top: 13px
 .name
   margin-left: 20%
->>>>>>> 2d09ce25bee67e18234a761f9e0e1d37ec97d2c7
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -161,16 +128,5 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
-.is-follow
-  background: none
-  border: 1px solid $bond
-  color: $bond
-<<<<<<< HEAD
 
 </style>
-=======
-.ta
-  width: 100%
-
-</style>
->>>>>>> 2d09ce25bee67e18234a761f9e0e1d37ec97d2c7
