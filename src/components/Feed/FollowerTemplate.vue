@@ -10,8 +10,8 @@
     .media-right
       button(type="submit" ).card-footer-item.btn-show-like
         span.icon-like
-          button.tag.is-rounded.is-follow() 팔로우
-          button.tag.is-rounded.is-primary() 팔로잉
+          button.tag.is-rounded.is-follow(v-if="!follower.is_follow" type="submit" @click="addFollow(follower.pk)") 팔로우
+          button.tag.is-rounded.is-primary(v-else type="submit" @click="deleteFollow(follower.pk)") 팔로잉
 </template>
 
 <script>
@@ -27,22 +27,14 @@ export default {
       .then(response=> {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('this_group');
-        let path = null;
-        let page_num = this.$parent.page_num
-        this.$http.get( 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`,
+        let pk = window.localStorage.getItem('pk');
+        // let path = null;
+        // let page_num = this.$parent.page_num
+        this.$http.get( 'https://api.thekym.com/member/' + `${pk}` + '/following/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    let rp = response.data.results;
-                    let owner = this.$parent.is_owner;
-                    for(let i = 0; i < rp.length; i++){
-                    if(rp[i].pk === owner.pk){
-                      rp.splice(i,1);
-                    }
-                    this.$parent.member_list = rp;
-                    this.pagination.next = this.$parent.pagination.next;
-                    this.pagination.prev = this.$parent.pagination.prev;
-                    }
+                    let followings = response.data;
+                    this.$parent.following_list = followings;
                     })
                   .catch(error => console.log(error.message))
       }
@@ -60,23 +52,15 @@ export default {
       .then(response=> {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('this_group');
-        let path = null;
-        let page_num = this.$parent.page_num
-        this.$http.get('https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`, 
+        let pk = window.localStorage.getItem('pk');
+        // let path = null;
+        // let page_num = this.$parent.page_num
+        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    let rp = response.data.results;
-                    let owner = this.$parent.is_owner;
-                    for(let i = 0; i < rp.length; i++){
-                    if(rp[i].pk === owner.pk){
-                      rp.splice(i,1); 
-                    }
-                    this.$parent.member_list = rp;
-                    this.pagination.next = this.$parent.pagination.next;
-                    this.pagination.prev = this.$parent.pagination.prev;
-                    }
-                  })
+                    let followings = response.data;
+                    this.$parent.following_list = followings;
+                    })
                   .catch(error => console.log(error.message))
       }
       )

@@ -55,12 +55,12 @@ export default {
         let pk = window.localStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
-        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/', 
+        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    let followers = response.data;
-                    this.$parent.follower_list = followers;
-                  })
+                    let followings = response.data;
+                    this.$parent.following_list = followings;
+                    })
                   .catch(error => console.log(error.message))
       }
       )
