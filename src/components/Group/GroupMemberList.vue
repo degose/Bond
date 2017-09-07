@@ -111,7 +111,6 @@ export default {
        {headers: {'Authorization' : `Token ${user_token}`}}
       )
       .then(response=> {
-        console.log(response)
         this.is_owner.is_follow = !this.is_owner.is_follow
       }
       )
@@ -125,7 +124,6 @@ export default {
         }
       )
       .then(response=> {
-        console.log(response)
         this.is_owner.is_follow = !this.is_owner.is_follow
       }
       )
@@ -136,7 +134,7 @@ export default {
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}}
        )
@@ -148,7 +146,7 @@ export default {
     },
     fetchGroupMember(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let path = null;
 
       if (this.page_num === 1){
@@ -208,11 +206,8 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  // width: auto
-  // height: auto
   height: 150px
   overflow: hidden
-  // background: #eee
   position: relative
 
 .group_profile_img
@@ -253,10 +248,6 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
-// .namelist.owner 
-//   padding-top: 0px
-  // .fix
-  // margin-top: 0px
 .is-follow
   background: none
   border: 1px solid $bond

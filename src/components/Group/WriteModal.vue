@@ -11,11 +11,6 @@
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
             img.canvas(:src="uploadImg", alt='Image')
-          hr
-          button.button.is-primary.rotating-img(@click="rotate90" aria-label="시계 방향으로 90도 회전") 90 사진 회전
-          button.button.is-primary.rotating-img(@click="rotate180" aria-label="시계 방향으로 180도 회전") 180 사진 회전
-          button.button.is-primary.rotating-img(@click="rotate270" aria-label="시계 방향으로 270도 회전") 270 사진 회전
-          button.button.is-primary.rotating-img(@click="rotate0" aria-label="사진 방향 리셋") 사진 회전 리셋
 
       form(id="uploadFile" name="uploadFile" method="POST" enctype="multipart/form-data" @submit.prevent="")
         footer.card-footer
@@ -117,11 +112,11 @@ export default {
     writeTextSubmit(){
       // 토큰 값으로 유저가 누구인지 인증
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let formData = new FormData();
-      let user_pk = window.localStorage.getItem('pk');
-      let user_img = window.localStorage.getItem('user_img');
-      let user_nickname = window.localStorage.getItem('user_nickname');
+      let user_pk = window.sessionStorage.getItem('pk');
+      let user_img = window.sessionStorage.getItem('user_img');
+      let user_nickname = window.sessionStorage.getItem('user_nickname');
 
       formData.append('content', this.write.content);
 
@@ -131,7 +126,7 @@ export default {
       }
       formData.append('group', pk);
       
-      this.$http.post(this.$store.state.api_write, formData,
+      this.$http.post('https://api.thekym.com/post/', formData,
         { 
           headers: {
             'Authorization' : `Token ${user_token}`,
@@ -166,47 +161,11 @@ export default {
       this.write.content = '';
       this.visible = false;
     },
-      rotatingIMG(){
-        // console.log(this.uploadImg)
-        // console.log(this.write.image)
-        this.img = this.$refs.file_img_input.files[0]
-        this.img.rotate(-2)
-        console.log("사진 회전 버튼 작동됩니다.")
-      },
     // 한글 양방향 데이터 바인딩 메서드
     writePost(target, e){
       let input = e.target.value;
       this.write[target] = input;
     },
-    rotate90() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(90deg);');
-        images[i] = this.uploadImg
-    }
-  },
-    rotate180() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(180deg);'); 
-    }
-  },
-    rotate270() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(270deg);'); 
-    }
-  },
-    rotate0() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(0deg);'); 
-    }
-  }
-    // show(){
-    //  console.log(document.getElementById("thing"))
-    //  document.getElementById("thing").style.display = "click"
-    // }
   }
 }
 </script>

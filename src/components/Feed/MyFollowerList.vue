@@ -60,7 +60,6 @@ import MakingGroupModal from '../Group/MakingGroupModal';
 // import MainFooter from '../Header-Footer/MainFooter';
 import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 import FollowerTemplate from './FollowerTemplate';
-
 export default {
   components:{
     // MainHeader,
@@ -102,7 +101,7 @@ export default {
     },
     fetchFollower(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('pk');
+      let pk = window.sessionStorage.getItem('pk');
       this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
@@ -113,7 +112,7 @@ export default {
     },  
     fetchFollowing(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('pk');
+      let pk = window.sessionStorage.getItem('pk');
       this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
@@ -126,10 +125,9 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     goGroup(pk){
-      window.localStorage.setItem('this_group', pk);
+      window.sessionStorage.setItem('this_group', pk);
       this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
-
   }
 }
 </script>
@@ -137,19 +135,16 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
-
 body
   background: #eee
 .page-wrapper
   min-height: 115vh
-
 .img-user-48
   background: #eee
   width: 48px
   height: 48px
   overflow: hidden
   border-radius: 50%
-
 .img-user-profile
   min-height: 100%
   width: 100%
@@ -161,7 +156,6 @@ body
 .group-img-small
   width: 100%
   min-height: 100%
-
 .namelist,
   padding-top: 13px
 // .tag.is-rounded
@@ -178,5 +172,4 @@ body
 .li-hr
   // padding: 0
   margin: 10px 0
-
 </style>

@@ -14,8 +14,6 @@ export default {
   name: 'Video',
   data(){
     return {
-      // video_visible: true
-      // this.$store.state.video_visible
     }
   },
 

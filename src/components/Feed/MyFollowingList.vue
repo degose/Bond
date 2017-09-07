@@ -40,7 +40,7 @@
                   | {{ following_list.length }}
               .card-content
                 ul
-                  li(v-for='(following, i) in following_list')
+                  li(v-for='following in following_list')
                     //- hr.li-hr
                     following-template(:following="following")
           //- .columns
@@ -95,7 +95,7 @@ export default {
     },
     fetchFollowing(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('pk');
+      let pk = window.sessionStorage.getItem('pk');
       this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
@@ -108,7 +108,7 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     goGroup(pk){
-        window.localStorage.setItem('this_group', pk);
+        window.sessionStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
 

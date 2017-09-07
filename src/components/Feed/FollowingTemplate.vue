@@ -27,9 +27,8 @@ export default {
        {headers: {'Authorization' : `Token ${user_token}`}}
       )
       .then(response=> {
-        console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('pk');
+        let pk = window.sessionStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
         this.$http.get( 'https://api.thekym.com/member/' + `${pk}` + '/following/',
@@ -37,6 +36,7 @@ export default {
                   .then(response => {
                     let followings = response.data;
                     this.$parent.following_list = followings;
+                    
                     })
                   .catch(error => console.log(error.message))
       }
@@ -52,9 +52,8 @@ export default {
        }
       )
       .then(response=> {
-        console.log(response);
         let user_token = window.localStorage.getItem('token');
-        let pk = window.localStorage.getItem('pk');
+        let pk = window.sessionStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
         this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/',
@@ -62,6 +61,7 @@ export default {
                   .then(response => {
                     let followings = response.data;
                     this.$parent.following_list = followings;
+                    
                     })
                   .catch(error => console.log(error.message))
       }
@@ -129,4 +129,3 @@ body
 
 
 </style>
-

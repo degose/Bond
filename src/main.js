@@ -4,7 +4,6 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import App from './App';
 import {routes} from './routes';
-import {store} from './store';
 
 
 Vue.use(VueRouter);
@@ -19,14 +18,6 @@ Vue.prototype.$http = axios;
 const router = new VueRouter({
   mode: 'history',
   routes,
-  // scrollBehavior (to, from, savedPosition) {
-  //   원하는 위치로 돌아가기
-  //   if (savedPosition) {
-  //     return savedPosition
-  //   } else {
-  //     return { x: 0, y: 0 }
-  //   }
-  // }
 });
 
 
@@ -34,7 +25,5 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
-  store,
-
   render: h => h(App)
 });
