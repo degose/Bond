@@ -42,7 +42,6 @@ export default {
        {headers: {'Authorization' : `Token ${user_token}`}}
       )
       .then(response=> {
-        console.log(response);
         let user_token = window.localStorage.getItem('token');
         let pk = window.sessionStorage.getItem('this_group');
         let path = null;
@@ -75,7 +74,6 @@ export default {
        }
       )
       .then(response=> {
-        console.log(response);
         let user_token = window.localStorage.getItem('token');
         let pk = window.sessionStorage.getItem('this_group');
         let path = null;

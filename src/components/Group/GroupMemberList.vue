@@ -111,7 +111,6 @@ export default {
        {headers: {'Authorization' : `Token ${user_token}`}}
       )
       .then(response=> {
-        console.log(response)
         this.is_owner.is_follow = !this.is_owner.is_follow
       }
       )
@@ -125,7 +124,6 @@ export default {
         }
       )
       .then(response=> {
-        console.log(response)
         this.is_owner.is_follow = !this.is_owner.is_follow
       }
       )

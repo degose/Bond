@@ -41,7 +41,7 @@
               .card-content
                 ul
                   li(v-for='following in following_list')
-                    hr.li-hr
+                    //- hr.li-hr
                     following-template(:following="following")
           //- .columns
           //-   .column
@@ -57,6 +57,7 @@
 import MakingGroupModal from '../Group/MakingGroupModal';
 import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 import FollowingTemplate from './FollowingTemplate';
+
 export default {
   components:{
     MakingGroupModal,
@@ -110,6 +111,7 @@ export default {
         window.sessionStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
+
   }
 }
 </script>
@@ -117,16 +119,19 @@ export default {
 <style lang="sass" scoped>
 @import "~bulma"
 @import "~style"
+
 body
   background: #eee
 .page-wrapper
   min-height: 115vh
+
 .img-user-48
   background: #eee
   width: 48px
   height: 48px
   overflow: hidden
   border-radius: 50%
+
 .img-user-profile
   min-height: 100%
   width: 100%
@@ -154,4 +159,5 @@ body
 .li-hr
   // padding: 0
   margin: 10px 0
+
 </style>
