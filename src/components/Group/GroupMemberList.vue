@@ -44,7 +44,6 @@
                 table.table.is-fullwidth
                   caption.a11y-hidden 그룹멤버
                   thead
-                      //- tr
                       th
                       th
                       
@@ -105,7 +104,6 @@ export default {
         all: ''
       },
       memberFollow:[]
-      // hash: '#scrollpos',
     }
   },  
   methods: {
@@ -185,8 +183,7 @@ export default {
                 .catch(error => console.log(error.message))
     },
     nextPage(){
-      this.page_num +=1;
-      console.log("다음페이지")
+      this.page_num ++;
       let api_path = this.pagination.next;
       if (api_path !== null) {
       let page_path = api_path.slice(-1);
@@ -215,11 +212,8 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  // width: auto
-  // height: auto
   height: 150px
   overflow: hidden
-  // background: #eee
   position: relative
 
 .group_profile_img
@@ -246,8 +240,6 @@ body
 
 .namelist,
   padding-top: 13px
-// .tag.is-rounded
-//   margin-top: 13px
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -257,10 +249,6 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
-// .namelist.owner 
-//   padding-top: 0px
-  // .fix
-  // margin-top: 0px
 .is-follow
   background: none
   border: 1px solid $bond
