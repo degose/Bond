@@ -79,8 +79,7 @@
         //- nav.pagination.is-centered
           //- button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
          
-        //- to-the-top-btn
-        ToTheTopBTN 
+        to-the-top-b-t-n
         write-modal(close_message="close lightbox" ref='write_modal')
         leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
