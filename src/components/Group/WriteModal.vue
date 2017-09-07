@@ -11,11 +11,6 @@
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
             img.canvas(:src="uploadImg", alt='Image')
-          hr
-          button.button.is-primary.rotating-img(@click="rotate90" aria-label="시계 방향으로 90도 회전") 90 사진 회전
-          button.button.is-primary.rotating-img(@click="rotate180" aria-label="시계 방향으로 180도 회전") 180 사진 회전
-          button.button.is-primary.rotating-img(@click="rotate270" aria-label="시계 방향으로 270도 회전") 270 사진 회전
-          button.button.is-primary.rotating-img(@click="rotate0" aria-label="사진 방향 리셋") 사진 회전 리셋
 
       form(id="uploadFile" name="uploadFile" method="POST" enctype="multipart/form-data" @submit.prevent="")
         footer.card-footer
@@ -166,47 +161,11 @@ export default {
       this.write.content = '';
       this.visible = false;
     },
-      rotatingIMG(){
-        // console.log(this.uploadImg)
-        // console.log(this.write.image)
-        this.img = this.$refs.file_img_input.files[0]
-        this.img.rotate(-2)
-        console.log("사진 회전 버튼 작동됩니다.")
-      },
     // 한글 양방향 데이터 바인딩 메서드
     writePost(target, e){
       let input = e.target.value;
       this.write[target] = input;
     },
-    rotate90() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(90deg);');
-        images[i] = this.uploadImg
-    }
-  },
-    rotate180() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(180deg);'); 
-    }
-  },
-    rotate270() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(270deg);'); 
-    }
-  },
-    rotate0() {
-    let images = document.getElementsByClassName('canvas');
-    for (var i = 0; i < images.length; i++) {
-        images[i].setAttribute('style', 'transform:rotate(0deg);'); 
-    }
-  }
-    // show(){
-    //  console.log(document.getElementById("thing"))
-    //  document.getElementById("thing").style.display = "click"
-    // }
   }
 }
 </script>
