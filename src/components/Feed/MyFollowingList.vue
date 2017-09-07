@@ -37,53 +37,32 @@
                   | &nbsp;  
                   | 팔로잉
                   | &nbsp; 
+                  | {{ following_list.length }}
               .card-content
-                table.table.is-fullwidth
-                  caption.a11y-hidden 팔로잉
-                  thead
-                      //- tr
-                      th
-                      th
-                      
-
-                      th 
-                    
-                  tbody
-                    tr(v-for='following in following_list')
-                      td
-                        figure.image.is-48x48.img-user-48
-                          img.img-user-profile(:src='following.profile_img', alt='Image')
-                      td 
-                        p.namelist {{following.nickname}}
-                      
-                      td
-                        button(type="submit" ).card-footer-item.btn-show-like
-                          span.icon-like
-                            button.tag.is-rounded.is-follow() 팔로우
-                            button.tag.is-rounded.is-primary() 팔로잉
-          .columns
-            .column
-              nav.pagination.is-centered
-                button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-                button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
-      //- ToTheTopBTN 
-      //- main-footer
+                ul
+                  li(v-for='following in following_list')
+                    hr.li-hr
+                    following-template(:following="following")
+          //- .columns
+          //-   .column
+          //-     nav.pagination.is-centered
+          //-       button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+          //-       button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
+      ToTheTopBTN 
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
 
 </template>
 
 <script>
-// import MainHeader from '../Header-Footer/MainHeader';
 import MakingGroupModal from '../Group/MakingGroupModal';
-// import MainFooter from '../Header-Footer/MainFooter';
 import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
+import FollowingTemplate from './FollowingTemplate';
 
 export default {
   components:{
-    // MainHeader,
     MakingGroupModal,
-    // MainFooter,
-    ToTheTopBTN
+    ToTheTopBTN,
+    FollowingTemplate
   },
   created(){
     this.getMyGroupList();
@@ -176,7 +155,7 @@ export default {
 body
   background: #eee
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 
 .img-user-48
   background: #eee
@@ -188,7 +167,14 @@ body
 .img-user-profile
   min-height: 100%
   width: 100%
-
+.group-img-small-wrapper
+  width: 32px
+  height: 32px
+  overflow: hidden
+  border-radius: 10%
+.group-img-small
+  width: 100%
+  min-height: 100%
 .namelist,
   padding-top: 13px
 // .tag.is-rounded
@@ -202,9 +188,8 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
-// .namelist.owner 
-//   padding-top: 0px
-  // .fix
-  // margin-top: 0px
+.li-hr
+  // padding: 0
+  margin: 10px 0
 
 </style>
