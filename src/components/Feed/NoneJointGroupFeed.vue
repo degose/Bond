@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     jointgroup(){
-        let pk = window.localStorage.getItem('this_group')
+        let pk = window.sessionStorage.getItem('this_group')
         let user_token = window.localStorage.getItem('token')
         this.$http.post('https://api.thekym.com/member/membership/', {group: pk},
                   { headers: {'Authorization' : `Token ${user_token}`}})
@@ -111,7 +111,7 @@ export default {
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
@@ -121,7 +121,7 @@ export default {
     },
     fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){

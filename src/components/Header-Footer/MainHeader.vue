@@ -6,12 +6,12 @@
             enter-active-class="animated rubberBand"
             :duration="2000"
           )
-            .navbar-brand(tabindex=0)
+            .navbar-brand
               router-link.navbar-item(to="/MainPage")
                 picture
                   img.is-hidden-mobile(src='../../assets/logo-01.svg', alt='큰본드', width=112, height=28)
                   img.is-hidden-desktop.is-hidden-tablet(src='../../assets/logo-02.svg', alt='작은본드')
-              .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu" tabindex=1)
+              .navbar-burger.burger(data-target="navMenuburger" @click="openMobileMyMenu")
                 figure.is-35x35.is-1by1.figure-image.user-header-wrapper
                   img.user-header(:src='user.profile_img', alt='Image', width=35, height=35)
           .search.column
@@ -31,7 +31,7 @@
               .control
                 button.button.btn-search(type="button" @click="fetch") Search
 
-          #navMenuburger.navbar-menu(tabindex=0)
+          #navMenuburger.navbar-menu
             .navbar-end
               .navbar-item.has-dropdown.is-hoverable.is-right
                 a.navbar-link
@@ -75,15 +75,15 @@ export default {
   methods: {
     getUserImg(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('pk');
+      let pk = window.sessionStorage.getItem('pk');
       this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
-                  window.localStorage.setItem('user_img', this.user.profile_img);
-                  window.localStorage.setItem('user_email', this.user.email);
-                  window.localStorage.setItem('user_nickname', this.user.nickname);
-                  window.localStorage.setItem('user_username', this.user.username);
+                  window.sessionStorage.setItem('user_img', this.user.profile_img);
+                  window.sessionStorage.setItem('user_email', this.user.email);
+                  window.sessionStorage.setItem('user_nickname', this.user.nickname);
+                  window.sessionStorage.setItem('user_username', this.user.username);
                   })
                 .catch(error => console.log(error.response));
     },
@@ -94,12 +94,6 @@ export default {
         let pk = response.data.user;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
-          window.localStorage.removeItem('pk', pk)
-          window.localStorage.removeItem('searchKeyword')
-          window.localStorage.removeItem('user_email')
-          window.localStorage.removeItem('user_img')
-          window.localStorage.removeItem('user_nickname')
-          window.localStorage.removeItem('user_username')
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
@@ -120,8 +114,12 @@ export default {
     fetch(){
       // const loadingComponent = this.$loading.open()
       // setTimeout(() => loadingComponent.close(), 1 * 1000)
+      if(this.search.trim()===''){
+        alert("빈 공백은 검색 할 수 없습니다.")
+        return
+      }
       let search = this.search.trim();
-      window.localStorage.setItem('searchKeyword',search)
+      window.sessionStorage.setItem('searchKeyword',search)
       this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
                   if(response.data.count != 0){

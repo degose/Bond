@@ -79,8 +79,7 @@
         //- nav.pagination.is-centered
           //- button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
          
-        //- to-the-top-btn
-        ToTheTopBTN 
+        to-the-top-b-t-n
         write-modal(close_message="close lightbox" ref='write_modal')
         leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
@@ -135,7 +134,7 @@ export default {
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
@@ -146,7 +145,7 @@ export default {
     },
     fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){

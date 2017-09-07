@@ -98,7 +98,7 @@ export default {
         formData.append('profile_img', this.$refs.file_input.files[0]);
       }
       this.$http.post(
-        this.$store.state.api_grouplist, 
+        'https://api.thekym.com/group/', 
         formData,
         { 
           headers: {

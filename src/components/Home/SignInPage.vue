@@ -88,13 +88,13 @@ export default {
   },
   methods: {
     signinSubmit(){
-      this.$http.post(this.$store.state.api_signin, this.signin)
+      this.$http.post('https://api.thekym.com/member/login/', this.signin)
       .then(response => {
       let token = response.data.token;
       let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
-          window.localStorage.setItem('pk', pk);
+          window.sessionStorage.setItem('pk', pk);
         }
         this.$router.push( {path: '/MainPage'} );
       })

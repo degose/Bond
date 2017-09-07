@@ -126,7 +126,7 @@ export default {
     goGroup(pk, e){
       this.$router.push({ path: '/JointGroup/'});
       // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-      window.localStorage.setItem('this_group',pk);
+      window.sessionStorage.setItem('this_group',pk);
     }
 }}
 </script>
