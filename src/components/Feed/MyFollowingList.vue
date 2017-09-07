@@ -40,8 +40,8 @@
                   | {{ following_list.length }}
               .card-content
                 ul
-                  li(v-for='following in following_list')
-                    hr.li-hr
+                  li(v-for='(following, i) in following_list')
+                    //- hr.li-hr
                     following-template(:following="following")
           //- .columns
           //-   .column
@@ -159,5 +159,6 @@ body
 .li-hr
   // padding: 0
   margin: 10px 0
+
 
 </style>

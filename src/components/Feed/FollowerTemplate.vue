@@ -1,5 +1,5 @@
 <template lang="pug">
-  article.media
+  article.media.for-hr
     figure.media-left
       p.image.is-48x48.img-user-48
         img.img-user-profile(:src='follower.profile_img', alt='Image')
@@ -17,6 +17,11 @@
 <script>
 export default {
   props: ['follower'],
+  data(){
+    return {
+      
+    }
+  },
   methods: {
     addFollow(pk) {
       let user_token = window.localStorage.getItem('token');
@@ -28,13 +33,11 @@ export default {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
         let pk = window.localStorage.getItem('pk');
-        // let path = null;
-        // let page_num = this.$parent.page_num
-        this.$http.get( 'https://api.thekym.com/member/' + `${pk}` + '/following/',
+        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    let followings = response.data;
-                    this.$parent.following_list = followings;
+                    let followers = response.data;
+                    this.$parent.follower_list = followers;
                     })
                   .catch(error => console.log(error.message))
       }
@@ -53,13 +56,11 @@ export default {
         console.log(response);
         let user_token = window.localStorage.getItem('token');
         let pk = window.localStorage.getItem('pk');
-        // let path = null;
-        // let page_num = this.$parent.page_num
-        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/',
+        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
-                    let followings = response.data;
-                    this.$parent.following_list = followings;
+                    let followers = response.data;
+                    this.$parent.follower_list = followers;
                     })
                   .catch(error => console.log(error.message))
       }
@@ -112,5 +113,16 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
+.is-follow
+  background: none
+  border: 1px solid $bond
+  color: $bond
+.for-hr
+  // background: yellow
+  position: relative
+  border-top: 1px solid hsl(0, 0%, 86%)
+  padding: 10px 0
+
+
 
 </style>

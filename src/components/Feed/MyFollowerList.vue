@@ -41,7 +41,7 @@
               .card-content
                 ul
                   li(v-for='follower in follower_list')
-                    hr.li-hr
+                    //- hr.li-hr
                     follower-template(:follower="follower")
           //- .columns
             //- .column
