@@ -139,7 +139,7 @@ export default {
 .pagination-btn
   color: $bond
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 .dropdownhr
   margin: 5px
 .grouplist-nav

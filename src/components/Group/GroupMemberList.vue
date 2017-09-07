@@ -41,45 +41,29 @@
                   | {{group_data.name}}
                   | &nbsp; 
               .card-content
-                table.table.is-fullwidth
-                  caption.a11y-hidden 그룹멤버
-                  thead
-                      //- tr
-                      th
-                      th
-                      
-
-                      th 
-                    
-                  tbody
-                    tr(v-if="this.pagination.prev === null")
-                      td
-                        figure.image.is-48x48.img-user-48
+                ul
+                  li(v-if="this.pagination.prev === null")
+                    hr.li-hr
+                    article.media
+                      figure.media-left
+                        p.image.is-48x48.img-user-48
                           img.img-user-profile(:src='is_owner.profile_img', alt='Image')
-                      td 
-                        p.namelist.owner {{is_owner.nickname}}
-                          | &nbsp;  
-                          | &nbsp;  
-                          span.tag.is-rounded.is-dark 그룹장
-                      td
+                      .media-content
+                        .content   
+                          p.namelist.name {{is_owner.nickname}}
+                            | &nbsp;  
+                            | &nbsp;  
+                            span.tag.is-rounded.is-dark.owner-tag 그룹장
+                      .media-right 
                         button.card-footer-item.btn-show-like
                           span.icon-like
-                            button.tag.is-rounded.is-follow(type="submit" @click="addFollow(is_owner.pk)") 팔로우
-                            button.tag.is-rounded.is-primary(type="submit" @click="deleteFollow(is_owner.pk)") 팔로잉                      
-                    tr(v-for='member in member_list')
-                      td
-                        figure.image.is-48x48.img-user-48
-                          img.img-user-profile(:src='member.profile_img', alt='Image')
-                      td 
-                        p.namelist {{member.nickname}}
-                      
-                      td
-                        button.card-footer-item.btn-show-like
-                          span.icon-like
-                            button.tag.is-rounded.is-follow(type="submit" @click="addFollow(member.pk)") 팔로우
-                            button.tag.is-rounded.is-primary(type="submit" @click="deleteFollow(member.pk)") 팔로잉
-                          | &nbsp;  
-                          //- | {{ post.like_count }}
+                            button.tag.is-rounded.is-follow(type="submit" @click="addFollow1(is_owner.pk)" v-if="!is_owner.is_follow") 팔로우
+                            button.tag.is-rounded.is-primary(type="submit" @click="deleteFollow1(is_owner.pk)" v-else) 팔로잉    
+              
+                
+                  li(v-for='member in member_list')
+                    hr.li-hr       
+                    group-member-template(:member = "member")    
           .columns
             .column
               nav.pagination.is-centered
@@ -89,13 +73,10 @@
 </template>
 
 <script>
-// import InvitationModal from './InvitationModal'
+import GroupMemberTemplate from './GroupMemberTemplate'
 export default {
   components:{
-    // InvitationModal,
-  },
-  beforeCreate(){
-    this.hash = this.$route.hash;
+    GroupMemberTemplate
   },
   created(){
     this.fetchGroupData();
@@ -105,12 +86,6 @@ export default {
     this.fetchGroupData();
     this.fetchGroupMember();
   },
-  // mounted(){
-  //   let el = document.querySelector(this.$route.hash);
-  //   console.log(el);
-  //   el.scrollIntoView(true);
-  //   // console.log(scrollIntoView);
-  // },
   data() {
     return{
       visible: false,
@@ -118,18 +93,18 @@ export default {
       pk:'',
       member_list:[],
       is_owner:{},
-      page_num: '',
+      page_num: 1,
       pagination:{
         next: '', 
         prev: '',
         all: ''
       },
-      // hash: '#scrollpos',
+      memberFollow:[]
     }
   },  
   methods: {
-    addFollow(pk) {
-      console.log(pk)
+    // 그룹장 관련
+    addFollow1(pk) {
       let user_token = window.localStorage.getItem('token');
       this.$http.post('https://api.thekym.com/member/relation/',
        {to_user: pk},
@@ -137,21 +112,24 @@ export default {
       )
       .then(response=> {
         console.log(response)
-        })
-      .catch(error => console.log(error.response))
+        this.is_owner.is_follow = !this.is_owner.is_follow
+      }
+      )
+      .catch(error => alert(error.response.data.to_user))
     },
-    deleteFollow(pk) {
+    deleteFollow1(pk) {
       let user_token = window.localStorage.getItem('token');
       this.$http.delete('https://api.thekym.com/member/relation/',{
         headers: {'Authorization' : `Token ${user_token}`},
         data:{"to_user":pk}
-       }
+        }
       )
       .then(response=> {
         console.log(response)
+        this.is_owner.is_follow = !this.is_owner.is_follow
       }
       )
-      .catch(error => console.log(error.response));
+      .catch(error => alert(error.response.data.to_user))
     },
     openLeaveGroupModal(){
       this.$refs.leave_group_modal.visible = true;
@@ -172,35 +150,36 @@ export default {
       let user_token = window.localStorage.getItem('token');
       let pk = window.localStorage.getItem('this_group');
       let path = null;
-      let page_num = 1;
-      if (this.page_num.trim() === ''){
-        path = 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`
+
+      if (this.page_num === 1){
+        path = 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${this.page_num}`
       }
       else{
         path = this.pagination[direction];
-        page_num = this.page_num;
+        // page_num = this.page_num;
       }
       this.$http.get(path, 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
-                  
+                  this.memberFollow = []
                   let members = response.data.results;
-                  // this.member_list = members;
                   this.pagination.next = response.data.next;
                   this.pagination.prev = response.data.previous;
                   let owner = this.is_owner;
                   for(let i = 0; i < members.length; i++){
                     if(members[i].pk === owner.pk){
-                      
-                      // members.splice(i,1); 
+                      members.splice(i,1); 
+                    }else if
+                    (members[i].pk !== owner.pk){
+                    this.memberFollow.push(members[i].is_follow)
                     }
                   }
                   this.member_list = members;
-                  console.log(this.member_list[0].is_follow)
                 })
                 .catch(error => console.log(error.message))
     },
     nextPage(){
+      this.page_num ++;
       let api_path = this.pagination.next;
       if (api_path !== null) {
       let page_path = api_path.slice(-1);
@@ -209,6 +188,7 @@ export default {
       }
     },
     prevPage(){
+      this.page_num --;
       let api_path = this.pagination.prev;
       if(this.page_num >= 3){
       let page_path = api_path.slice(-1);
@@ -244,7 +224,7 @@ export default {
 body
   background: #eee
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 
 .img-user-48
   background: #eee
@@ -257,10 +237,13 @@ body
   min-height: 100%
   width: 100%
 
-.namelist,
+.namelist
   padding-top: 13px
-// .tag.is-rounded
-//   margin-top: 13px
+  // .owner-tag
+  //   margin-bottom: -40px
+.name
+  margin-left: 20%
+
 .card-header-title
   font-size: 25px
   padding-left: 0
@@ -278,5 +261,7 @@ body
   background: none
   border: 1px solid $bond
   color: $bond
-
+.li-hr
+  // padding: 0
+  margin: 10px 0
 </style>

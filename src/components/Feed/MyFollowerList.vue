@@ -35,37 +35,19 @@
                 .card-header-title
                   | &nbsp;  
                   | &nbsp;  
-                  | 팔로잉
+                  | 팔로워
                   | &nbsp; 
+                  | {{ follower_list.length }}
               .card-content
-                table.table.is-fullwidth
-                  caption.a11y-hidden 팔로잉
-                  thead
-                      //- tr
-                      th
-                      th
-                      
-
-                      th 
-                    
-                  tbody
-                    tr(v-for='follower in follower_list')
-                      td
-                        figure.image.is-48x48.img-user-48
-                          img.img-user-profile(:src='follower.profile_img', alt='Image')
-                      td 
-                        p.namelist {{follower.nickname}}
-                      
-                      td
-                        button(type="submit" ).card-footer-item.btn-show-like
-                          span.icon-like
-                            button.tag.is-rounded.is-follow(@click="deleteFollow(follower.pk)") 팔로우
-                            button.tag.is-rounded.is-primary(@click="deleteFollow(follower.pk)") 팔로잉
-          .columns
-            .column
-              nav.pagination.is-centered
-                button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
-                button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
+                ul
+                  li(v-for='follower in follower_list')
+                    hr.li-hr
+                    follower-template(:follower="follower")
+          //- .columns
+            //- .column
+            //-   nav.pagination.is-centered
+            //-     button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
+            //-     button.pagination-next.pagination-btn(@click="nextPage()" :disabled='pagination.next === null') 다음 페이지  
       //- ToTheTopBTN 
       //- main-footer
       MakingGroupModal(ref="my_modal" close_message="close lightbox")
@@ -77,13 +59,15 @@
 import MakingGroupModal from '../Group/MakingGroupModal';
 // import MainFooter from '../Header-Footer/MainFooter';
 import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
+import FollowerTemplate from './FollowerTemplate';
 
 export default {
   components:{
     // MainHeader,
     MakingGroupModal,
     // MainFooter,
-    ToTheTopBTN
+    ToTheTopBTN,
+    FollowerTemplate
   },
   created(){
     this.getMyGroupList();
@@ -132,7 +116,7 @@ export default {
                 .then(response => {
                   let followers = response.data;
                   this.follower_list = followers;
-                  console.log('followers',followers);
+                  // console.log('followers',followers);
                   // this.pagination.next = response.data.next;
                   // this.pagination.prev = response.data.previous;
                 })
@@ -202,7 +186,7 @@ export default {
 body
   background: #eee
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 
 .img-user-48
   background: #eee
@@ -214,6 +198,14 @@ body
 .img-user-profile
   min-height: 100%
   width: 100%
+.group-img-small-wrapper
+  width: 32px
+  height: 32px
+  overflow: hidden
+  border-radius: 10%
+.group-img-small
+  width: 100%
+  min-height: 100%
 
 .namelist,
   padding-top: 13px
@@ -228,5 +220,8 @@ body
   color: $bond
 .card-wrapper
   min-height: 80vh
+.li-hr
+  // padding: 0
+  margin: 10px 0
 
 </style>
