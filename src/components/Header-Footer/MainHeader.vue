@@ -76,7 +76,7 @@ export default {
     getUserImg(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.sessionStorage.getItem('pk');
-      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/',
+      this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
@@ -88,7 +88,7 @@ export default {
                 .catch(error => console.log(error.response));
     },
     signOut(){
-      this.$http.post('https://api.thekym.com/member/logout/')
+      this.$http.post('http://api.thekym.com/member/logout/')
       .then(response => {
         let token = response.data.token;
         let pk = response.data.user;
@@ -120,7 +120,7 @@ export default {
       }
       let search = this.search.trim();
       window.sessionStorage.setItem('searchKeyword',search)
-      this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
+      this.$http.get('http://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
                   if(response.data.count != 0){
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});

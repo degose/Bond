@@ -112,7 +112,7 @@ export default {
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.sessionStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
+      this.$http.get('http://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -122,7 +122,7 @@ export default {
     getMyGroupList(){
           let user_token = window.localStorage.getItem('token');
           
-          this.$http.get('https://api.thekym.com/group/my-group/', 
+          this.$http.get('http://api.thekym.com/group/my-group/', 
             {headers: { 'Authorization' : `Token ${user_token}` }}
           )
           .then(response => {
@@ -137,7 +137,7 @@ export default {
         let path = null;
         let page_num = 1;
         if (this.page_num.trim() === ''){
-          path = 'https://api.thekym.com/post/my-group/?page='+`${page_num}`
+          path = 'http://api.thekym.com/post/my-group/?page='+`${page_num}`
       }
         else  {
         path = this.pagination[direction];

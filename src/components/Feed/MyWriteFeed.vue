@@ -132,11 +132,11 @@ export default {
       let user_nickname = window.sessionStorage.getItem('user_nickname');
       let confirmPostDelete = confirm(`${user_nickname}` + '님, 정말 이 글을 삭제하시겠습니까?');
       if ( confirmPostDelete === true ){
-        this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
+        this.$http.delete('http://api.thekym.com/post/' + `${pk}`+ '/',
           { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response=> {
             let group_pk = window.sessionStorage.getItem('this_group');
-            this.$http.get('https://api.thekym.com/post/?author=' + `${user_pk}`,
+            this.$http.get('http://api.thekym.com/post/?author=' + `${user_pk}`,
               { headers: {'Authorization' : `Token ${user_token}`} })
               .then(response=> {
                 let data = response.data.results;
@@ -158,7 +158,7 @@ export default {
     getMyGroupList(){
         let user_token = window.localStorage.getItem('token');
         
-        this.$http.get('https://api.thekym.com/group/my-group/', 
+        this.$http.get('http://api.thekym.com/group/my-group/', 
           {headers: { 'Authorization' : `Token ${user_token}` }}
         )
         .then(response => {
@@ -173,7 +173,7 @@ export default {
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){
-        path = 'https://api.thekym.com/post/?author='+`${pk}` + '&page=' +`${page_num}`
+        path = 'http://api.thekym.com/post/?author='+`${pk}` + '&page=' +`${page_num}`
       }
       else{
         path = this.pagination[direction];

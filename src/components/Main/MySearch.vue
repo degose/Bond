@@ -62,7 +62,7 @@ export default {
       let direction = this.direction;
       let newsearch = this.newsearch;
       if ( this.page_num.trim() === '' || `${newsearch}` !== `${search}`) {
-        path = 'https://api.thekym.com/group/?search='+`${search}`;
+        path = 'http://api.thekym.com/group/?search='+`${search}`;
         this.newsearch = `${search}`;
       }
       else{

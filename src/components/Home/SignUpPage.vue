@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     signupSubmit(){
-      this.$http.post('https://api.thekym.com/member/', this.signup)
+      this.$http.post('http://api.thekym.com/member/', this.signup)
                 .then(response => {
                   console.log(response);
                   this.$router.push( {path: '/SignInPage'} );

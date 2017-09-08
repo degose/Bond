@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     signOut(){
-      this.$http.post('https://api.thekym.com/member/logout/')
+      this.$http.post('http://api.thekym.com/member/logout/')
       .then(response => {
         let token = response.data.token;
         let pk = response.data.user;
@@ -86,7 +86,7 @@ export default {
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
-      this.$http.get('https://api.thekym.com/member/', this.user,
+      this.$http.get('http://api.thekym.com/member/', this.user,
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
           

@@ -74,7 +74,7 @@ export default {
       let path = null;
       let page_num = 1;
       if ( this.page_num.trim() === '' ) {
-        path = "https://api.thekym.com/group/my-group/?page="+`${page_num}`
+        path = "http://api.thekym.com/group/my-group/?page="+`${page_num}`
       }
       else {
         path = this.pagination[direction];

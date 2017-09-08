@@ -15,21 +15,21 @@
           p.is-hidden-mobile
             strong FrontEndSchool
             | &nbsp; 
-            a(href='https://github.com/realkth' target="_blank") 김태훈
+            a(href='http://github.com/realkth' target="_blank") 김태훈
             |  · 
-            a(href='https://github.com/chamsinnim' target="_blank") 한성욱
+            a(href='http://github.com/chamsinnim' target="_blank") 한성욱
             |  · 
-            a(href='https://github.com/degose' target="_blank") 고세민
+            a(href='http://github.com/degose' target="_blank") 고세민
             | &nbsp; 
             | /
             | &nbsp; 
             strong BackEndSchool
             | &nbsp; 
-            a(href='https://github.com/Gyong1211' target="_blank") 김기홍
+            a(href='http://github.com/Gyong1211' target="_blank") 김기홍
             |  · 
-            a(href='https://github.com/ym4199' target="_blank") 김영민
+            a(href='http://github.com/ym4199' target="_blank") 김영민
             |  · 
-            a(href='https://github.com/dahamlee' target="_blank") 이다함
+            a(href='http://github.com/dahamlee' target="_blank") 이다함
           p.is-hidden-tablet.is-hidden-desktop
             a(href='http://jgthms.com') 패스트캠퍼스
 
