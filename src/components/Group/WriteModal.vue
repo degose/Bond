@@ -126,7 +126,7 @@ export default {
       }
       formData.append('group', pk);
       
-      this.$http.post('https://api.thekym.com/post/', formData,
+      this.$http.post('http://api.thekym.com/post/', formData,
         { 
           headers: {
             'Authorization' : `Token ${user_token}`,

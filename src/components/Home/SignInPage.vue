@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     signinSubmit(){
-      this.$http.post('https://api.thekym.com/member/login/', this.signin)
+      this.$http.post('http://api.thekym.com/member/login/', this.signin)
       .then(response => {
       let token = response.data.token;
       let pk = response.data.user;

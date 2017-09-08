@@ -25,7 +25,7 @@ export default {
   methods: {
     addFollow(pk) {
       let user_token = window.localStorage.getItem('token');
-      this.$http.post('https://api.thekym.com/member/relation/',
+      this.$http.post('http://api.thekym.com/member/relation/',
        {to_user: pk},
        {headers: {'Authorization' : `Token ${user_token}`}}
       )
@@ -34,7 +34,7 @@ export default {
         let pk = window.sessionStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
-        this.$http.get( 'https://api.thekym.com/member/' + `${pk}` + '/follower/',
+        this.$http.get( 'http://api.thekym.com/member/' + `${pk}` + '/follower/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
                     let followers = response.data;
@@ -48,7 +48,7 @@ export default {
     },
     deleteFollow(pk) {
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('https://api.thekym.com/member/relation/',{
+      this.$http.delete('http://api.thekym.com/member/relation/',{
         headers: {'Authorization' : `Token ${user_token}`},
         data:{"to_user":pk}
        }
@@ -58,7 +58,7 @@ export default {
         let pk = window.sessionStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
-        this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/',
+        this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/follower/',
         { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
                     let followers = response.data;

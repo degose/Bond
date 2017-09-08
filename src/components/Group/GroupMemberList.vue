@@ -106,7 +106,7 @@ export default {
     // 그룹장 관련
     addFollow1(pk) {
       let user_token = window.localStorage.getItem('token');
-      this.$http.post('https://api.thekym.com/member/relation/',
+      this.$http.post('http://api.thekym.com/member/relation/',
        {to_user: pk},
        {headers: {'Authorization' : `Token ${user_token}`}}
       )
@@ -118,7 +118,7 @@ export default {
     },
     deleteFollow1(pk) {
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('https://api.thekym.com/member/relation/',{
+      this.$http.delete('http://api.thekym.com/member/relation/',{
         headers: {'Authorization' : `Token ${user_token}`},
         data:{"to_user":pk}
         }
@@ -135,7 +135,7 @@ export default {
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.sessionStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
+      this.$http.get('http://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}}
        )
         .then(response=> {
@@ -150,7 +150,7 @@ export default {
       let path = null;
 
       if (this.page_num === 1){
-        path = 'https://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${this.page_num}`
+        path = 'http://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${this.page_num}`
       }
       else{
         path = this.pagination[direction];

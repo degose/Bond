@@ -89,7 +89,7 @@ export default {
   methods: {
     getMyGroupList(){
         let user_token = window.localStorage.getItem('token');
-        this.$http.get('https://api.thekym.com/group/my-group/', 
+        this.$http.get('http://api.thekym.com/group/my-group/', 
           {headers: { 'Authorization' : `Token ${user_token}` }}
         )
         .then(response => {
@@ -102,7 +102,7 @@ export default {
     fetchFollower(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.sessionStorage.getItem('pk');
-      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/follower/', 
+      this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/follower/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   let followers = response.data;
@@ -113,7 +113,7 @@ export default {
     fetchFollowing(direction){
       let user_token = window.localStorage.getItem('token');
       let pk = window.sessionStorage.getItem('pk');
-      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/following/', 
+      this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/following/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   let followings = response.data;

@@ -110,7 +110,7 @@ export default {
         formData.append('profile_img', this.$refs.file_input.files[0]);
       }
       this.$http.patch(
-        'https://api.thekym.com/member/' + `${pk}` + '/', 
+        'http://api.thekym.com/member/' + `${pk}` + '/', 
         formData,
         { 
           headers: {
@@ -141,7 +141,7 @@ export default {
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
       let pk = window.sessionStorage.getItem('pk');
-      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/',
+      this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
