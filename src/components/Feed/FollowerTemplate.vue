@@ -116,4 +116,9 @@ body
   background: none
   border: 1px solid $bond
   color: $bond
+.for-hr
+  // background: yellow
+  position: relative
+  border-top: 1px solid hsl(0, 0%, 86%)
+  padding: 10px 0
 </style>
