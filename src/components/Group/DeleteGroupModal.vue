@@ -37,9 +37,9 @@ export default {
       this.visible = false;
     },
     closeDeleteModal(){
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('https://api.thekym.com/group/' + `${pk}` + '/',
+      this.$http.delete('http://api.thekym.com/group/' + `${pk}` + '/',
                 { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.$router.push({ path: '/MainPage'});
@@ -56,4 +56,5 @@ export default {
 </script>
 <style lang="sass" scoped>
 
+  
 </style>

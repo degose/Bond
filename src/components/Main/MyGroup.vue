@@ -10,7 +10,7 @@
               .card
                 .card-image
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper
-                    img(:src="group.profile_img" alt='Image')
+                    img.img-group_list(:src="group.profile_img" alt='Image')
                 .card-content
                   .media
                     .media-content.has-text-centered.ellipsis-wrapper
@@ -22,8 +22,8 @@
               a(@click="openModal")
                 .card-image.makegroup
                   figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-grouplist-wrapper.is-hidden-mobile
-                      img(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
-                      img(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
+                      img.img-group_list(src='../../assets/group-add-hoverx2-tablet.png', alt='Image').is-hidden-tablet.is-hidden-mobile
+                      img.img-group_list(src='../../assets/group-add-hoverx2.png', alt='Image').is-hidden-mobile
                 .card-content
                   .media
                     .media-content.has-text-centered
@@ -74,7 +74,7 @@ export default {
       let path = null;
       let page_num = 1;
       if ( this.page_num.trim() === '' ) {
-        path = "https://api.thekym.com/group/my-group/?page="+`${page_num}`
+        path = "http://api.thekym.com/group/my-group/?page="+`${page_num}`
       }
       else {
         path = this.pagination[direction];
@@ -90,7 +90,6 @@ export default {
         this.pagination.prev = data.previous;
         // 총 페이지 수. 11은 그룹리스트 페이지네이션 기준 값..
         this.$router.push({ path: '/MainPage/', query: { page: `${page_num}` }});
-        console.log(response)
       })
       .catch(error => {
         console.log(error.message);
@@ -127,7 +126,7 @@ export default {
     goGroup(pk, e){
       this.$router.push({ path: '/JointGroup/'});
       // this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
-      window.localStorage.setItem('this_group',pk);
+      window.sessionStorage.setItem('this_group',pk);
     }
 }}
 </script>
@@ -140,21 +139,29 @@ export default {
 .pagination-btn
   color: $bond
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 .dropdownhr
   margin: 5px
 .grouplist-nav
   margin-top: 100px
-  // margin-bottom: 200px
-.plusgroup
-  background: yellow
+  
 .img-grouplist-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  // min-height: 135px
+  height: 150px
   overflow: hidden
   // background: #eee
+  position: relative
+
+.img-group_list
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
+
+  
 .grouplist-wrapper
   min-height: 80vh
   flex-wrap: wrap

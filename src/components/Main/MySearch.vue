@@ -6,25 +6,25 @@
           .column.is-10.is-offset-1
             .box.fetched-data
               article.media.fetched-data-item(v-for = "(group,i) in group_list")
-                a(@click.prevent ="goGroup(group.pk, i)")
-                  .media-left
-                    figure.image.is-64x64
-                      img(:src='group.profile_img', alt='Image')
-                  .media-content
-                    .content
-                      p(style='white-space: pre-line')
-                        strong {{group.name}}
-                        br
-                        |           {{group.description}}
-                      div
-                        span.icon.is-small.member
-                          i.fa.fa-users(aria-hidden='true')
-                        small    {{group.num_of_members}}
-                        | &nbsp; 
-                        | &nbsp; 
-                        span.icon.is-small.leader
-                          i.fa.fa-user-circle-o(aria-hidden='true')
-                        small    {{group.owner.nickname}}
+                //- a(@click.prevent ="goGroup(group.pk, i)")
+                a(@click.prevent ="goGroup(group.pk, i)").media-left
+                  figure.image.is-64x64.group-search-img-wrapper
+                    img.group-search-img(:src='group.profile_img', alt='Image')
+                a(@click.prevent ="goGroup(group.pk, i)").media-content
+                  .content
+                    p(style='white-space: pre-line')
+                      strong {{group.name}}
+                      br
+                      |           {{group.description}}
+                    div
+                      span.icon.is-small.member
+                        i.fa.fa-users(aria-hidden='true')
+                      small    {{group.num_of_members}}
+                      | &nbsp; 
+                      | &nbsp; 
+                      span.icon.is-small.leader
+                        i.fa.fa-user-circle-o(aria-hidden='true')
+                      small    {{group.owner.nickname}}
 
         .columns
           .column
@@ -57,12 +57,12 @@ export default {
       setTimeout(() => loadingComponent.close(), 1 * 1000)
       
       let path = null;
-      let search = window.localStorage.getItem('searchKeyword');
+      let search = window.sessionStorage.getItem('searchKeyword');
       let user_token = window.localStorage.getItem('token');
       let direction = this.direction;
       let newsearch = this.newsearch;
       if ( this.page_num.trim() === '' || `${newsearch}` !== `${search}`) {
-        path = 'https://api.thekym.com/group/?search='+`${search}`;
+        path = 'http://api.thekym.com/group/?search='+`${search}`;
         this.newsearch = `${search}`;
       }
       else{
@@ -76,7 +76,7 @@ export default {
             this.pagination.next = data.next;
             this.pagination.prev = data.previous;
             this.is_member = [];
-            for(let i=0;i <response.data.results.length;i++){
+            for(let i=0;i<response.data.results.length;i++){
               this.is_member.push(data.results[i].is_member)
             }
           })
@@ -84,7 +84,7 @@ export default {
     },
     nextPage(){
       let api_path = this.pagination.next;
-      let search = window.localStorage.getItem('searchKeyword');
+      let search = window.sessionStorage.getItem('searchKeyword');
       this.newsearch = `${search}`;
       if (api_path !== null) {
         let first = api_path.indexOf('?page=');
@@ -100,20 +100,20 @@ export default {
       let last = api_path.indexOf('&');
       let first = api_path.indexOf('?page=');
       let page_path = api_path.slice(first, last);
-      let search = window.localStorage.getItem('searchKeyword');
+      let search = window.sessionStorage.getItem('searchKeyword');
       this.newsearch = `${search}`;
       if(this.page_num >= 3){
         this.page_num = page_path[page_path.length - 1];
         this.direction = 'prev';
         this.$router.push({path: '/SearchResult/group/', query: {page: `${this.page_num}`}});
       }else if(this.page_num == 2){
-        let search = window.localStorage.getItem('searchKeyword');
+        let search = window.sessionStorage.getItem('searchKeyword');
         this.direction = 'prev';
         this.$router.push({path: '/SearchResult/group/', query: {search: `${search}`}});
       }
     },
     goGroup(pk, i){
-      window.localStorage.setItem('this_group',pk);
+      window.sessionStorage.setItem('this_group',pk);
       if(this.is_member[i] === true){
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       }
@@ -137,7 +137,16 @@ export default {
 .all-wrapper
   background: #eee
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
+
+.group-search-img-wrapper
+  width: 64px
+  height: 64px
+  overflow: hidden
+  // border-radius: 10%
+.group-search-img
+  width: 100%
+  min-height: 100%
 
 .pagination-btn
   color: $bond

@@ -2,6 +2,8 @@
   //- 가입하지 않은 그룹의 feed
   div.all-wrapper(v-cloak)
     main-header
+    hr.hr.is-hidden-touch
+    hr.hr.is-hidden-desktop
     .container.page-wrapper
       .columns
         //- 그룹 정보 영역
@@ -56,6 +58,7 @@
             .columns.is-mobile.pagination-wrapper
               .column.is-offset-4.is-one-third.has-text-centered
                 button.pagination-next.pagination-btn.is-centered(@click="nextPage()" :disabled='pagination.next === null') 더보기                   
+    ToTheTopBTN
     main-footer
 </template>
 
@@ -63,10 +66,13 @@
 <script>
 import MainHeader from '../Header-Footer/MainHeader';
 import MainFooter from '../Header-Footer/MainFooter';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
+
 export default {
   components: {
     MainHeader,
-    MainFooter
+    MainFooter,
+    ToTheTopBTN
   },
   created(){
     this.fetchGroupData();
@@ -89,9 +95,9 @@ export default {
   },
   methods: {
     jointgroup(){
-        let pk = window.localStorage.getItem('this_group')
+        let pk = window.sessionStorage.getItem('this_group')
         let user_token = window.localStorage.getItem('token')
-        this.$http.post('https://api.thekym.com/member/membership/', {group: pk},
+        this.$http.post('http://api.thekym.com/member/membership/', {group: pk},
                   { headers: {'Authorization' : `Token ${user_token}`}})
                   .then(response => {
                     if(response.status === 201){
@@ -105,8 +111,8 @@ export default {
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
+      let pk = window.sessionStorage.getItem('this_group');
+      this.$http.get('http://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -115,11 +121,11 @@ export default {
     },
     fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){
-        path = 'https://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+        path = 'http://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
       }
       else{
         path = this.pagination[direction];
@@ -139,7 +145,7 @@ export default {
                 .catch(error => console.log(error.response));
     },
     nextPage(){
-      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
+      // "http://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
       let api_path = this.pagination.next;
       if (api_path !== null) {
       let page_path = api_path.slice(-1);
@@ -153,7 +159,7 @@ export default {
       let user_token = window.localStorage.getItem('token');
       console.log('pk:',pk);
       console.log('token:',user_token);
-      this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/',
+      this.$http.post('http://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   console.log('like.response:',response);
@@ -172,15 +178,19 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  height: 150px
   overflow: hidden
+  // background: #eee
+  position: relative
 
 .group_profile_img
-  background: url('http://bulma.io/images/placeholders/1280x960.png')
-  // overflow: hidden
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
 
 .img-user
   background: #eee
@@ -198,7 +208,7 @@ export default {
   background: #eee
 
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
   // background: #eee
 
 .card-wrapper
@@ -237,4 +247,10 @@ export default {
   color: $bond
 .group-info
   // position: fixed
+.hr.is-hidden-desktop
+  margin-top: 112px
+  opacity: 0
+.hr.is-hidden-touch
+  margin-top: 61px
+  opacity: 0
 </style>

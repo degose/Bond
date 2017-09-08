@@ -115,14 +115,14 @@ export default {
   methods: {
     deletePost(pk){
       let user_token = window.localStorage.getItem('token');
-      let user_nickname = window.localStorage.getItem('user_nickname');
+      let user_nickname = window.sessionStorage.getItem('user_nickname');
       let confirmPostDelete = confirm(`${user_nickname}` + '님, 정말 이 글을 삭제하시겠습니까?');
       if ( confirmPostDelete === true ){
-        this.$http.delete('https://api.thekym.com/post/' + `${pk}`+ '/',
+        this.$http.delete('http://api.thekym.com/post/' + `${pk}`+ '/',
           { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response=> {
-            let group_pk = window.localStorage.getItem('this_group');
-            this.$http.get('https://api.thekym.com/post/?group=' + `${group_pk}`,
+            let group_pk = window.sessionStorage.getItem('this_group');
+            this.$http.get('http://api.thekym.com/post/?group=' + `${group_pk}`,
               { headers: {'Authorization' : `Token ${user_token}`} })
               .then(response=> {
                 let data = response.data.results;
@@ -143,13 +143,13 @@ export default {
     },
     writeCommentSubmit(pk){
       let user_token = window.localStorage.getItem('token');
-      let user_img = window.localStorage.getItem('user_img');
-      let user_nickname = window.localStorage.getItem('user_nickname');
+      let user_img = window.sessionStorage.getItem('user_img');
+      let user_nickname = window.sessionStorage.getItem('user_nickname');
       let comment_submit_data = {
         post: pk,
         content: this.write_comment
       }
-      this.$http.post('https://api.thekym.com/post/comment/', 
+      this.$http.post('http://api.thekym.com/post/comment/', 
         comment_submit_data,
         { headers: {'Authorization' : `Token ${user_token}`,}})
         .then(response => {
@@ -162,8 +162,8 @@ export default {
     },
     fetchCommentData(post_pk){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/post/comment/?post=' + `${post_pk}`,
+      let pk = window.sessionStorage.getItem('this_group');
+      this.$http.get('http://api.thekym.com/post/comment/?post=' + `${post_pk}`,
        { headers: {'Authorization' : `Token ${user_token}`} })
                 .then(response=> {
                   this.comment_count = response.data.count;
@@ -174,13 +174,13 @@ export default {
     },
     addLike(pk) {
       let user_token = window.localStorage.getItem('token');
-      this.$http.post('https://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/', true,
+      this.$http.post('http://api.thekym.com/post/' + `${pk}`+ '/post-like-toggle/', true,
        { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response=> {
             let data = response.data;
             let user_token = window.localStorage.getItem('token');
-            let group_pk = window.localStorage.getItem('this_group');
-            this.$http.get('https://api.thekym.com/post/?group=' + `${group_pk}`,
+            let group_pk = window.sessionStorage.getItem('this_group');
+            this.$http.get('http://api.thekym.com/post/?group=' + `${group_pk}`,
               { headers: {'Authorization' : `Token ${user_token}`} })
               .then(response=> {
                 let data = response.data.results;
@@ -198,13 +198,13 @@ export default {
         post: ppk
       }
       let user_token = window.localStorage.getItem('token');
-      let user_nickname = window.localStorage.getItem('user_nickname');
+      let user_nickname = window.sessionStorage.getItem('user_nickname');
       let confirmCommentDelete = confirm(`${user_nickname}` + '님, 정말 이 댓글을 삭제하시겠습니까?');
       if ( confirmCommentDelete === true ){
-        this.$http.delete('https://api.thekym.com/post/comment/' + `${pk}` + '/',
+        this.$http.delete('http://api.thekym.com/post/comment/' + `${pk}` + '/',
           { headers: {'Authorization' : `Token ${user_token}`}})
           .then(response => {
-            this.$http.get('https://api.thekym.com/post/comment/?post=' + `${ppk}`,
+            this.$http.get('http://api.thekym.com/post/comment/?post=' + `${ppk}`,
             { headers: {'Authorization' : `Token ${user_token}`}})
             .then(response=> {
               this.comment_count = response.data.count;
@@ -215,7 +215,6 @@ export default {
             if (error.response.status === 403){
               alert('작성자만 요청할 수 있는 작업입니다.');
             }
-            console.log('delete-error:',error.response);
           });
       }
     },
@@ -301,7 +300,8 @@ body
 .fa-heart-o
   font-size: 1rem
   margin-top: 1px
-
+.card-footer-item
+  display: inline-block
 
 
 </style>

@@ -7,7 +7,7 @@
             .card
               .card-image
                 figure.image.group_profile-wrapper.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1
-                  img(:src='group_data.profile_img', alt='Image')
+                  img.group_profile_img(:src='group_data.profile_img', alt='Image')
               .card-content
                 article.media
                   .media-content
@@ -79,7 +79,7 @@
         //- nav.pagination.is-centered
           //- button.pagination-previous.pagination-btn(@click="prevPage()" :disabled='pagination.prev === null') 이전 페이지
          
-          
+        to-the-top-b-t-n
         write-modal(close_message="close lightbox" ref='write_modal')
         leave-group-modal(close_message="close lightbox" ref='leave_group_modal')
         delete-group-modal(close_message="close lightbox" ref='delete_group_modal')
@@ -92,6 +92,7 @@ import WriteModal from './WriteModal';
 import PostTemplate from './PostTemplate';
 import DeleteGroupModal from './DeleteGroupModal';
 import LeaveGroupModal from './LeaveGroupModal';
+import ToTheTopBTN from '../Header-Footer/ToTheTopBTN';
 
 export default {
   created(){
@@ -117,9 +118,11 @@ export default {
     WriteModal,
     PostTemplate,
     DeleteGroupModal,
-    LeaveGroupModal
+    LeaveGroupModal,
+    ToTheTopBTN
   },
   methods: {
+    
     openWriteModal(){
       this.$refs.write_modal.visible = true;
     },
@@ -131,8 +134,8 @@ export default {
     },
     fetchGroupData(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
-      this.$http.get('https://api.thekym.com/group/' + `${pk}`+ '/',
+      let pk = window.sessionStorage.getItem('this_group');
+      this.$http.get('http://api.thekym.com/group/' + `${pk}`+ '/',
        { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response=> {
                   this.group_data = response.data;
@@ -142,11 +145,11 @@ export default {
     },
     fetchPostData(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let path = null;
       let page_num = 1;
       if (this.page_num.trim() === ''){
-        path = 'https://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
+        path = 'http://api.thekym.com/post/?group=' + `${pk}` + '&page=' +`${page_num}`
       }
       else{
         path = this.pagination[direction];
@@ -166,7 +169,7 @@ export default {
                 .catch(error => console.log(error.response));
     },
     nextPage(){
-      // "https://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
+      // "http://api.thekym.com/post/?group=210&page=2".slice(-1) => 2
       let api_path = this.pagination.next;
       if (api_path !== null) {
       let page_path = api_path.slice(-1);
@@ -201,11 +204,19 @@ export default {
 @import "~style"
 
 .group_profile-wrapper
-  width: auto
-  height: auto
-  min-height: 100px
-  max-height: 135px
+  // width: auto
+  // height: auto
+  height: 150px
   overflow: hidden
+  // background: #eee
+  position: relative
+
+.group_profile_img
+  width: auto
+  min-height: 100%
+  position: absolute
+  top: 30%
+  transform: translateY(-30%) 
 
 .user-img
   background: #eee
@@ -214,10 +225,11 @@ body
   background: #eee
 
 .page-wrapper
-  min-height: 87vh
+  min-height: 115vh
 
 .card-wrapper
   margin-bottom: 20px
+
 
 
 .icon-more
@@ -255,4 +267,6 @@ body
   padding-bottom: 20px
 .disabled-ico
   color: #666
+.icon.is-small
+  padding-bottom: 4px
 </style>

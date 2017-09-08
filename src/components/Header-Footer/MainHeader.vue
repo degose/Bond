@@ -44,10 +44,13 @@
                     | 내 글 보기
                   router-link.navbar-item(to="/MyGroupFeed")
                     | 새 글 보기
+                  router-link.navbar-item(to="/MyFollowList")
+                    | 팔로잉 / 팔로워
                   hr.dropdownhr
                   a.navbar-item(@click="signOut")
                     | 로그 아웃
-        hr.navhr.is-hidden-mobile
+        //- hr.navhr.is-hidden-mobile
+        hr.navhr
         my-setting(close_message="close lightbox" ref='my_setting')
         mobile-my-menu(close_message="close lightbox" ref='mobile_my_menu')
 </template>
@@ -72,31 +75,25 @@ export default {
   methods: {
     getUserImg(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('pk');
-      this.$http.get('https://api.thekym.com/member/' + `${pk}` + '/',
+      let pk = window.sessionStorage.getItem('pk');
+      this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
-                  window.localStorage.setItem('user_img', this.user.profile_img);
-                  window.localStorage.setItem('user_email', this.user.email);
-                  window.localStorage.setItem('user_nickname', this.user.nickname);
-                  window.localStorage.setItem('user_username', this.user.username);
+                  window.sessionStorage.setItem('user_img', this.user.profile_img);
+                  window.sessionStorage.setItem('user_email', this.user.email);
+                  window.sessionStorage.setItem('user_nickname', this.user.nickname);
+                  window.sessionStorage.setItem('user_username', this.user.username);
                   })
                 .catch(error => console.log(error.response));
     },
     signOut(){
-      this.$http.post('https://api.thekym.com/member/logout/')
+      this.$http.post('http://api.thekym.com/member/logout/')
       .then(response => {
         let token = response.data.token;
         let pk = response.data.user;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
-          window.localStorage.removeItem('pk', pk)
-          window.localStorage.removeItem('searchKeyword')
-          window.localStorage.removeItem('user_email')
-          window.localStorage.removeItem('user_img')
-          window.localStorage.removeItem('user_nickname')
-          window.localStorage.removeItem('user_username')
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
@@ -117,9 +114,13 @@ export default {
     fetch(){
       // const loadingComponent = this.$loading.open()
       // setTimeout(() => loadingComponent.close(), 1 * 1000)
+      if(this.search.trim()===''){
+        alert("빈 공백은 검색 할 수 없습니다.")
+        return
+      }
       let search = this.search.trim();
-      window.localStorage.setItem('searchKeyword',search)
-      this.$http.get('https://api.thekym.com/'+'group/?search='+`${search}`)
+      window.sessionStorage.setItem('searchKeyword',search)
+      this.$http.get('http://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
                   if(response.data.count != 0){
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
@@ -151,26 +152,26 @@ export default {
 .user-header
   width: 100%
   min-height: 100%
-  // position: absolute
-  // top: 0 
-  // bottom: 0
-  // right: 0
-  // left: 0
-
-
-
 .navbar-burger.burger
   padding-top: 8px
   padding-left: 10px
 .navhr
-  margin: 0 5px 30px 5px
-  // margin: 0
+  // margin: 0 5px 30px 5px
+  margin: 0
+  // padding: 0
 .dropdownhr
   margin: 5px
-.nav-fixed
-  position: fixed
+
 .nav-bg
+  position: fixed 
+  top: 0
+  width: 100%
   background: #fff
+  z-index: 10
+  // left: 0
+  // border-top: 0
+
 .btn-search
   color: $primary
+
 </style>

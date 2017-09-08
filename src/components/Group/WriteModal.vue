@@ -7,10 +7,10 @@
 
       section.modal-card-body
         .card-content
-          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content')
+          textarea.write-text-modal(type="text" placeholder='소식을 남겨주세요.', rows='10' @input="writePost('content', $event)" @value='write.content' v-focus="true")
         .card-content(v-if="file_name.length > 0")
           figure.image.is-desktop-16by9.is-mobile-1by1.is-tablet-2by1.img-group-wrapper
-            img(:src="uploadImg", alt='Image')
+            img.canvas(:src="uploadImg", alt='Image')
 
       form(id="uploadFile" name="uploadFile" method="POST" enctype="multipart/form-data" @submit.prevent="")
         footer.card-footer
@@ -37,7 +37,16 @@
 </template>
 
 <script>
+const focus = {
+    inserted(el) {
+      el.focus()
+    },
+  }
 export default {
+  directives: { focus },
+  // mounted(){
+  //      this.$refs.inputText.focus();
+  // },
   props: {
     close_message: {
       type: String,
@@ -45,12 +54,13 @@ export default {
     },
     is_visible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       visible: this.is_visible,
+      focus: this.focus,
       uploadImg: '',
       write: {
         // 텍스트 내용
@@ -64,6 +74,7 @@ export default {
       file_url: '',
       file_name: '',
       flie: null,
+      img: ''
     }
   },
   methods: {
@@ -71,7 +82,9 @@ export default {
       this.uploadImg = '';
       this.$refs.file_img_input = '';
       this.write.content = '';
-      this.visible = false;
+      this.write.img = '';
+      this.file_name = '';
+      this.file = null;
       this.visible = false;
     },
     checkImage(file){
@@ -99,20 +112,21 @@ export default {
     writeTextSubmit(){
       // 토큰 값으로 유저가 누구인지 인증
       let user_token = window.localStorage.getItem('token');
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let formData = new FormData();
-      let user_pk = window.localStorage.getItem('pk');
-      let user_img = window.localStorage.getItem('user_img');
-      let user_nickname = window.localStorage.getItem('user_nickname');
+      let user_pk = window.sessionStorage.getItem('pk');
+      let user_img = window.sessionStorage.getItem('user_img');
+      let user_nickname = window.sessionStorage.getItem('user_nickname');
 
       formData.append('content', this.write.content);
 
       if(!!this.$refs.file_img_input.files[0] ){
+        
         formData.append('image', this.$refs.file_img_input.files[0]);
       }
       formData.append('group', pk);
       
-      this.$http.post(this.$store.state.api_write, formData,
+      this.$http.post('http://api.thekym.com/post/', formData,
         { 
           headers: {
             'Authorization' : `Token ${user_token}`,
@@ -161,8 +175,7 @@ export default {
 
 .card-footer-item
   background: #fff
-.ca
-  cursur: pointer
+
 
 .write-text-modal
   border: none
@@ -175,10 +188,11 @@ export default {
 // input
 // span,
 // i
-//   cursur: pointer
 
 .disabled-ico
   color: #666
+
+
 
   
 </style>

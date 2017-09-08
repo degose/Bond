@@ -37,11 +37,11 @@ export default {
       this.visible = false;
     },
     deleteMembership(){
-      let pk = window.localStorage.getItem('this_group');
+      let pk = window.sessionStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
-      this.$http.delete('https://api.thekym.com/member/membership/',
-              {group: pk},
-              { headers: {'Authorization' : `Token ${user_token}`}}
+      this.$http.delete('http://api.thekym.com/member/membership/',{
+              data:{"group":pk},
+              headers: {'Authorization' : `Token ${user_token}`}}
               )
               .then(response => {
                 this.$router.push({ path: '/NoneJointGroupFeed/', query: { group: `${pk}` }});

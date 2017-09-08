@@ -28,7 +28,7 @@
                       i.fa.fa-check
                 .column.is-half.is-offset-one-quarter
                   .control.has-icons-left.has-icons-right
-                    input.input(type='password', v-model="signin.password" placeholder='비밀번호를 입력해주세요.', aria-label="비밀번호 입력상자")
+                    input.input(type='password', v-model="signin.password" placeholder='비밀번호를 입력해주세요.', aria-label="비밀번호 입력상자" @keyup.enter="signinSubmit")
                     span.icon.is-small.is-left
                       i.fa.fa-lock
                     span.icon.is-small.is-right
@@ -57,13 +57,13 @@
                         i.fa.fa-check
                   .column.is-half.is-offset-one-quarter
                     .control.has-icons-left.has-icons-right
-                      input.input(type='password', v-model="signin.password" placeholder='비밀번호를 입력해주세요.', aria-label="비밀번호 입력상자")
+                      input.input(type='password', v-model="signin.password" placeholder='비밀번호를 입력해주세요.', aria-label="비밀번호 입력상자" @keyup.enter="signinSubmit")
                       span.icon.is-small.is-left
                         i.fa.fa-lock
                       span.icon.is-small.is-right
                         i.fa.fa-check
                   .control.column.is-half.is-offset-one-quarter
-                    button.column.btn-fill.btn-login(type="button" @click="signinSubmit") 로그인
+                    button.column.btn-fill.btn-login(type="button" @click="signinSubmit" ) 로그인
               
               .field
                 .control.column.is-half.is-offset-one-quarter.has-text-centered
@@ -88,13 +88,13 @@ export default {
   },
   methods: {
     signinSubmit(){
-      this.$http.post(this.$store.state.api_signin, this.signin)
+      this.$http.post('http://api.thekym.com/member/login/', this.signin)
       .then(response => {
       let token = response.data.token;
       let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
-          window.localStorage.setItem('pk', pk);
+          window.sessionStorage.setItem('pk', pk);
         }
         this.$router.push( {path: '/MainPage'} );
       })
