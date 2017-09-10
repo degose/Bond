@@ -94,7 +94,7 @@ export default {
       let pk = response.data.user;
         if ( !window.localStorage.getItem('token') ) {
           window.localStorage.setItem('token', token);
-          window.sessionStorage.setItem('pk', pk);
+          window.localStorage.setItem('pk', pk);
         }
         this.$router.push( {path: '/MainPage'} );
       })
