@@ -57,7 +57,7 @@ export default {
       setTimeout(() => loadingComponent.close(), 1 * 1000)
       
       let path = null;
-      let search = window.sessionStorage.getItem('searchKeyword');
+      let search = window.localStorage.getItem('searchKeyword');
       let user_token = window.localStorage.getItem('token');
       let direction = this.direction;
       let newsearch = this.newsearch;
@@ -84,7 +84,7 @@ export default {
     },
     nextPage(){
       let api_path = this.pagination.next;
-      let search = window.sessionStorage.getItem('searchKeyword');
+      let search = window.localStorage.getItem('searchKeyword');
       this.newsearch = `${search}`;
       if (api_path !== null) {
         let first = api_path.indexOf('?page=');
@@ -100,20 +100,20 @@ export default {
       let last = api_path.indexOf('&');
       let first = api_path.indexOf('?page=');
       let page_path = api_path.slice(first, last);
-      let search = window.sessionStorage.getItem('searchKeyword');
+      let search = window.localStorage.getItem('searchKeyword');
       this.newsearch = `${search}`;
       if(this.page_num >= 3){
         this.page_num = page_path[page_path.length - 1];
         this.direction = 'prev';
         this.$router.push({path: '/SearchResult/group/', query: {page: `${this.page_num}`}});
       }else if(this.page_num == 2){
-        let search = window.sessionStorage.getItem('searchKeyword');
+        let search = window.localStorage.getItem('searchKeyword');
         this.direction = 'prev';
         this.$router.push({path: '/SearchResult/group/', query: {search: `${search}`}});
       }
     },
     goGroup(pk, i){
-      window.sessionStorage.setItem('this_group',pk);
+      window.localStorage.setItem('this_group',pk);
       if(this.is_member[i] === true){
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
       }

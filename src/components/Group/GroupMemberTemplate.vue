@@ -43,7 +43,7 @@ export default {
       )
       .then(response=> {
         let user_token = window.localStorage.getItem('token');
-        let pk = window.sessionStorage.getItem('this_group');
+        let pk = window.localStorage.getItem('this_group');
         let path = null;
         let page_num = this.$parent.page_num
         this.$http.get( 'http://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`,
@@ -75,7 +75,7 @@ export default {
       )
       .then(response=> {
         let user_token = window.localStorage.getItem('token');
-        let pk = window.sessionStorage.getItem('this_group');
+        let pk = window.localStorage.getItem('this_group');
         let path = null;
         let page_num = this.$parent.page_num
         this.$http.get('http://api.thekym.com/member/?group=' + `${pk}` + '&page=' +`${page_num}`, 

@@ -95,7 +95,7 @@ export default {
     },
     fetchFollowing(direction){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.sessionStorage.getItem('pk');
+      let pk = window.localStorage.getItem('pk');
       this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/following/', 
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
@@ -108,7 +108,7 @@ export default {
       this.$refs.my_modal.visible = true;
     },
     goGroup(pk){
-        window.sessionStorage.setItem('this_group', pk);
+        window.localStorage.setItem('this_group', pk);
         this.$router.push({ path: '/JointGroup/', query: { group: `${pk}` }});
     },
 

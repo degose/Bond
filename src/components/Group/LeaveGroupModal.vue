@@ -37,7 +37,7 @@ export default {
       this.visible = false;
     },
     deleteMembership(){
-      let pk = window.sessionStorage.getItem('this_group');
+      let pk = window.localStorage.getItem('this_group');
       let user_token = window.localStorage.getItem('token');
       this.$http.delete('http://api.thekym.com/member/membership/',{
               data:{"group":pk},

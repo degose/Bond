@@ -73,6 +73,13 @@ export default {
         let pk = response.data.user;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
+          window.localStorage.removeItem('pk', pk)
+          window.localStorage.removeItem('searchKeyword')
+          window.localStorage.removeItem('user_email')
+          window.localStorage.removeItem('user_img')
+          window.localStorage.removeItem('user_nickname')
+          window.localStorage.removeItem('user_username')
+          window.localStorage.removeItem('this_group')
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
