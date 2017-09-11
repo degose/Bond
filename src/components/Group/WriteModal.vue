@@ -112,11 +112,11 @@ export default {
     writeTextSubmit(){
       // 토큰 값으로 유저가 누구인지 인증
       let user_token = window.localStorage.getItem('token');
-      let pk = window.sessionStorage.getItem('this_group');
+      let pk = window.localStorage.getItem('this_group');
       let formData = new FormData();
-      let user_pk = window.sessionStorage.getItem('pk');
-      let user_img = window.sessionStorage.getItem('user_img');
-      let user_nickname = window.sessionStorage.getItem('user_nickname');
+      let user_pk = window.localStorage.getItem('pk');
+      let user_img = window.localStorage.getItem('user_img');
+      let user_nickname = window.localStorage.getItem('user_nickname');
 
       formData.append('content', this.write.content);
 

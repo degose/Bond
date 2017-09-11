@@ -100,7 +100,7 @@ export default {
     submitSetting(){
 
       let user_token = window.localStorage.getItem('token');
-      let pk = window.sessionStorage.getItem('pk');
+      let pk = window.localStorage.getItem('pk');
       let formData = new FormData();
 
       if(!!this.userinput.nickname){
@@ -140,7 +140,7 @@ export default {
     },
     getUserInfo(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.sessionStorage.getItem('pk');
+      let pk = window.localStorage.getItem('pk');
       this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {

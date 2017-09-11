@@ -75,15 +75,15 @@ export default {
   methods: {
     getUserImg(){
       let user_token = window.localStorage.getItem('token');
-      let pk = window.sessionStorage.getItem('pk');
+      let pk = window.localStorage.getItem('pk');
       this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/',
       { headers: {'Authorization' : `Token ${user_token}`}})
                 .then(response => {
                   this.user = response.data;
-                  window.sessionStorage.setItem('user_img', this.user.profile_img);
-                  window.sessionStorage.setItem('user_email', this.user.email);
-                  window.sessionStorage.setItem('user_nickname', this.user.nickname);
-                  window.sessionStorage.setItem('user_username', this.user.username);
+                  window.localStorage.setItem('user_img', this.user.profile_img);
+                  window.localStorage.setItem('user_email', this.user.email);
+                  window.localStorage.setItem('user_nickname', this.user.nickname);
+                  window.localStorage.setItem('user_username', this.user.username);
                   })
                 .catch(error => console.log(error.response));
     },
@@ -94,6 +94,14 @@ export default {
         let pk = response.data.user;
         if ( window.localStorage.getItem('token') ) {
           window.localStorage.removeItem('token', token);
+          window.localStorage.removeItem('pk', pk)
+          window.localStorage.removeItem('searchKeyword')
+          window.localStorage.removeItem('user_email')
+          window.localStorage.removeItem('user_img')
+          window.localStorage.removeItem('user_nickname')
+          window.localStorage.removeItem('user_username')
+          window.localStorage.removeItem('this_group')
+
         }
         this.$router.push( {path: "/"} );
         alert("성공적으로 로그아웃 하셨습니다.")
@@ -114,22 +122,23 @@ export default {
     fetch(){
       // const loadingComponent = this.$loading.open()
       // setTimeout(() => loadingComponent.close(), 1 * 1000)
-      if(this.search.trim()===''){
-        alert("빈 공백은 검색 할 수 없습니다.")
-        return
-      }
       let search = this.search.trim();
-      window.sessionStorage.setItem('searchKeyword',search)
+      window.localStorage.setItem('searchKeyword',search)
+
       this.$http.get('http://api.thekym.com/'+'group/?search='+`${search}`)
                 .then(response => {
+                 if (search === ''){
+                    alert("빈 문자열은 검색 하실 수 없습니다.")
+                    return
+                  }
                   if(response.data.count != 0){
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
                   }else{
                     alert("해당 검색어와 관련된 그룹이 없습니다.");
                   }
-                })
+                }
+                )
                 .catch(error => console.error(error.message))
-      this.search = '';
     },
   }
 }

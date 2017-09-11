@@ -28,7 +28,7 @@ export default {
       )
       .then(response=> {
         let user_token = window.localStorage.getItem('token');
-        let pk = window.sessionStorage.getItem('pk');
+        let pk = window.localStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
         this.$http.get( 'http://api.thekym.com/member/' + `${pk}` + '/following/',
@@ -53,7 +53,7 @@ export default {
       )
       .then(response=> {
         let user_token = window.localStorage.getItem('token');
-        let pk = window.sessionStorage.getItem('pk');
+        let pk = window.localStorage.getItem('pk');
         // let path = null;
         // let page_num = this.$parent.page_num
         this.$http.get('http://api.thekym.com/member/' + `${pk}` + '/following/',
