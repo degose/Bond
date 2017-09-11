@@ -24,7 +24,7 @@
                   placeholder='그룹을 검색해보세요'  
                   @input="inputSearch" 
                   :value="search"
-                  @keyup.enter="fetch"
+                  @keydown.enter="fetch"
                   )
                 span.span.icon.is-small.is-left
                   i.fa.fa-search
@@ -133,6 +133,7 @@ export default {
                   }
                   if(response.data.count != 0){
                   this.$router.push({ path: '/SearchResult/group/', query: { search: `${search}` }});
+                  this.search = '';
                   }else{
                     alert("해당 검색어와 관련된 그룹이 없습니다.");
                   }
