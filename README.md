@@ -32,8 +32,8 @@
   - 작업 일정은 스크럼보드를 통해 관리
 --------------------------------------------
 
-
-> ## 일별 진행사항은 [스크럼보드](https://docs.google.com/spreadsheets/d/19uk0yIWIGAGDWxCyIE3sBjMY3eeNxImAGhN5P_W6S3M/edit#gid=1954898330)에 개인 별로 작성  
+> ## 프로젝트 결과물 : [동영상](https://www.youtube.com/watch?v=gty0xzSBzRk&t=204s)
+> ## 일별 진행사항은 [스크럼보드](https://docs.google.com/spreadsheets/d/19uk0yIWIGAGDWxCyIE3sBjMY3eeNxImAGhN5P_W6S3M/edit#gid=1954898330)에 개인 별로 작성  본드 
 > ## 프로젝트 진행과정 : [github](https://github.com/degose/Bond/projects/1)
 
 --------------------------------------------
