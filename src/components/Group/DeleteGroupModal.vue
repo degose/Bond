@@ -12,7 +12,7 @@
       footer.modal-card-foot
         button.button.is-primary(@click="closeDeleteModal") 확인
         button.button(@click="closeModal") 취소
-      // level-right 요소로 우측정렬 가능.. 빈 요소라도 level-left는 언제나 필수! 
+      //- level-right 요소로 우측정렬 가능.. 빈 요소라도 level-left는 언제나 필수! 
 </template>
 
 <script>
