@@ -16,7 +16,7 @@
                     .media-content.has-text-centered.ellipsis-wrapper
                       p.title.is-4.ellipsis {{ group.name }}
 
-              
+            //- 그룹 만들기 버튼 
           .column.is-3
             .card
               a(@click="openModal")
@@ -77,6 +77,7 @@ export default {
         path = "http://api.thekym.com/group/my-group/?page="+`${page_num}`
       }
       else {
+        // [direction] => data의 pagination 객체의 키 값으로 접근
         path = this.pagination[direction];
         page_num = this.page_num;
       }
@@ -119,6 +120,7 @@ export default {
       this.page_num = page_path;
       this.getMyGroupList('prev');}
       else{
+        // 다시 1page로 돌아가기 위한 메서드로 api상 prev페이지가 1일 때는 쿼리 값에 page가 없기 때문에 page_num이 필요 없어서 바로 this.pagination.prev 여기로 가면 됨
          let path = this.pagination.prev
          this.getMyGroupList('prev');
       }
