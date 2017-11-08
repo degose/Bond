@@ -118,11 +118,6 @@ export default {
     this.getMyGroupList();
   },
   methods: {
-    addPostData(o){
-      console.log(this.post_data);
-      this.post_data.unshift(o);
-      console.log(this.post_data);
-    },
     openModal(){
       this.$refs.my_modal.visible = true;
     },

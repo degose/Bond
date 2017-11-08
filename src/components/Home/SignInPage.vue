@@ -128,6 +128,7 @@ export default {
   margin-bottom: 0
 
 .home-box
+  // Hue색조, Saturation채도, Lightness명도, Alpha투명도
   background-color: hsla(0, 0%, 100%, .9)
   padding: 40px 0
 
